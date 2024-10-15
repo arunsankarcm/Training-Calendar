@@ -37,4 +37,3 @@ async function postData() {
     }
   }
   
-  postData();
