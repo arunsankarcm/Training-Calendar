@@ -10,9 +10,7 @@ body {
     height: 100vh;
     background: linear-gradient(120deg, #fefefe 60%, #6495ed 40%);
     background-size: cover;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
+   
 }
 
 .logo {
@@ -28,14 +26,13 @@ body {
     max-width: 85%;
     margin-top: auto;
     margin-left: 20px;
-    /* flex-wrap: wrap; */
+   
 }
 
 .left-side, .right-side {
     width: 100%;
     display: flex;
-    /* align-items: center;
-    justify-content: center; */
+  
 }
 
 .right-side {
@@ -70,7 +67,7 @@ body {
     border-radius: 5px;
     border: 1px solid #333;
     width: 70%;
-    /* max-width: 500px; */
+    
     height: auto;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
     color: #333;
