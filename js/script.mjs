@@ -56,11 +56,13 @@ function AddCourseToCard(course) {
     <div class="icons">
       <img src="../pics/laptop.png" alt="Laptop icon" />
     </div>
+    <div class="three-dots">⋮</div>
   `;
 
   cardsDiv.appendChild(card);
 
   cardNo++;
 }
+
 
 window.addEventListener("load", getCourses);
