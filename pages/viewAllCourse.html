@@ -1,76 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../styles/viewAllCourse.css">
-</head>
-
-
-
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Training Calendar</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../styles/viewAllCourse.css" />
+  </head>
+  <body>
     <header class="head">
-        <div class="left-section">
-          <img src="../pics/exp_logo.png" alt="Experion Logo" class="logo" style="width:150px ; height: 30px;" />
-         
-        </div>
-        <div class="right-section">
-          <img src="../pics/sign_out.png" alt="Back" class="icon" style="width:20px ; height: 20px;" />
-         
-        </div>
-      </header>
+      <div class="left-section">
+        <img
+          src="../pics/exp_logo.png"
+          alt="Experion Logo"
+          class="logo"
+          style="width: 150px; height: 30px"
+        />
+      </div>
+      <div class="right-section">
+        <img
+          src="../pics/sign_out.png"
+          alt="Back"
+          class="icon"
+          style="width: 20px; height: 20px"
+        />
+      </div>
+    </header>
+
     <div class="header">
-        
-        <div class="header-content">
-            <h1>Training Calendar <span class="month-year"><br> <img src="../pics/left-arr.png" alt="left_arrow">November 2024 <img src="../pics/right-arr.png" alt=""></span> </h1>
-            <div class="search-bar">
-                <input type="text" placeholder="Search here..." />
-                <button class="search-btn">
-                    <img src="https://img.icons8.com/ios-glyphs/30/search--v1.png"/>
-                </button>
-            </div>
-            <div class="action-icons">
-                <img src="../pics/export-file.png"/>
-                <img src="../pics/filter.png"/>
-                <img src="../pics/add.png"/>
-            </div>
+      <div class="header-content">
+        <h1>
+          Training Calendar
+          <span class="month-year">
+            <br />
+            <img src="../pics/left-arr.png" alt="left_arrow" /> November 2024
+            <img src="../pics/right-arr.png" alt="" />
+          </span>
+        </h1>
+        <div class="search-bar">
+          <input type="text" placeholder="Search here..." id="search-input" />
+          <button class="search-btn">
+            <img
+              src="https://img.icons8.com/ios-glyphs/30/search--v1.png"
+              alt="Search"
+            />
+          </button>
         </div>
+        <div class="action-icons">
+          <img src="../pics/export-file.png" alt="Export" />
+          <img src="../pics/filter.png" alt="Filter" />
+          <img src="../pics/add.png" alt="Add" />
+        </div>
+      </div>
     </div>
-    
-    <main class="card-grid">
-        <!-- Training Cards (Repeat as necessary) -->
-        <div class="training-card">
-            <div class="status">
-                <span class="circle yellow"><p>1</p></span> 
-                <p>Project Object Model Approach in Automation Framework</p>
-            </div>
-            <ul class="details">
-                <li>Oops model</li>
-                <li>Automation tools</li>
-            </ul>
-            <p class="audience">Target Audience: <strong>DU6</strong></p>
-            <p class="date">Date: <strong>8-Oct-2024 (1hr)</strong></p>
-            <p class="trainer">Trainer: <strong>Akshat Arora</strong></p>
-            <div class="icons">
-                <img src="../pics/laptop.png"/>
-            </div>
-        </div>
-       
-     
-</main>
-</body>
 
+    <div class="card-grid" id="card-grid"></div>
 
-
-    
-
+    <script type="module" src="../firebaseConfig.mjs"></script>
+    <script type="module" src="../js/script.mjs"></script>
+  </body>
 </html>

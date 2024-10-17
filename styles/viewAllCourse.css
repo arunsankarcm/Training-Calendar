@@ -89,6 +89,10 @@ body {
     position: relative;
 }
 
+.hide{
+    display: none;
+}
+
 .status {
     display: flex;
     align-items: center;
