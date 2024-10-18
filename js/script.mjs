@@ -8,7 +8,21 @@ import {
 
 const cardsDiv = document.getElementById("card-grid");
 let cardNo = 1;
-let allCourses = []; // Store all courses globally
+let allCourses = []; 
+let currentMonth = new Date().getMonth(); // Current month (0-11)
+let currentYear = new Date().getFullYear(); // Current year
+
+function getMonthName(monthIndex) {
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June", "July", 
+    "August", "September", "October", "November", "December"
+  ];
+  return monthNames[monthIndex];
+}
+
+function updateMonthYearDisplay() {
+  document.getElementById("month-year").textContent = `${getMonthName(currentMonth)} ${currentYear}`;
+}
 
 
 function getCourses() {
@@ -21,6 +35,7 @@ function getCourses() {
           allCourses.push(course);
           AddCourseToCard(course);
         });
+        filterCoursesByMonth(); 
       } else {
         console.log("No data available");
       }
@@ -29,6 +44,50 @@ function getCourses() {
       console.error("Error fetching data: ", error);
     });
 }
+
+function filterCoursesByMonth() {
+  cardsDiv.innerHTML = ""; // Clear the card grid
+  cardNo = 1; // Reset card number
+
+  const filteredCourses = allCourses.filter((course) => {
+    const value = course.val();
+    const startDate = new Date(value.startDate);
+    const endDate = value.endDate ? new Date(value.endDate) : null;
+
+    // Check if the course starts in the selected month/year or is ongoing
+    const isStartingThisMonth = (startDate.getMonth() === currentMonth && startDate.getFullYear() === currentYear);
+    const isOngoingThisMonth = (startDate.getMonth() < currentMonth && (!endDate || endDate.getMonth() >= currentMonth) && startDate.getFullYear() <= currentYear);
+
+    return isStartingThisMonth || isOngoingThisMonth;
+  });
+
+  // Add the filtered courses to the grid
+  filteredCourses.forEach((course) => {
+    AddCourseToCard(course);
+  });
+}
+
+document.getElementById("left-arrow").addEventListener("click", () => {
+  if (currentMonth === 0) {
+    currentMonth = 11;
+    currentYear--;
+  } else {
+    currentMonth--;
+  }
+  updateMonthYearDisplay();
+  filterCoursesByMonth();
+});
+
+document.getElementById("right-arrow").addEventListener("click", () => {
+  if (currentMonth === 11) {
+    currentMonth = 0;
+    currentYear++;
+  } else {
+    currentMonth++;
+  }
+  updateMonthYearDisplay();
+  filterCoursesByMonth();
+});
 
 function AddCourseToCard(course) {
   const value = course.val();
@@ -162,4 +221,7 @@ document
   .getElementById("search-input")
   .addEventListener("input", searchCourses);
 
-window.addEventListener("load", getCourses);
+  window.addEventListener("load", () => {
+    updateMonthYearDisplay(); // Show current month/year on page load
+    getCourses(); // Fetch and display courses
+  });
