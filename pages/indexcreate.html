@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Registration Form</title>
+    <link rel="stylesheet" href="..\styles\stylecreate.css" />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .button {
+        display: flex;
+        justify-content: center;
+      }
+      .container {
+        max-width: 900px;
+        background-color: #fff;
+        margin: 50px auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ccc;
+      }
+
+      .header {
+        background-color: lightgray;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+        padding: 0 10px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .logo {
+        padding-left: 13px;
+        padding-top: 17px;
+      }
+
+      .icon {
+        /* padding-bottom: 0;
+            display: flex;
+            align-items: flex-end; */
+      }
+
+      .form-container {
+        padding: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="time"],
+      input[type="number"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      textarea {
+        height: 120px;
+        resize: vertical;
+      }
+
+      .inline-group {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .inline-group .form-group {
+        width: 48%;
+      }
+
+      .radio-group {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .flex-container {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .left-section,
+      .right-section {
+        width: 48%;
+      }
+
+      button {
+        background-color: #4a90e2;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #357ae8;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="left-section">
+          <img
+            src="thumbnail_image002-removebg-preview (1).png"
+            alt="Experion Logo"
+            class="logo"
+            style="width: 150px; height: 30px"
+          />
+        </div>
+      </header>
+
+      <!-- Form container -->
+      <div class="form-container">
+        <form>
+          <div class="form-group">
+            <label for="course-name">Course Name:</label>
+            <input
+              type="text"
+              id="course-name"
+              name="course-name"
+              placeholder="Input the Course title"
+            />
+          </div>
+
+          <div class="inline-group">
+            <div class="form-group">
+              <label for="start-date">Start Date:</label>
+              <input type="date" id="start-date" name="start-date" />
+            </div>
+            <div class="form-group">
+              <label for="end-date">End Date:</label>
+              <input type="date" id="end-date" name="end-date" />
+            </div>
+          </div>
+
+          <div class="inline-group">
+            <div class="form-group">
+              <label for="start-time">Start Time:</label>
+              <input type="time" id="start-time" name="start-time" />
+            </div>
+            <div class="form-group">
+              <label for="end-time">End Time:</label>
+              <input type="time" id="end-time" name="end-time" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="key-points">Key Points to be covered:</label>
+            <textarea
+              id="key-points"
+              name="key-points"
+              placeholder="Enter the project description here"
+            ></textarea>
+          </div>
+
+          <div class="flex-container">
+            <div class="left-section">
+              <div class="form-group">
+                <label for="trainer">Trainer:</label>
+                <input
+                  type="text"
+                  id="trainer"
+                  name="trainer"
+                  placeholder="Enter Trainer's name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="audience">Target Audience:</label>
+                <input type="text" id="audience" name="audience" />
+              </div>
+              <div class="form-group">
+                <label for="max-participants"
+                  >Maximum Number of Participants:</label
+                >
+                <input
+                  type="number"
+                  id="max-participants"
+                  name="max-participants"
+                  min="1"
+                />
+              </div>
+            </div>
+
+            <div class="right-section">
+              <div class="form-group">
+                <br />
+                <div class="radio-group">
+                  <label>
+                    <input type="radio" name="mode" value="online" /> Online
+                  </label>
+                  <br />
+                  <label>
+                    <input type="radio" name="mode" value="offline" /> Offline
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="button">
+            <button class="button" type="submit">SUBMIT</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
