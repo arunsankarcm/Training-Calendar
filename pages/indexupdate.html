@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Updation Form</title>
+    <link rel="stylesheet" href="../styles/styleupdate.css" />
+    <link
+      href="
+https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="left-section">
+          <img
+            src="thumbnail_image002-removebg-preview (1).png"
+            alt="Experion Logo"
+            class="logo"
+          />
+        </div>
+        <div class="right-section">
+          <img src="image (8).png" alt="back button" class="backbutton" />
+        </div>
+      </header>
+
+      <div class="form-container">
+        <form>
+          <img
+            src="back-button (1).png"
+            alt="previous"
+            class="previousbutton"
+          />
+          <br />
+          <br />
+          <br />
+          <div class="form-group">
+            <label for="course-name">Course Name:</label>
+            <input
+              type="text"
+              id="course-name"
+              name="course-name"
+              placeholder="Update the Course title"
+            />
+          </div>
+
+          <div class="inline-group">
+            <div class="form-group">
+              <label for="start-date">Start Date:</label>
+              <input type="date" id="start-date" name="start-date" />
+            </div>
+            <div class="form-group">
+              <label for="end-date">End Date:</label>
+              <input type="date" id="end-date" name="end-date" />
+            </div>
+          </div>
+
+          <div class="inline-group">
+            <div class="form-group">
+              <label for="start-time">Start Time:</label>
+              <input type="time" id="start-time" name="start-time" />
+            </div>
+            <div class="form-group">
+              <label for="end-time">End Time:</label>
+              <input type="time" id="end-time" name="end-time" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="key-points">Key Points to be covered:</label>
+            <textarea
+              id="key-points"
+              name="key-points"
+              placeholder="Update the description of the course here"
+            ></textarea>
+          </div>
+
+          <div class="flex-container">
+            <div class="left-section">
+              <div class="form-group">
+                <label for="trainer">Trainer:</label>
+                <input
+                  type="text"
+                  id="trainer"
+                  name="trainer"
+                  placeholder="Update Trainer's name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="audience">Target Audience:</label>
+                <input type="text" id="audience" name="audience" />
+              </div>
+              <div class="form-group">
+                <label for="max-participants"
+                  >Maximum Number of Participants:</label
+                >
+                <input
+                  type="number"
+                  id="max-participants"
+                  name="max-participants"
+                  min="1"
+                />
+              </div>
+            </div>
+
+            <div class="right-section">
+              <div class="form-group">
+                <div class="radio-group">
+                  <label>
+                    <input
+                      type="radio"
+                      name="mode"
+                      value="online"
+                      class="online"
+                    />
+                    Online
+                    <img src="image (6).png" alt="online" class="onlinepic" />
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      type="radio"
+                      name="mode"
+                      value="offline"
+                      class="offline"
+                    />
+                    Offline
+                    <img src="image (7).png" alt="offline" class="offlinepic" />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="button">
+            <button type="submit">UPDATE</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
