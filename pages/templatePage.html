@@ -1,179 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Training Calendar - October 2024</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    <link rel="stylesheet" href="../styles/templatestyles.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"/>
+
+    <link rel="stylesheet" href="../styles/templatestyles.css" />
+    
+  </head>
+  <body>
     <div class="download-icons">
-        <a href="#" onclick="downloadImage()"><img src="../pics/downloads (1).png" alt="download-icon"></a>
-        <a href="#" id="downloadBtn"><img src="../pics/sheet (1).png" alt="download-sheet"></a>
-        <!-- <button onclick="downloadImage()">Download as PNG</button> -->
-        <!-- <button id="downloadBtn">Download as Excel</button> -->
+      <a href="#" onclick="downloadImage()"
+        ><img src="../pics/downloads (1).png" alt="download-icon"
+      /></a>
+      <a href="#" id="downloadBtn"
+        ><img src="../pics/sheet (1).png" alt="download-sheet"
+      /></a>
+      <!-- <button onclick="downloadImage()">Download as PNG</button> -->
+      <!-- <button id="downloadBtn">Download as Excel</button> -->
     </div>
 
     <div class="container" id="container-capture">
-        <div class="rhombus-top">
-            <img src="../pics/Rhombus.png" alt="experion-rhombus-white">
+      <div class="rhombus-top">
+        <img src="../pics/Rhombus.png" alt="experion-rhombus-white" />
+      </div>
+      <div class="header">
+        <h7>Training Calendar</h7><br />
+        <h6><b>October 2024</b></h6>
+        <p>
+          This calendar contains the details of all training programs planned
+          for this month - technical and soft skills - conducted by external
+          vendors and internal trainers.
+        </p>
+      </div>
+      <div class="training-details-section">
+        <!-- upcoming section -->
+        <div class="upcoming-section">
+          <div class="upcoming-button">
+            <h2>UPCOMING</h2>
+          </div>
+          <div id="upcoming-training-cards-section"> 
+          </div>
         </div>
-        <div class="header">
-            <h7>Training Calendar</h7><br>
-            <h6><b>October 2024</b></h6>
-            <p>This calendar contains the details of all training programs planned for this month - technical and soft skills - conducted by external vendors and internal trainers.</p>
-        </div>
-        <div class="training-details-section">
-
-             <!-- upcoming section -->
-            <div class="upcoming-section">
-                <div class="upcoming-button">
-                    <h2>UPCOMING</h2>
+        <!-- ongoing section -->
+        <div class="ongoing-section">
+          <div class="ongoing-button">
+            <h2>ONGOING</h2>
+          </div>
+          <div class="ongoing-training-cards-section">
+            <div class="training-card">
+                <div class="circle-number">
+                  <span>3</span>
                 </div>
-                <div class="training-card">
-                    <div class="circle-number">
-                        <span>1</span>
-                    </div>
-                    <div class="training-details">
-                        <h3>Project Object Model Approach in Automation Framework</h3>
-                        <p><strong>Target Audience:</strong> DU6</p>
-                        <p><strong>Date:</strong> 8-Oct-24 (1 hr)</p>
-                        <p><strong>Trainer:</strong> Akshat Arora</p>
-                        <p><strong>Key points:</strong> Automation | Robotics | Coding </p>
-                    </div>
-                    
-                    <span class="tag online">Online</span>
-                </div>  
-
-                <div class="line"></div>
-        
-                <div class="training-card">
-                    <div class="circle-number">
-                        <span>2</span>
-                    </div>
-                    <div class="training-details">
-                        <h3>Buddy Program Session - Your role as a Buddy</h3>
-                        <p><strong>Target Audience:</strong> Grade B</p>
-                        <p><strong>Date:</strong> 10-Oct-24 (1 hr)</p>
-                        <p><strong>Trainer:</strong> Anjana Gopakumar</p>
-                        <p><strong>Key points:</strong> Automation | Robotics | Coding </p>
-                    </div>
-                    
-                    <span class="tag offline">Offline</span>
+                <div class="training-details">
+                  <h3>Project Object Model Approach in Automation Framework</h3>
+                  <p><strong>Target Audience:</strong> DU6</p>
+                  <p><strong>Date:</strong> 8-Oct-24 (1 hr)</p>
+                  <p><strong>Trainer:</strong> Akshat Arora</p>
+                  <p>
+                    <strong>Key points:</strong> Automation | Robotics | Coding
+                  </p>
                 </div>
-
-                <div class="line"></div>
-                
-                <div class="training-card">
-                    <div class="circle-number">
-                        <span>3</span>
-                    </div>
-                    <div class="training-details">
-                        <h3>Project Object Model Approach in Automation Framework</h3>
-                        <p><strong>Target Audience:</strong> DU6</p>
-                        <p><strong>Date:</strong> 8-Oct-24 (1 hr)</p>
-                        <p><strong>Trainer:</strong> Akshat Arora</p>
-                        <p><strong>Key points:</strong> Automation | Robotics | Coding </p>
-                    </div>
-                    
-                    <span class="tag online">Online</span>
-                </div>
-
-                <div class="line"></div>
-        
-                <div class="training-card">
-                    <div class="circle-number">
-                        <span>4</span>
-                    </div>
-                    <div class="training-details">
-                        <h3>Buddy Program Session - Your role as a Buddy</h3>
-                        <p><strong>Target Audience:</strong> Grade B</p>
-                        <p><strong>Date:</strong> 10-Oct-24 (1 hr)</p>
-                        <p><strong>Trainer:</strong> Anjana Gopakumar</p>
-                        <p><strong>Key points:</strong> Automation | Robotics | Coding </p>
-                    </div>
-                    
-                    <span class="tag offline">Offline</span>
-                    
-                </div>
-        
-                
-            </div>
-                <!-- ongoing section -->
-            <div class="ongoing-section">
-
-                <div class="ongoing-button">
-                    <h2>ONGOING</h2>
-                </div>
-                <div class="training-card">
-                    <div class="circle-number">
-                        <span>1</span>
-                    </div>
-
-                    <div class="training-details">
-                        <h3>Buddy Program Session - Your role as a Buddy</h3>
-                        <p><strong>Target Audience:</strong> Grade B</p>
-                        <p><strong>Date:</strong> 10-Oct-24 (1 hr)</p>
-                        <p><strong>Trainer:</strong> Anjana Gopakumar</p>
-                        <p><strong>Key points:</strong> Automation | Robotics | Coding </p>
-                    </div>  
-
-                    <span class="tag offline">Offline</span>
-                    
-                </div>
-
-                <div class="line"></div>
-        
-                <div class="training-card">
-                    <div class="circle-number">
-                        <span>2</span>
-                    </div>
-
-                    <div class="training-details">
-                        <h3>Buddy Program Session - Your role as a Buddy</h3>
-                        <p><strong>Target Audience:</strong> Grade B</p>
-                        <p><strong>Date:</strong> 10-Oct-24 (1 hr)</p>
-                        <p><strong>Trainer:</strong> Anjana Gopakumar</p>
-                        <p><strong>Key points:</strong> Automation | Robotics | Coding </p>
-                    </div>
-                    
-                    <span class="tag offline">Offline</span>
-                    
-                </div>
-        
-            </div>
-
-
-        </div>
-        
-
-        <div class="footer">
-            <div class="secure-spot">
-                <h7>Secure your spot now!</h7>
-            </div>
-            <p><strong>Please use the training nomination form available in Vconnect to submit your nominations.</strong>  
-                <br>Nominations will be accepted in concurrence with managers and based on the availability of seats.</p>
-        </div>
-
-        <div class="bottom-badges">
-            <div class="company-logo">
-                <img src="../pics/Group 691.png" alt="Experion Technologies">
-            </div>
             
-            <div class="gptw-logo">
-                <img src="../pics/GPTW 2023 1 badge.png" alt="Great Place to Work">
-            </div>
-        </div>
+                <span class="tag online">Online</span>
+              </div>
             
-        
-        
+              <div class="line"></div>            
+          </div>  
+        </div>
+
+      <div class="footer">
+        <div class="secure-spot">
+          <h7>Secure your spot now!</h7>
+        </div>
+        <p>
+          <strong
+            >Please use the training nomination form available in Vconnect to
+            submit your nominations.</strong
+          >
+          <br />Nominations will be accepted in concurrence with managers and
+          based on the availability of seats.
+        </p>
+      </div>
+
+      <div class="bottom-badges">
+        <div class="company-logo">
+          <img src="../pics/Group 691.png" alt="Experion Technologies" />
+        </div>
+
+        <div class="gptw-logo">
+          <img src="../pics/GPTW 2023 1 badge.png" alt="Great Place to Work" />
+        </div>
+      </div>
     </div>
-   
 
     <!-- Include the xlsx library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="../js/templateJS.js"></script> 
-</body>
+    <script type="module" src="../js/script.mjs"></script>
+    <script src="../js/templateJS.js"></script>
+  </body>
 </html>
+
+
+<!-- <div class="training-card">
+    <div class="circle-number">
+      <span>1</span>
+    </div>
+    <div class="training-details">
+      <h3>Project Object Model Approach in Automation Framework</h3>
+      <p><strong>Target Audience:</strong> DU6</p>
+      <p><strong>Date:</strong> 8-Oct-24 (1 hr)</p>
+      <p><strong>Trainer:</strong> Akshat Arora</p>
+      <p>
+        <strong>Key points:</strong> Automation | Robotics | Coding
+      </p>
+    </div>
+
+    <span class="tag online">Online</span>
+  </div>
+
+  <div class="line"></div>
+
+  <div class="training-card">
+    <div class="circle-number">
+      <span>2</span>
+    </div>
+    <div class="training-details">
+      <h3>Buddy Program Session - Your role as a Buddy</h3>
+      <p><strong>Target Audience:</strong> Grade B</p>
+      <p><strong>Date:</strong> 10-Oct-24 (1 hr)</p>
+      <p><strong>Trainer:</strong> Anjana Gopakumar</p>
+      <p>
+        <strong>Key points:</strong> Automation | Robotics | Coding
+      </p>
+    </div>
+
+    <span class="tag offline">Offline</span>
+  </div>
+
+  <div class="line"></div>
+
+  <div class="training-card">
+    <div class="circle-number">
+      <span>3</span>
+    </div>
+    <div class="training-details">
+      <h3>Project Object Model Approach in Automation Framework</h3>
+      <p><strong>Target Audience:</strong> DU6</p>
+      <p><strong>Date:</strong> 8-Oct-24 (1 hr)</p>
+      <p><strong>Trainer:</strong> Akshat Arora</p>
+      <p>
+        <strong>Key points:</strong> Automation | Robotics | Coding
+      </p>
+    </div>
+
+    <span class="tag online">Online</span>
+  </div>
+
+  <div class="line"></div>
+  </div> -->
+
+  
