@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Training Calendar</title>
     <link rel="stylesheet" href="../styles/viewAllCourse.css" />
+    <link href='
+https://fonts.googleapis.com/css?family=Montserrat'
+rel='stylesheet'>
   </head>
   <body>
     <header class="head">
@@ -48,16 +51,43 @@
           </button>
         </div>
         <div class="action-icons">
+
+          <div class="expo">
           <img src="../pics/export-file.png" alt="Export" />
-          <img src="../pics/filter.png" alt="Filter" />
-          <img src="../pics/add.png" alt="Add" />
+        </div>
+
+          <div class="filter-section">
+            <div class="container-f">
+                <button class="icon-btn" id="iconButton">
+                    <img src="../pics/filter.png" alt="">
+                  </svg>
+                </button>
+                <div class="popup-menu" id="popupMenuFilter">
+                  <p>Upcoming</p>
+                  <hr>
+                  <p>Ongoing</p>
+                  <hr>
+                  <p>Completed</p>
+                </div>
+              </div>
+           </div>
+
+               <div class="addicon">
+                  <img src="../pics/add.png" alt="Add" />
+              </div>
+
         </div>
       </div>
     </div>
-
     <div class="card-grid" id="card-grid"></div>
+  
+
+
+    
 
     <script type="module" src="../firebaseConfig.mjs"></script>
     <script type="module" src="../js/script.mjs"></script>
+    <script type="module" src="../js/viewAllCourse.js"></script>
+
   </body>
 </html>

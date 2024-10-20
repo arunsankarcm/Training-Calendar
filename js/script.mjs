@@ -119,11 +119,11 @@ function AddCourseToCard(course) {
   // Determine course status and set the color dynamically
   let statusColor = "";
   if (currentDate < startDate) {
-    statusColor = "red"; // Upcoming
+    statusColor = "#CA1919"; // Upcoming
   } else if (currentDate >= startDate && (!endDate || currentDate <= endDate)) {
-    statusColor = "yellow"; // Ongoing or TBD
+    statusColor = "#D0BF26"; // Ongoing or TBD
   } else if (endDate && currentDate > endDate) {
-    statusColor = "green"; // Finished
+    statusColor = "#156B1F"; // Finished
   }
 
   // Convert start and end time to 24-hour format
@@ -189,16 +189,42 @@ function AddCourseToCard(course) {
     <div class="icons">
       <img src="${modeIcon}" alt="Mode icon" />
     </div>
-    <div class="three-dots">
+ <div class="three-dots">
              ⋮
-
+    </div>
+    <div class="popup-menu">
+      <ul>
+        <li> Edit</li>
+        <hr>
+        <div class="del-tag">
+           <li>Delete</li>
+        </div>
+      </ul>
     </div>
   `;
 
   cardsDiv.appendChild(card);
 
+  const threeDots = card.querySelector('.three-dots');
+  const popupMenu = card.querySelector('.popup-menu');
+
+  threeDots.addEventListener('click', (e) => {
+    // Toggle the visibility of the popup menu
+    popupMenu.style.display = popupMenu.style.display === 'block' ? 'none' : 'block';
+  });
+
+  // Hide the popup if clicking outside of the card
+  document.addEventListener('click', (e) => {
+    if (!threeDots.contains(e.target) && !popupMenu.contains(e.target)) {
+      popupMenu.style.display = 'none';
+    }
+  });
+
+
   cardNo++;
 }
+// -----------------------------------
+
 
 function searchCourses() {
   const searchTerm = document
