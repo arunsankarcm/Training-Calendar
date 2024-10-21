@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Training Calendar</title>
+    <link rel="stylesheet" href="../styles/viewAllCourse.css" />
+    <link href='
+https://fonts.googleapis.com/css?family=Montserrat'
+rel='stylesheet'>
+  </head>
+  <body>
+    <header class="head">
+      <div class="left-section">
+        <img
+          src="../Images/exp_logo.png"
+          alt="Experion Logo"
+          class="logo"
+          style="width: 150px; height: 30px"
+        />
+      </div>
+      <div class="right-section">
+        <button id="logout_button" style="border: none;"><img
+          src="../Images/sign_out.png"
+          alt="Back"
+          class="icon"
+          style="width: 20px; height: 20px"
+        /></button>
+      </div>
+    </header>
+
+    <div class="header">
+      <div class="header-content">
+        <h1>
+            Training Calendar
+            <span class="month-year">
+              <br />
+              <img src="../Images/left-arr.png" alt="left_arrow" id="left-arrow" />
+              <span id="month-year"></span>
+              <img src="../Images/right-arr.png" alt="right_arrow" id="right-arrow" />
+            </span>
+          </h1>
+          
+        <div class="search-bar">
+          <input type="text" placeholder="Search here..." id="search-input" />
+          <button class="search-btn">
+            <img
+              src="https://img.icons8.com/ios-glyphs/30/search--v1.png"
+              alt="Search"
+            />
+          </button>
+        </div>
+        <div class="action-icons">
+
+          <div class="expo">
+          <img src="../Images/export-file.png" alt="Export" />
+        </div>
+
+          <div class="filter-section">
+            <div class="container-f">
+                <button class="icon-btn" id="iconButton">
+                    <img src="../Images/filter.png" alt="">
+                  </svg>
+                </button>
+                <div class="popup-menu" id="popupMenuFilter">
+                  <p>Upcoming</p>
+                  <hr>
+                  <p>Ongoing</p>
+                  <hr>
+                  <p>Completed</p>
+                </div>
+              </div>
+           </div>
+
+               <div class="addicon">
+                 <a href="indexcreate.html" id="add_button"><img src="../Images/add.png" alt="Add" /></a> 
+              </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="card-grid" id="card-grid"></div>
+  
+
+
+    
+
+    <script type="module" src="../firebaseConfig.mjs"></script>
+    <script type="module" src="../js/script.mjs"></script>
+    <script type="module" src="../js/viewAllCourse.js"></script>
+
+  </body>
+</html>

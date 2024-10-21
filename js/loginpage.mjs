@@ -1,5 +1,5 @@
 import { auth, db } from "../firebaseConfig.mjs";
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {
   ref,
   update,
@@ -16,7 +16,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
     .then((userCredential) => {
       errorMessage.textContent = "";
       sessionStorage.setItem("successMessage", "Successfully logged in!");
-      window.location.href = "home.html";
+      window.location.href = "viewAllCourse.html";
 
       const user = userCredential.user;
       const dt = new Date();
@@ -32,21 +32,25 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
     });
 });
 
-// // Check if user is authenticated
-// onAuthStateChanged(auth, (user) => {
-//   if (user) {
-//     console.log('User is signed in:', user.uid);
-//   } else {
-//     console.log('User is signed out.');
-//   }
-// });
+// Check if user is authenticated
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log('User is signed in:', user.uid);
+  } else {
+    console.log('User is signed out.');
+  }
+});
 
-// // Logout function (sign out)
-// document.getElementById('logoutButton').addEventListener('click', () => {
-//   signOut(auth).then(() => {
-//     alert('Logged out successfully.');
-//     window.location.href = 'login.html'; // Redirect to login page after logging out
-//   }).catch((error) => {
-//     console.error('Sign out error:', error);
-//   });
-// });
+window.addEventListener('load', () => {
+  // Check if the logout message exists
+  const logoutMessage = localStorage.getItem('logoutMessage');
+
+  if (logoutMessage) {
+    // Display the alert with the logout message
+    alert(logoutMessage);
+
+    // Clear the message from localStorage to avoid showing it again
+    localStorage.removeItem('logoutMessage');
+  }
+});
+
