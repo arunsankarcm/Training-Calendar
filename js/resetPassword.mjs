@@ -8,6 +8,8 @@ document.getElementById("backToLogin").addEventListener("click", (e) => {
   e.preventDefault();
   window.location.href = "loginpage.html";
 });
+
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is signed in, so you can access the email
@@ -21,6 +23,8 @@ onAuthStateChanged(auth, (user) => {
     console.log("No user is logged in.");
   }
 });
+
+
 document.getElementById("reset_form").addEventListener("submit", (e) => {
   e.preventDefault();
 

@@ -1,0 +1,379 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* font-family: 'Arial', sans-serif;*/
+  font-family: montserrat;
+}
+html {
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
+.header {
+  background-color: #3e68b9;
+  color: white;
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.head {
+  background-color: #d9d9d9;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 21px;
+}
+
+.month-year {
+  color: #ffffff;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  padding: 5px;
+  font-size: 16px;
+  width: 500px;
+}
+
+.search-btn img {
+  width: 25px;
+  cursor: pointer;
+}
+.month-year img {
+  width: 17px;
+  height: 17px;
+  padding-top: 5px;
+}
+
+.action-icons img {
+  width: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+  display: flex;
+}
+.action-icons {
+  display: flex;
+  margin-right: 80px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 70px;
+  padding: 20px;
+}
+
+.training-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  position: relative;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+}
+
+.status p {
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Horizontally center the content */
+  align-items: center;
+}
+
+.yellow {
+  background-color: #d0bf26;
+  width: 17px;
+  height: 17px;
+  padding-right: 4px;
+}
+.yellow p {
+  padding-right: 7px;
+}
+
+.red {
+  background-color: #e74c3c;
+}
+
+.green {
+  background-color: #2ecc71;
+}
+
+.details {
+  list-style: disc;
+  margin: 10px 0;
+  margin-left: 40px;
+  margin-bottom: 30px;
+}
+.info p {
+  margin-left: 28px;
+}
+
+.details li {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #666;
+  line-height: 18px;
+}
+
+.audience,
+.date,
+.trainer {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.icons {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.icons img {
+  width: 25px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.three-dots {
+  font-size: 26px;
+  cursor: pointer;
+  color: #7f7f7f; /* Change color as needed */
+  position: absolute;
+  top: 16px;
+  right: 15px;
+}
+
+/* ------------------------ */
+
+.container {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+.icon-btn img {
+  width: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.expo img {
+  padding-top: 7px;
+  width: 38px;
+}
+.addicon img {
+  padding-top: 10px;
+}
+
+.popup-menu {
+  display: none;
+  position: absolute;
+  top: 170px;
+  background-color: #f0f0f0;
+  padding: 12px;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  width: 146px;
+  font-weight: 550;
+  text-align: center;
+  
+  left: 75%;
+}
+
+#course-number {
+  padding-right: 10px;
+}
+
+/* ------------ */
+.popup-menu p {
+  margin: 10px 0;
+  font-size: 16px;
+  cursor: pointer;
+  color: #2d2d2d;
+}
+/* ---------POPUP - FILTER------------ */
+#popupMenuFilter.popup-menu {
+  display: flex;
+  display: none; /* Ensure it's hidden initially */
+line-height: 11px;
+  width: 120px;
+  height: 126px;
+  margin-top: 115px;
+  margin-left: 1000px;
+}
+
+
+#popupMenuFilter.popup-menu hr {
+  display: flex;
+  width: 90px;
+  height: auto;
+}
+
+/* ----------------------------- */
+
+.popup-menu hr {
+  border: none;
+  border-top: 1px solid #0b0b0b;
+  margin-left: 2px;
+}
+
+.popup-menu p:hover {
+  color: #007bff;
+}
+
+/* -------------------------------- */
+
+/* General styles for the menu */
+.menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.three-dots {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 18px; /* Adjust the height as needed */
+}
+
+.three-dots span {
+  display: block;
+  width: 4px;
+  height: 4px;
+  margin: 2px 0;
+  background-color: gray;
+  border-radius: 50%;
+}
+
+.menu-popup {
+  position: absolute;
+  top: 40px; /* Adjust based on button size */
+  right: 0;
+  background-color: #eeeeee;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 100px; /* Adjust width as needed */
+  display: none; /* Hidden by default */
+}
+
+.menu-popup p {
+  margin: 0;
+  padding: 8px 0;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+}
+
+.menu-popup p:hover {
+  background-color: #e0e0e0;
+}
+
+.menu-popup hr {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  margin: 5px 0;
+}
+
+/* -------------------------popup three-dots ---------------------------- */
+
+.popup-menu {
+  display: none;
+  position: absolute;
+  left: 260px;
+  top: 50px;
+  width: 80px;
+  height: 80px;
+  background-color: #eeeeee;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  line-height: 20px;
+  z-index: 10;
+  align-items: center;
+}
+.popup-menu hr {
+  display: flex;
+  padding-right: 20px;
+  width: 50px;
+  padding-top: 5px;
+}
+
+.popup-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.popup-menu ul li {
+  padding: 2px;
+  cursor: pointer;
+}
+.del-tag li {
+  display: flex;
+  position: relative;
+  padding-right: 10px;
+}
+
+.popup-menu ul li:hover {
+  background-color: #f4f4f9;
+}
