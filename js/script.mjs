@@ -5,7 +5,8 @@ import {
   child,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
-const cardsDiv = document.getElementById("upcoming-training-cards-section");
+const upcomingDiv = document.getElementById("upcoming-training-cards-section");
+const ongoingDiv = document.getElementById("ongoing-training-cards-section");
 let cardNo = 1;
 
 function getCourses() {
@@ -15,6 +16,7 @@ function getCourses() {
 
   get(child(dbref, "courses"))
     .then((snapshot) => {
+
       if (snapshot.exists()) {
         console.log("Data fetched successfully!"); // Log when data is fetched
         const courses = snapshot.val(); // Get the courses object
@@ -26,6 +28,39 @@ function getCourses() {
             renderCourses(courses[courseId]);
           }
         }
+
+        // chatGPTstarts
+
+        const coursesArray = Object.keys(courses).map((key) => courses[key]);
+
+        // Sort courses by the start date
+        const sortedCourses = coursesArray.sort((a, b) => {
+          const dateA = new Date(a.startDate);
+          const dateB = new Date(b.startDate);
+          return dateA - dateB; // Ascending order
+        });
+
+        // Get the current date
+        const currentDate = new Date();
+
+        // Separate courses into ongoing and upcoming
+        sortedCourses.forEach((course) => {
+          const courseStartDate = new Date(course.startDate);
+
+          if (courseStartDate >= currentDate) {
+            // Upcoming courses (Start date is today or later)
+            console.log(`Rendering upcoming course: ${course.courseName}`);
+            renderCourses(course, "upcoming");
+          } else {
+            // Ongoing courses (Start date is in the past)
+            console.log(`Rendering ongoing course: ${course.courseName}`);
+            renderCourses(course, "ongoing");
+          }
+        });
+
+        // chatGPTends
+
+
       } else {
         console.log("No data available"); // Log when no data is found
       }
@@ -33,6 +68,7 @@ function getCourses() {
     .catch((error) => {
       console.error("Error fetching data:", error); // Log any errors
     });
+
 }
 
 function renderCourses(course) {
@@ -69,7 +105,15 @@ function renderCourses(course) {
   card.appendChild(modeTag);
 
   // Append the card to the container
-  cardsDiv.appendChild(card);
+  // if (section == "upcoming") {
+  //   upcomingDiv.appendChild(card);
+  // } else {    
+  //   ongoingDiv.appendChild(card);
+  // }
+
+  // ongoingDiv.appendChild(card);
+  // upcomingDiv.appendChild(card);
+
 
   console.log(`Course card for '${course.courseName}' added to the DOM.`);
   cardNo++;
