@@ -75,10 +75,7 @@ textarea {
   width: 48%;
 }
 
-/* .radio-group {
-  display: flex;
-  flex-direction: column;
-} */
+
 
 .flex-container {
   display: flex;
@@ -109,29 +106,12 @@ button:hover {
   background-color: #357ae8;
 }
 
-.radio-group input[type="radio"] {
-  display: none;
-}
 
 .radio-group label {
   position: relative;
   padding-left: 30px;
   cursor: pointer;
   font-size: 16px;
-}
-
-.radio-group label::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 15px;
-  height: 15px;
-  border: 2px solid #ccc;
-  border-radius: 50%;
-  background-color: white;
-  transition: border-color 0.3s, background-color 0.3s;
 }
 
 .radio-group input[type="radio"]:checked + label::before {
