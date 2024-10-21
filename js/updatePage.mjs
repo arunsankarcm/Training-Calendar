@@ -108,12 +108,14 @@ const saveInDB = (
     mode: mode,
   })
     .then(() => {
+      // Success! Show popup and redirect to home page
       showPopup("Course added successfully!", "success");
       setTimeout(() => {
-        window.location.href = "viewAllCourse.html";
-      }, 2000);
+        window.location.href = "viewAllCourse.html"; // Redirect to home page
+      }, 2000); // 2-second delay before redirecting
     })
     .catch((error) => {
+      // Error occurred, show an error popup
       showPopup("Failed to add the course. Please try again.", "error");
       console.error("Error adding course: ", error);
     });
@@ -144,7 +146,7 @@ const showPopup = (message, type) => {
 };
 
 function changeBackgroundColor(event) {
-  event.target.style.backgroundColor = "#357ae8";
+  event.target.style.backgroundColor = " #357ae8";
 }
 
 function resetBackgroundColor(event) {
