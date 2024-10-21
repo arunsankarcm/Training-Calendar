@@ -223,8 +223,6 @@ body {
   width: 146px;
   font-weight: 550;
   text-align: center;
-  
-  left: 75%;
 }
 
 #course-number {
@@ -241,14 +239,13 @@ body {
 /* ---------POPUP - FILTER------------ */
 #popupMenuFilter.popup-menu {
   display: flex;
-  display: none; /* Ensure it's hidden initially */
-line-height: 11px;
+  display: none; 
+  line-height: 11px;
   width: 120px;
   height: 126px;
   margin-top: 115px;
-  margin-left: 1000px;
+  margin-left: 780px;
 }
-
 
 #popupMenuFilter.popup-menu hr {
   display: flex;
