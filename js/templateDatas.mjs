@@ -48,6 +48,7 @@ function getCourses() {
           const courseStartDate = new Date(course.startDate);
 
           if (courseStartDate >= currentDate) {
+            
             // Upcoming courses (Start date is today or later)
             console.log(`Rendering upcoming course: ${course.courseName}`);
             renderCourses(course, "upcoming");
@@ -71,7 +72,7 @@ function getCourses() {
 
 }
 
-function renderCourses(course) {
+function renderCourses(course,section) {
   console.log(`Rendering course card for: ${course.courseName}`);
 
   // Create the main card div
@@ -105,11 +106,11 @@ function renderCourses(course) {
   card.appendChild(modeTag);
 
   // Append the card to the container
-  // if (section == "upcoming") {
-  //   upcomingDiv.appendChild(card);
-  // } else {    
-  //   ongoingDiv.appendChild(card);
-  // }
+  if (section === "upcoming") {
+    upcomingDiv.appendChild(card);
+  } else {    
+    ongoingDiv.appendChild(card);
+  }
 
   // ongoingDiv.appendChild(card);
   // upcomingDiv.appendChild(card);
