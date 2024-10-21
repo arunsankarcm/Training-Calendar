@@ -28,7 +28,7 @@
       <div class="rhombus-top">
         <img src="../pics/Rhombus.png" alt="experion-rhombus-white" />
       </div>
-      <div class="header">
+      <div class="header" id="header-month-year">
         <h7>Training Calendar</h7><br />
         <h6><b>October 2024</b></h6>
         <p>
@@ -44,6 +44,9 @@
             <h2>UPCOMING</h2>
           </div>
           <div id="upcoming-training-cards-section"> 
+
+            <!-- upcoming training details will come here -->
+
           </div>
         </div>
         <!-- ongoing section -->
@@ -51,40 +54,26 @@
           <div class="ongoing-button">
             <h2>ONGOING</h2>
           </div>
-          <div class="ongoing-training-cards-section">
-            <div class="training-card">
-                <div class="circle-number">
-                  <span>3</span>
-                </div>
-                <div class="training-details">
-                  <h3>Project Object Model Approach in Automation Framework</h3>
-                  <p><strong>Target Audience:</strong> DU6</p>
-                  <p><strong>Date:</strong> 8-Oct-24 (1 hr)</p>
-                  <p><strong>Trainer:</strong> Akshat Arora</p>
-                  <p>
-                    <strong>Key points:</strong> Automation | Robotics | Coding
-                  </p>
-                </div>
-            
-                <span class="tag online">Online</span>
-              </div>
-            
-              <div class="line"></div>            
+          <div id="ongoing-training-cards-section">
+                       
+            <!-- ongoing training details will come here-->
+
           </div>  
         </div>
 
+
+        <!-- static footer section -->
+      </div>
+       
       <div class="footer">
         <div class="secure-spot">
           <h7>Secure your spot now!</h7>
         </div>
-        <p>
-          <strong
-            >Please use the training nomination form available in Vconnect to
-            submit your nominations.</strong
-          >
-          <br />Nominations will be accepted in concurrence with managers and
-          based on the availability of seats.
-        </p>
+          <p><strong>Please use the training nomination form available in Vconnect to
+            submit your nominations.</strong>
+
+          <br>Nominations will be accepted in concurrence with managers and
+          based on the availability of seats.</p>
       </div>
 
       <div class="bottom-badges">
@@ -98,13 +87,19 @@
       </div>
     </div>
 
-    <!-- Include the xlsx library -->
+    <!-- include the xcel library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script type="module" src="../js/script.mjs"></script>
+    <!-- javascript linking section -->
+    <script type="module" src="../js/templateDatas.mjs"></script>
     <script src="../js/templateJS.js"></script>
   </body>
 </html>
 
+
+<!-- dummy datas -->
+
+
+<!-- upcoming data -->
 
 <!-- <div class="training-card">
     <div class="circle-number">
@@ -123,45 +118,29 @@
     <span class="tag online">Online</span>
   </div>
 
-  <div class="line"></div>
+  <div class="line"></div>-->
+  
 
+
+
+  <!-- ongoing data -->
+
+<!-- 
   <div class="training-card">
     <div class="circle-number">
-      <span>2</span>
+        <span>1</span>
     </div>
+
     <div class="training-details">
-      <h3>Buddy Program Session - Your role as a Buddy</h3>
-      <p><strong>Target Audience:</strong> Grade B</p>
-      <p><strong>Date:</strong> 10-Oct-24 (1 hr)</p>
-      <p><strong>Trainer:</strong> Anjana Gopakumar</p>
-      <p>
-        <strong>Key points:</strong> Automation | Robotics | Coding
-      </p>
-    </div>
+        <h3>Buddy Program Session - Your role as a Buddy</h3>
+        <p><strong>Target Audience:</strong> Grade B</p>
+        <p><strong>Date:</strong> 10-Oct-24 (1 hr)</p>
+        <p><strong>Trainer:</strong> Anjana Gopakumar</p>
+        <p><strong>Key points:</strong> Automation | Robotics | Coding </p>
+    </div>  
 
     <span class="tag offline">Offline</span>
-  </div>
+    
+</div>
 
-  <div class="line"></div>
-
-  <div class="training-card">
-    <div class="circle-number">
-      <span>3</span>
-    </div>
-    <div class="training-details">
-      <h3>Project Object Model Approach in Automation Framework</h3>
-      <p><strong>Target Audience:</strong> DU6</p>
-      <p><strong>Date:</strong> 8-Oct-24 (1 hr)</p>
-      <p><strong>Trainer:</strong> Akshat Arora</p>
-      <p>
-        <strong>Key points:</strong> Automation | Robotics | Coding
-      </p>
-    </div>
-
-    <span class="tag online">Online</span>
-  </div>
-
-  <div class="line"></div>
-  </div> -->
-
-  
+<div class="line"></div> -->
