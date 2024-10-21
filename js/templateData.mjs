@@ -9,68 +9,7 @@ const upcomingDiv = document.getElementById("upcoming-training-cards-section");
 const ongoingDiv = document.getElementById("ongoing-training-cards-section");
 let cardNo = 1;
 
-// function getCourses() {
-//   console.log("Fetching data from Firebase..."); // Log before fetching data
 
-//   const dbref = ref(db);
-
-//   get(child(dbref, "courses"))
-//     .then((snapshot) => {
-
-//       if (snapshot.exists()) {
-//         console.log("Data fetched successfully!"); // Log when data is fetched
-//         const courses = snapshot.val(); // Get the courses object
-//         console.log("Courses data:", courses); // Log the fetched courses data
-
-//         for (const courseId in courses) {
-//           if (courses.hasOwnProperty(courseId)) {
-//             console.log(`Rendering course: ${courses[courseId].courseName}`); // Log each course being rendered
-//             renderCourses(courses[courseId]);
-//           }
-//         }
-
-//         // chatGPTstarts
-
-//         const coursesArray = Object.keys(courses).map((key) => courses[key]);
-
-//         // Sort courses by the start date
-//         const sortedCourses = coursesArray.sort((a, b) => {
-//           const dateA = new Date(a.startDate);
-//           const dateB = new Date(b.startDate);
-//           return dateA - dateB; // Ascending order
-//         });
-
-//         // Get the current date
-//         const currentDate = new Date();
-
-//         // Separate courses into ongoing and upcoming
-//         sortedCourses.forEach((course) => {
-//           const courseStartDate = new Date(course.startDate);
-
-//           if (courseStartDate >= currentDate) {
-            
-//             // Upcoming courses (Start date is today or later)
-//             console.log(`Rendering upcoming course: ${course.courseName}`);
-//             renderCourses(course, "upcoming");
-//           } else {
-//             // Ongoing courses (Start date is in the past)
-//             console.log(`Rendering ongoing course: ${course.courseName}`);
-//             renderCourses(course, "ongoing");
-//           }
-//         });
-
-//         // chatGPTends
-
-
-//       } else {
-//         console.log("No data available"); // Log when no data is found
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("Error fetching data:", error); // Log any errors
-//     });
-
-// }
 
 function getCourses() {
   console.log("Fetching data from Firebase...");
@@ -145,7 +84,7 @@ function renderCourses(course,section) {
     <p><strong>Target Audience:</strong> ${course.targetAudience}</p>
     <p><strong>Date & Time:</strong> ${course.startDate} (${course.startTime})</p>
     <p><strong>Trainer:</strong> ${course.trainerName}</p>
-    <p><strong>Key points:</strong> ${course.keyPoints}</p>
+    <p><strong>Key topics:</strong> ${course.keyPoints}</p>
   `;
 
   // Mode tag (Online/Offline)
@@ -176,3 +115,67 @@ function renderCourses(course,section) {
 
 // Call the function to fetch and render courses
 getCourses();
+
+
+// function getCourses() {
+//   console.log("Fetching data from Firebase..."); // Log before fetching data
+
+//   const dbref = ref(db);
+
+//   get(child(dbref, "courses"))
+//     .then((snapshot) => {
+
+//       if (snapshot.exists()) {
+//         console.log("Data fetched successfully!"); // Log when data is fetched
+//         const courses = snapshot.val(); // Get the courses object
+//         console.log("Courses data:", courses); // Log the fetched courses data
+
+//         for (const courseId in courses) {
+//           if (courses.hasOwnProperty(courseId)) {
+//             console.log(`Rendering course: ${courses[courseId].courseName}`); // Log each course being rendered
+//             renderCourses(courses[courseId]);
+//           }
+//         }
+
+//         // chatGPTstarts
+
+//         const coursesArray = Object.keys(courses).map((key) => courses[key]);
+
+//         // Sort courses by the start date
+//         const sortedCourses = coursesArray.sort((a, b) => {
+//           const dateA = new Date(a.startDate);
+//           const dateB = new Date(b.startDate);
+//           return dateA - dateB; // Ascending order
+//         });
+
+//         // Get the current date
+//         const currentDate = new Date();
+
+//         // Separate courses into ongoing and upcoming
+//         sortedCourses.forEach((course) => {
+//           const courseStartDate = new Date(course.startDate);
+
+//           if (courseStartDate >= currentDate) {
+            
+//             // Upcoming courses (Start date is today or later)
+//             console.log(`Rendering upcoming course: ${course.courseName}`);
+//             renderCourses(course, "upcoming");
+//           } else {
+//             // Ongoing courses (Start date is in the past)
+//             console.log(`Rendering ongoing course: ${course.courseName}`);
+//             renderCourses(course, "ongoing");
+//           }
+//         });
+
+//         // chatGPTends
+
+
+//       } else {
+//         console.log("No data available"); // Log when no data is found
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Error fetching data:", error); // Log any errors
+//     });
+
+// }
