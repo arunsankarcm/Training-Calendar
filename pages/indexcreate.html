@@ -6,8 +6,7 @@
     <title>Course Registration Form</title>
     <link rel="stylesheet" href="../styles/stylecreate.css" />
     <link
-      href="
-https://fonts.googleapis.com/css?family=Montserrat"
+      href="https://fonts.googleapis.com/css?family=Montserrat"
       rel="stylesheet"
     />
   </head>
@@ -22,7 +21,11 @@ https://fonts.googleapis.com/css?family=Montserrat"
           />
         </div>
         <div class="right-section">
-          <img src="../Images/image (8).png" alt="back button" class="backbutton" />
+          <img
+            src="../Images/image (8).png"
+            alt="back button"
+            class="backbutton"
+          />
         </div>
       </header>
 
@@ -43,28 +46,34 @@ https://fonts.googleapis.com/css?family=Montserrat"
               id="course-name"
               name="course-name"
               placeholder="Input the Course title"
+              required
             />
           </div>
 
           <div class="inline-group">
             <div class="form-group">
               <label for="start-date">Start Date:</label>
-              <input type="date" id="start-date" name="start-date" />
+              <input type="date" id="start-date" name="start-date" required />
             </div>
             <div class="form-group">
               <label for="end-date">End Date:</label>
-              <input type="date" id="end-date" name="end-date" />
+              <input
+                type="date"
+                id="end-date"
+                name="end-date"
+               
+              />
             </div>
           </div>
 
           <div class="inline-group">
             <div class="form-group">
               <label for="start-time">Start Time:</label>
-              <input type="time" id="start-time" name="start-time" />
+              <input type="time" id="start-time" name="start-time" required />
             </div>
             <div class="form-group">
               <label for="end-time">End Time:</label>
-              <input type="time" id="end-time" name="end-time" />
+              <input type="time" id="end-time" name="end-time" required />
             </div>
           </div>
 
@@ -74,6 +83,7 @@ https://fonts.googleapis.com/css?family=Montserrat"
               id="key-points"
               name="key-points"
               placeholder="Enter the project description here"
+              required
             ></textarea>
           </div>
 
@@ -86,11 +96,12 @@ https://fonts.googleapis.com/css?family=Montserrat"
                   id="trainer"
                   name="trainer"
                   placeholder="Enter Trainer's name"
+                  required
                 />
               </div>
               <div class="form-group">
                 <label for="audience">Target Audience:</label>
-                <input type="text" id="audience" name="audience" />
+                <input type="text" id="audience" name="audience" required />
               </div>
               <div class="form-group">
                 <label for="max-participants"
@@ -101,6 +112,7 @@ https://fonts.googleapis.com/css?family=Montserrat"
                   id="max-participants"
                   name="max-participants"
                   min="1"
+                  required
                 />
               </div>
             </div>
@@ -114,9 +126,14 @@ https://fonts.googleapis.com/css?family=Montserrat"
                       name="mode"
                       value="online"
                       class="online"
+                      required
                     />
                     Online
-                    <img src="../Images/image (6).png" alt="online" class="onlinepic" />
+                    <img
+                      src="../Images/image (6).png"
+                      alt="online"
+                      class="onlinepic"
+                    />
                   </label>
                   <br />
                   <label>
@@ -125,9 +142,14 @@ https://fonts.googleapis.com/css?family=Montserrat"
                       name="mode"
                       value="offline"
                       class="offline"
+                      required
                     />
                     Offline
-                    <img src="../Images/image (7).png" alt="offline" class="offlinepic" />
+                    <img
+                      src="../Images/image (7).png"
+                      alt="offline"
+                      class="offlinepic"
+                    />
                   </label>
                 </div>
               </div>
