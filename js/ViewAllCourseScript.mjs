@@ -316,9 +316,21 @@ function filterCourses(filterType) {
   let filteredCourses = [];
   const currentDate = new Date(); // Current date for comparison
 
+  // Step 1: Filter courses that belong to the currently selected month and year
+  const monthFilteredCourses = allCourses.filter(course => {
+    const value = course.val();
+    const startDate = new Date(value.startDate);
+    const startMonth = startDate.getMonth();
+    const startYear = startDate.getFullYear();
+    
+    // Check if the course's start month and year match the selected month and year
+    return startMonth === currentMonth && startYear === currentYear;
+  });
+
+  // Step 2: Further filter courses based on the filterType (upcoming, ongoing, completed)
   switch (filterType) {
     case 'upcoming':
-      filteredCourses = allCourses.filter(course => {
+      filteredCourses = monthFilteredCourses.filter(course => {
         const value = course.val();
         const startDate = new Date(value.startDate);
         return startDate > currentDate; // Upcoming courses start in the future
@@ -326,7 +338,7 @@ function filterCourses(filterType) {
       break;
 
     case 'ongoing':
-      filteredCourses = allCourses.filter(course => {
+      filteredCourses = monthFilteredCourses.filter(course => {
         const value = course.val();
         const startDate = new Date(value.startDate);
         const endDate = value.endDate ? new Date(value.endDate) : null;
@@ -336,7 +348,7 @@ function filterCourses(filterType) {
       break;
 
     case 'completed':
-      filteredCourses = allCourses.filter(course => {
+      filteredCourses = monthFilteredCourses.filter(course => {
         const value = course.val();
         const startDate = new Date(value.startDate);
         const endDate = value.endDate ? new Date(value.endDate) : null;
@@ -346,14 +358,15 @@ function filterCourses(filterType) {
       break;
 
     default:
-      filteredCourses = allCourses; // If no filter is selected, show all courses
+      filteredCourses = monthFilteredCourses; // If no filter is selected, show all courses for the month
   }
 
-  // Add the filtered courses to the grid
+  // Step 3: Add the filtered courses to the grid
   filteredCourses.forEach((course) => {
     AddCourseToCard(course);
   });
 }
+
 
 // Logout function (sign out)
 document.getElementById('logout_button').addEventListener('click', () => {
