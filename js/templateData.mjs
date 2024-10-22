@@ -41,14 +41,29 @@ function getCourses() {
           const courseStartDate = new Date(course.startDate);
           const courseEndDate = new Date(course.endDate);
 
-          if (courseEndDate < currentDate) {
+            // Extract current month and year
+            const currentMonth = currentDate.getMonth(); 
+            const currentYear = currentDate.getFullYear();
+  
+            // Extract course start month and year
+            const courseStartMonth = courseStartDate.getMonth();
+      
+
+
+          if (courseEndDate < currentDate) 
+          {
             // Ignore courses that have already ended
             console.log(`Course '${course.courseName}' has ended, skipping.`);
-          } else if (courseStartDate > currentDate) {
+          } 
+
+          else if ((courseStartDate >= currentDate) && (courseStartMonth >= currentMonth))
+           {
             // Upcoming courses (Start date is in the future)
             console.log(`Rendering upcoming course: ${course.courseName}`);
             renderCourses(course, "upcoming");
-          } else {
+          }
+          else 
+          {
             // Ongoing courses (Start date is in the past, but the end date is today or later)
             console.log(`Rendering ongoing course: ${course.courseName}`);
             renderCourses(course, "ongoing");
@@ -67,6 +82,45 @@ function getCourses() {
 function renderCourses(course,section) {
   console.log(`Rendering course card for: ${course.courseName}`);
 
+  // const courseDate = new Date(course.startDate);  
+  const startTime = new Date(`${course.startDate}T${course.startTime}`); 
+  const endTime = new Date(`${course.startDate}T${course.endTime}`); 
+
+  const durationMs = endTime - startTime; 
+  const durationHours = Math.floor(durationMs / (1000 * 60 * 60)); 
+  const durationMinutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
+ let durationString = null;
+if ((durationHours > 1) && ( durationMinutes > 0)) 
+{
+  durationString = `${durationHours} hrs ${durationMinutes} mins`;
+}
+else if ((durationHours > 1) && (durationMinutes === 0))
+{
+  durationString = `${durationHours} hrs`;
+}
+else if ((durationHours === 1) && ( durationMinutes > 0)) {
+  durationString = `${durationHours} hr ${durationMinutes} mins`;
+}
+else if ((durationHours === 1) && ( durationMinutes === 0)) {
+  durationString = `${durationHours} hr`;
+}
+else if ((durationHours === 0) && (durationMinutes > 0)){
+  durationString = `${durationMinutes} mins`;
+}
+else{
+  durationString = `NS`;
+}
+
+  
+  // const durationString = `${durationHours} hr(s) ${durationMinutes} min(s)`;
+
+  let courseEndDateValid=course.endDate;
+  if (courseEndDateValid === '')
+  {
+    courseEndDateValid = "TBD";
+  }
+
+
   // Create the main card div
   const card = document.createElement("div");
   card.classList.add("training-card");
@@ -79,10 +133,11 @@ function renderCourses(course,section) {
   // Training details
   const trainingDetails = document.createElement("div");
   trainingDetails.classList.add("training-details");
+  
   trainingDetails.innerHTML = `
     <h3>${course.courseName}</h3>
     <p><strong>Target Audience:</strong> ${course.targetAudience}</p>
-    <p><strong>Date & Time:</strong> ${course.startDate} (${course.startTime})</p>
+    <p><strong>Date & Time:</strong> ${course.startDate} to ${courseEndDateValid} || (${durationString})</p> 
     <p><strong>Trainer:</strong> ${course.trainerName}</p>
     <p><strong>Key topics:</strong> ${course.keyPoints}</p>
   `;
