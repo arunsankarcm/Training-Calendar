@@ -5,6 +5,7 @@ import {
   ref,
   get,
   child,
+  remove
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
 const cardsDiv = document.getElementById("card-grid");
@@ -93,6 +94,7 @@ document.getElementById("right-arrow").addEventListener("click", () => {
 function AddCourseToCard(course) {
   const value = course.val();
   const card = document.createElement("div");
+  const courseKey = course.key;
   card.classList.add("training-card");
 
   // Function to convert 12-hour format to 24-hour format
@@ -208,6 +210,8 @@ function AddCourseToCard(course) {
 
   const threeDots = card.querySelector('.three-dots');
   const popupMenu = card.querySelector('.popup-menu');
+  const deleteBtn = card.querySelector('.del-tag');
+
 
   threeDots.addEventListener('click', (e) => {
     // Toggle the visibility of the popup menu
@@ -218,6 +222,24 @@ function AddCourseToCard(course) {
   document.addEventListener('click', (e) => {
     if (!threeDots.contains(e.target) && !popupMenu.contains(e.target)) {
       popupMenu.style.display = 'none';
+    }
+  });
+
+  deleteBtn.addEventListener('click', () => {
+    // Confirm deletion
+    const confirmDelete = confirm("Are you sure you want to delete this course?");
+    if (confirmDelete) {
+      // Remove the course from Firebase
+      const courseRef = ref(db, `courses/${courseKey}`);
+      remove(courseRef)
+        .then(() => {
+          // Remove the course card from the UI
+          card.remove();
+          console.log("Course deleted successfully.");
+        })
+        .catch((error) => {
+          console.error("Error deleting course:", error);
+        });
     }
   });
 
@@ -253,22 +275,92 @@ document
     getCourses(); // Fetch and display courses
   });
 
+// Filter Functionality
+const iconButton = document.getElementById('iconButton');
+const popupMenuFilter = document.getElementById('popupMenuFilter');
 
+function togglePopup() {
+  popupMenuFilter.style.display = popupMenuFilter.style.display === 'block' ? 'none' : 'block';
+}
 
-  // Logout function (sign out)
-  document.getElementById('logout_button').addEventListener('click', () => {
-    signOut(auth).then(() => {
-      // Store the logout message in localStorage
-      localStorage.setItem('logoutMessage', 'Logged out successfully.');
-  
-      // Redirect to login page after logging out
-      window.location.href = 'loginpage.html';
-    }).catch((error) => {
-      console.error('Sign out error:', error);
-    });
+iconButton.addEventListener('click', (e) => {
+  e.stopPropagation();
+  togglePopup();
+});
+
+document.getElementById('filter-upcoming').addEventListener('click', () => {
+  filterCourses('upcoming');
+  popupMenuFilter.style.display = 'none';
+});
+
+document.getElementById('filter-ongoing').addEventListener('click', () => {
+  filterCourses('ongoing');
+  popupMenuFilter.style.display = 'none';
+});
+
+document.getElementById('filter-completed').addEventListener('click', () => {
+  filterCourses('completed');
+  popupMenuFilter.style.display = 'none';
+});
+
+function filterCourses(filterType) {
+  cardsDiv.innerHTML = ""; // Clear the card grid
+  cardNo = 1; // Reset card number
+
+  let filteredCourses = [];
+  const currentDate = new Date(); // Current date for comparison
+
+  switch (filterType) {
+    case 'upcoming':
+      filteredCourses = allCourses.filter(course => {
+        const value = course.val();
+        const startDate = new Date(value.startDate);
+        return startDate > currentDate; // Upcoming courses start in the future
+      });
+      break;
+
+    case 'ongoing':
+      filteredCourses = allCourses.filter(course => {
+        const value = course.val();
+        const startDate = new Date(value.startDate);
+        const endDate = value.endDate ? new Date(value.endDate) : null;
+        // Ongoing courses start in the past and either have no end date or end in the future
+        return startDate <= currentDate && (!endDate || endDate >= currentDate);
+      });
+      break;
+
+    case 'completed':
+      filteredCourses = allCourses.filter(course => {
+        const value = course.val();
+        const startDate = new Date(value.startDate);
+        const endDate = value.endDate ? new Date(value.endDate) : null;
+        // Completed courses have both start and end dates in the past
+        return startDate < currentDate && endDate && endDate < currentDate;
+      });
+      break;
+
+    default:
+      filteredCourses = allCourses; // If no filter is selected, show all courses
+  }
+
+  // Add the filtered courses to the grid
+  filteredCourses.forEach((course) => {
+    AddCourseToCard(course);
   });
-  
+}
 
+// Logout function (sign out)
+document.getElementById('logout_button').addEventListener('click', () => {
+  signOut(auth).then(() => {
+    // Store the logout message in localStorage
+    localStorage.setItem('logoutMessage', 'Logged out successfully.');
+  
+    // Redirect to login page after logging out
+    window.location.href = 'loginpage.html';
+  }).catch((error) => {
+    console.error('Sign out error:', error);
+  });
+});
 
 // Check if user is authenticated
 onAuthStateChanged(auth, (user) => {
@@ -278,5 +370,3 @@ onAuthStateChanged(auth, (user) => {
     window.location.href = 'loginpage.html';
   }
 });
-
-//new
