@@ -266,9 +266,9 @@ function searchCourses() {
     return courseName.includes(searchTerm);
   });
 
-  cardNo = 1;
   filteredCourses.forEach((course) => {
-    AddCourseToCard(course);
+    const originalIndex = allCourses.indexOf(course); // Get the original index of the course
+    AddCourseToCard(course, originalIndex + 1); // Pass the original card number as (index + 1)
   });
 }
 
