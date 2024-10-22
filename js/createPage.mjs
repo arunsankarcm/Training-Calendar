@@ -47,23 +47,23 @@ function validateEndTime() {
     document.getElementById("end-time").value = "";
   }
 }
-// function changeBackgroundColor(event) {
-//   event.target.style.backgroundColor = "#357ae8";
-// }
+function changeBackgroundColor(event) {
+  event.target.style.backgroundColor = "#357ae8";
+}
 
-// function resetBackgroundColor(event) {
-//   event.target.style.backgroundColor = "";
-// }
+function resetBackgroundColor(event) {
+  event.target.style.backgroundColor = "";
+}
 
-// const inputFields = document.querySelectorAll(
-//   'input[type="text"], input[type="date"], input[type="time"], textarea'
-// );
+const inputFields = document.querySelectorAll(
+  'input[type="text"], input[type="date"], input[type="time"], textarea'
+);
 
-// inputFields.forEach((input) => {
-//   input.addEventListener("focus", changeBackgroundColor);
-//   input.addEventListener("input", changeBackgroundColor);
-//   input.addEventListener("blur", resetBackgroundColor);
-// });
+inputFields.forEach((input) => {
+  input.addEventListener("focus", changeBackgroundColor);
+  input.addEventListener("input", changeBackgroundColor);
+  input.addEventListener("blur", resetBackgroundColor);
+});
 
 // Submission event
 document.getElementById("create-page").addEventListener("submit", submitCourse);
@@ -187,23 +187,7 @@ const showPopup = (message, type) => {
   document.body.appendChild(popup);
 };
 
-function changeBackgroundColor(event) {
-  event.target.style.backgroundColor = "#357ae8";
-}
 
-function resetBackgroundColor(event) {
-  event.target.style.backgroundColor = "";
-}
-
-const inputFields = document.querySelectorAll(
-  'input[type="text"], input[type="date"], input[type="time"], textarea'
-);
-
-inputFields.forEach((input) => {
-  input.addEventListener("focus", changeBackgroundColor);
-  input.addEventListener("input", changeBackgroundColor);
-  input.addEventListener("blur", resetBackgroundColor);
-});
 
 
 
