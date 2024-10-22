@@ -42,6 +42,6 @@ document.getElementById("reset_form").addEventListener("submit", (e) => {
       resetMessage.textContent = "Invalid Email Address";
       const errorCode = error.code;
       const errorMessage = error.message;
-      // ..
+      
     });
 });

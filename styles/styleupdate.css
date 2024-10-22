@@ -89,6 +89,9 @@ textarea {
 .right-section {
   width: 48%;
 }
+#logout_button{
+  cursor: pointer;
+}
 
 .button {
   display: flex;

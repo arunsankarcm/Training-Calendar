@@ -1,10 +1,13 @@
-import { db } from "../firebaseConfig.mjs";
+import { db, auth } from "../firebaseConfig.mjs";
+import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
 import {
   ref,
   set,
   push,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
+// Validation code
 document.addEventListener("DOMContentLoaded", () => {
   const endDateInput = document.getElementById("end-date");
   const endTimeInput = document.getElementById("end-time");
@@ -44,9 +47,28 @@ function validateEndTime() {
     document.getElementById("end-time").value = "";
   }
 }
+function changeBackgroundColor(event) {
+  event.target.style.backgroundColor = "#357ae8";
+}
 
-document.getElementById("create-page").addEventListener("submit", sumbitCourse);
-function sumbitCourse(e) {
+function resetBackgroundColor(event) {
+  event.target.style.backgroundColor = "";
+}
+
+const inputFields = document.querySelectorAll(
+  'input[type="text"], input[type="date"], input[type="time"], textarea'
+);
+
+inputFields.forEach((input) => {
+  input.addEventListener("focus", changeBackgroundColor);
+  input.addEventListener("input", changeBackgroundColor);
+  input.addEventListener("blur", resetBackgroundColor);
+});
+
+// Submission event
+document.getElementById("create-page").addEventListener("submit", submitCourse);
+
+function submitCourse(e) {
   e.preventDefault();
 
   const courseName = getElementVal("course-name");
@@ -67,6 +89,7 @@ function sumbitCourse(e) {
       break;
     }
   }
+
   saveInDB(
     courseName,
     startDate,
@@ -81,6 +104,7 @@ function sumbitCourse(e) {
   );
 }
 
+// Save to Firebase
 const saveInDB = (
   courseName,
   startDate,
@@ -95,6 +119,7 @@ const saveInDB = (
 ) => {
   const coursesRef = ref(db, "courses");
   const newCourseRef = push(coursesRef);
+
   set(newCourseRef, {
     courseName: courseName,
     startDate: startDate,
@@ -111,52 +136,79 @@ const saveInDB = (
       showPopup("Course added successfully!", "success");
       setTimeout(() => {
         window.location.href = "viewAllCourse.html";
-      }, 2000);
+      }, 3000);
     })
     .catch((error) => {
       showPopup("Failed to add the course. Please try again.", "error");
       console.error("Error adding course: ", error);
     });
 };
+
+// Get input value by ID
 const getElementVal = (id) => {
   return document.getElementById(id).value;
 };
 
+// Popup function
 const showPopup = (message, type) => {
   const popup = document.createElement("div");
   popup.style.position = "fixed";
   popup.style.top = "50%";
   popup.style.left = "50%";
   popup.style.transform = "translate(-50%, -50%)";
+  popup.style.width = "350px";
+  popup.style.height = "200px";
   popup.style.padding = "20px";
-  popup.style.backgroundColor = type === "success" ? "#4CAF50" : "#f44336";
-  popup.style.color = "white";
-  popup.style.fontSize = "18px";
-  popup.style.borderRadius = "10px";
-  popup.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
-  popup.innerHTML = message;
+  popup.style.backgroundColor = "white";
+  popup.style.color = "#333";
+  popup.style.fontSize = "20px";
+  popup.style.fontFamily = "'Montserrat', sans-serif";
+  popup.style.borderRadius = "15px";
+  popup.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.15)";
+  popup.style.textAlign = "center";
+  popup.style.zIndex = "1000"; 
 
+  // Adding the appropriate image based on the type
+  const messageImg = document.createElement("img");
+  messageImg.src =
+    type === "success"
+      ? "https://cdn-icons-png.flaticon.com/128/190/190411.png"
+      : "https://cdn-icons-png.flaticon.com/128/1828/1828950.png";
+  messageImg.style.width = "50px";
+  messageImg.style.height = "50px";
+  messageImg.style.marginBottom = "20px";
+
+  const messageText = document.createElement("p");
+  messageText.textContent = message;
+  messageText.style.margin = "0";
+
+  popup.appendChild(messageImg);
+  popup.appendChild(messageText);
   document.body.appendChild(popup);
-
-  setTimeout(() => {
-    document.body.removeChild(popup);
-  }, 2000);
 };
 
-function changeBackgroundColor(event) {
-  event.target.style.backgroundColor = "#357ae8";
-}
 
-function resetBackgroundColor(event) {
-  event.target.style.backgroundColor = "";
-}
 
-const inputFields = document.querySelectorAll(
-  'input[type="text"], input[type="date"], input[type="time"], textarea'
-);
 
-inputFields.forEach((input) => {
-  input.addEventListener("focus", changeBackgroundColor);
-  input.addEventListener("input", changeBackgroundColor);
-  input.addEventListener("blur", resetBackgroundColor);
+
+// Logout function (sign out)
+document.getElementById('logout_button').addEventListener('click', () => {
+  signOut(auth).then(() => {
+    // Store the logout message in localStorage
+    localStorage.setItem('logoutMessage', 'Logged out successfully.');
+  
+    // Redirect to login page after logging out
+    window.location.href = 'loginpage.html';
+  }).catch((error) => {
+    console.error('Sign out error:', error);
+  });
+});
+
+// Check if user is authenticated
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log('User is signed in:', user.email);
+  } else {
+    window.location.href = 'loginpage.html';
+  }
 });
