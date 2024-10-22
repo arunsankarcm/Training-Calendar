@@ -197,7 +197,7 @@ function AddCourseToCard(course) {
     </div>
     <div class="popup-menu">
       <ul>
-        <li> Edit</li>
+        <li class = "edit-tag"> Edit</li>
         <hr>
         <div class="del-tag">
            <li>Delete</li>
@@ -211,6 +211,7 @@ function AddCourseToCard(course) {
   const threeDots = card.querySelector('.three-dots');
   const popupMenu = card.querySelector('.popup-menu');
   const deleteBtn = card.querySelector('.del-tag');
+  const editBtn = card.querySelector('.edit-tag')
 
 
   threeDots.addEventListener('click', (e) => {
@@ -241,6 +242,11 @@ function AddCourseToCard(course) {
           console.error("Error deleting course:", error);
         });
     }
+  });
+
+  editBtn.addEventListener('click', () => {
+    // Redirect to the edit page, passing the course key as a query parameter
+    window.location.href = `indexupdate.html?courseKey=${courseKey}`;
   });
 
 

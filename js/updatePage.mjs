@@ -3,7 +3,48 @@ import {
   ref,
   set,
   push,
+  get
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+
+const urlParams = new URLSearchParams(window.location.search);
+const courseKey = urlParams.get('courseKey');
+
+if (courseKey) {
+  const courseRef = ref(db, `courses/${courseKey}`);
+  get(courseRef)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const courseData = snapshot.val();
+        console.log(courseData);
+        // Populate your form or fields with the course data
+        document.getElementById('course-name').value = courseData.courseName;
+        document.getElementById('start-date').value = courseData.startDate;
+        document.getElementById('end-date').value = courseData.endDate || '';
+        document.getElementById("start-time").value = courseData.startTime;
+        document.getElementById("end-time").value = courseData.endTime;
+        document.getElementById("key-points").value = courseData.keyPoints;
+        document.getElementById("trainer").value = courseData.trainerName;
+        document.getElementById("audience").value = courseData.targetAudience;
+        document.getElementById("max-participants").value = courseData.maxParticipation;
+
+        const modeRadioButtons = document.getElementsByName("mode");
+        for (const radio of modeRadioButtons) {
+          if (radio.value === courseData.mode) {
+            radio.checked = true; // Set the correct mode as checked
+          }
+        }
+      } else {
+        console.log("No course data available");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching course data:", error);
+    });
+} else {
+  console.error("No courseKey found in URL");
+}
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const endDateInput = document.getElementById("end-date");
@@ -74,15 +115,15 @@ inputFields.forEach((input) => {
 // function sumbitCourse(e) {
 //   e.preventDefault();
 
-//   const courseName = getElementVal("course-name");
-//   const startDate = getElementVal("start-date");
-//   const endDate = getElementVal("end-date");
-//   const startTime = getElementVal("start-time");
-//   const endTime = getElementVal("end-time");
-//   const keyPoints = getElementVal("key-points");
-//   const trainerName = getElementVal("trainer");
-//   const targetAudience = getElementVal("audience");
-//   const maxParticipation = getElementVal("max-participants");
+  // const courseName = getElementVal("course-name");
+  // const startDate = getElementVal("start-date");
+  // const endDate = getElementVal("end-date");
+  // const startTime = getElementVal("start-time");
+  // const endTime = getElementVal("end-time");
+  // const keyPoints = getElementVal("key-points");
+  // const trainerName = getElementVal("trainer");
+  // const targetAudience = getElementVal("audience");
+  // const maxParticipation = getElementVal("max-participants");
 
 //   const mode = document.getElementsByName("mode");
 //   let selectedValue = "";
@@ -120,18 +161,18 @@ inputFields.forEach((input) => {
 // ) => {
 //   const coursesRef = ref(db, "courses");
 //   const newCourseRef = push(coursesRef);
-//   set(newCourseRef, {
-//     courseName: courseName,
-//     startDate: startDate,
-//     endDate: endDate,
-//     startTime: startTime,
-//     endTime: endTime,
-//     keyPoints: keyPoints,
-//     trainerName: trainerName,
-//     targetAudience: targetAudience,
-//     maxParticipation: maxParticipation,
-//     mode: mode,
-//   })
+  // set(newCourseRef, {
+  //   courseName: courseName,
+  //   startDate: startDate,
+  //   endDate: endDate,
+  //   startTime: startTime,
+  //   endTime: endTime,
+  //   keyPoints: keyPoints,
+  //   trainerName: trainerName,
+  //   targetAudience: targetAudience,
+  //   maxParticipation: maxParticipation,
+  //   mode: mode,
+  // })
 //     .then(() => {
 //       // Success! Show popup and redirect to home page
 //       showPopup("Course added successfully!", "success");
