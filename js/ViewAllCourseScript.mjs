@@ -384,7 +384,7 @@ document.getElementById('logout_button').addEventListener('click', () => {
 // Check if user is authenticated
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log('User is signed in:', user.uid);
+    console.log('User is signed in:', user.email);
   } else {
     window.location.href = 'loginpage.html';
   }

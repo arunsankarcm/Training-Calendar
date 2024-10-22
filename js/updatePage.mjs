@@ -1,4 +1,5 @@
-import { db } from "../firebaseConfig.mjs";
+import { db, auth } from "../firebaseConfig.mjs";
+import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {
   ref,
   set,
@@ -202,7 +203,7 @@ document.getElementById('logout_button').addEventListener('click', () => {
 // Check if user is authenticated
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log('User is signed in:', user.uid);
+    console.log('User is signed in:', user.email);
   } else {
     window.location.href = 'loginpage.html';
   }

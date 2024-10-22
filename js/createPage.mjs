@@ -1,4 +1,6 @@
-import { db } from "../firebaseConfig.mjs";
+import { db, auth } from "../firebaseConfig.mjs";
+import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
 import {
   ref,
   set,
@@ -44,6 +46,23 @@ function validateEndTime() {
     document.getElementById("end-time").value = "";
   }
 }
+function changeBackgroundColor(event) {
+  event.target.style.backgroundColor = "#357ae8";
+}
+
+function resetBackgroundColor(event) {
+  event.target.style.backgroundColor = "";
+}
+
+const inputFields = document.querySelectorAll(
+  'input[type="text"], input[type="date"], input[type="time"], textarea'
+);
+
+inputFields.forEach((input) => {
+  input.addEventListener("focus", changeBackgroundColor);
+  input.addEventListener("input", changeBackgroundColor);
+  input.addEventListener("blur", resetBackgroundColor);
+});
 
 document.getElementById("create-page").addEventListener("submit", sumbitCourse);
 function sumbitCourse(e) {
@@ -143,20 +162,28 @@ const showPopup = (message, type) => {
   }, 2000);
 };
 
-function changeBackgroundColor(event) {
-  event.target.style.backgroundColor = "#357ae8";
-}
 
-function resetBackgroundColor(event) {
-  event.target.style.backgroundColor = "";
-}
 
-const inputFields = document.querySelectorAll(
-  'input[type="text"], input[type="date"], input[type="time"], textarea'
-);
 
-inputFields.forEach((input) => {
-  input.addEventListener("focus", changeBackgroundColor);
-  input.addEventListener("input", changeBackgroundColor);
-  input.addEventListener("blur", resetBackgroundColor);
+// Logout function (sign out)
+document.getElementById('logout_button').addEventListener('click', () => {
+  signOut(auth).then(() => {
+    // Store the logout message in localStorage
+    localStorage.setItem('logoutMessage', 'Logged out successfully.');
+  
+    // Redirect to login page after logging out
+    window.location.href = 'loginpage.html';
+  }).catch((error) => {
+    console.error('Sign out error:', error);
+  });
 });
+
+// Check if user is authenticated
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log('User is signed in:', user.email);
+  } else {
+    window.location.href = 'loginpage.html';
+  }
+});
+
