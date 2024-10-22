@@ -109,40 +109,58 @@ const saveInDB = (
   })
     .then(() => {
       // Success! Show popup and redirect to home page
-      showPopup("Course added successfully!", "success");
+      showPopup("Course updated successfully!", "success");
       setTimeout(() => {
-        window.location.href = "viewAllCourse.html"; // Redirect to home page
-      }, 2000); // 2-second delay before redirecting
+        window.location.href = "viewAllCourse.html";
+      }, 3000);
     })
     .catch((error) => {
       // Error occurred, show an error popup
-      showPopup("Failed to add the course. Please try again.", "error");
-      console.error("Error adding course: ", error);
+      showPopup("Failed to updated the course. Please try again.", "error");
+      console.error("Error updating course: ", error);
     });
 };
 const getElementVal = (id) => {
   return document.getElementById(id).value;
 };
 
+//popup
+// Popup function
 const showPopup = (message, type) => {
   const popup = document.createElement("div");
   popup.style.position = "fixed";
   popup.style.top = "50%";
   popup.style.left = "50%";
   popup.style.transform = "translate(-50%, -50%)";
+  popup.style.width = "350px";
+  popup.style.height = "200px";
   popup.style.padding = "20px";
-  popup.style.backgroundColor = type === "success" ? "#4CAF50" : "#f44336";
-  popup.style.color = "white";
-  popup.style.fontSize = "18px";
-  popup.style.borderRadius = "10px";
-  popup.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
-  popup.innerHTML = message;
+  popup.style.backgroundColor = "white";
+  popup.style.color = "#333";
+  popup.style.fontSize = "20px";
+  popup.style.fontFamily = "'Montserrat', sans-serif";
+  popup.style.borderRadius = "15px";
+  popup.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.15)";
+  popup.style.textAlign = "center";
+  popup.style.zIndex = "1000";
 
+  // Adding the appropriate image based on the type
+  const messageImg = document.createElement("img");
+  messageImg.src =
+    type === "success"
+      ? "https://cdn-icons-png.flaticon.com/128/190/190411.png"
+      : "https://cdn-icons-png.flaticon.com/128/1828/1828950.png";
+  messageImg.style.width = "50px";
+  messageImg.style.height = "50px";
+  messageImg.style.marginBottom = "20px";
+
+  const messageText = document.createElement("p");
+  messageText.textContent = message;
+  messageText.style.margin = "0";
+
+  popup.appendChild(messageImg);
+  popup.appendChild(messageText);
   document.body.appendChild(popup);
-
-  setTimeout(() => {
-    document.body.removeChild(popup);
-  }, 2000);
 };
 
 function changeBackgroundColor(event) {
