@@ -45,3 +45,8 @@ document.getElementById("reset_form").addEventListener("submit", (e) => {
       
     });
 });
+
+document.getElementById("resetEmail").addEventListener("focus", () => {
+  const resetMessage = document.getElementById("reset-message");
+  resetMessage.textContent = ""; // Clear the error message
+});

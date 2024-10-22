@@ -40,6 +40,15 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
     });
 });
 
+document.getElementById("email").addEventListener("focus", () => {
+  const errorMessage = document.getElementById("error-message");
+  errorMessage.textContent = ""; // Clear the error message
+});
+document.getElementById("password").addEventListener("focus", () => {
+  const errorMessage = document.getElementById("error-message");
+  errorMessage.textContent = ""; // Clear the error message
+});
+
 // Check if user is authenticated
 onAuthStateChanged(auth, (user) => {
   if (user) {
