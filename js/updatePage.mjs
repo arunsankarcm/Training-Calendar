@@ -2,49 +2,8 @@ import { db } from "../firebaseConfig.mjs";
 import {
   ref,
   set,
-  push,
   get
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
-
-const urlParams = new URLSearchParams(window.location.search);
-const courseKey = urlParams.get('courseKey');
-
-if (courseKey) {
-  const courseRef = ref(db, `courses/${courseKey}`);
-  get(courseRef)
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const courseData = snapshot.val();
-        console.log(courseData);
-        // Populate your form or fields with the course data
-        document.getElementById('course-name').value = courseData.courseName;
-        document.getElementById('start-date').value = courseData.startDate;
-        document.getElementById('end-date').value = courseData.endDate || '';
-        document.getElementById("start-time").value = courseData.startTime;
-        document.getElementById("end-time").value = courseData.endTime;
-        document.getElementById("key-points").value = courseData.keyPoints;
-        document.getElementById("trainer").value = courseData.trainerName;
-        document.getElementById("audience").value = courseData.targetAudience;
-        document.getElementById("max-participants").value = courseData.maxParticipation;
-
-        const modeRadioButtons = document.getElementsByName("mode");
-        for (const radio of modeRadioButtons) {
-          if (radio.value === courseData.mode) {
-            radio.checked = true; // Set the correct mode as checked
-          }
-        }
-      } else {
-        console.log("No course data available");
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching course data:", error);
-    });
-} else {
-  console.error("No courseKey found in URL");
-}
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
   const endDateInput = document.getElementById("end-date");
@@ -87,7 +46,6 @@ function validateEndTime() {
 }
 
 
-
 function changeBackgroundColor(event) {
   event.target.style.backgroundColor = "#357ae8";
 }
@@ -106,208 +64,126 @@ inputFields.forEach((input) => {
   input.addEventListener("blur", resetBackgroundColor);
 });
 
+const urlParams = new URLSearchParams(window.location.search);
+const courseKey = urlParams.get('courseKey');
+
+if (courseKey) {
+  const courseRef = ref(db, `courses/${courseKey}`);
+  get(courseRef)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const courseData = snapshot.val();
+        console.log(courseData);
+        // Populate your form or fields with the course data
+        document.getElementById('course-name').value = courseData.courseName;
+        document.getElementById('start-date').value = courseData.startDate;
+        document.getElementById('end-date').value = courseData.endDate || '';
+        document.getElementById("start-time").value = courseData.startTime;
+        document.getElementById("end-time").value = courseData.endTime;
+        document.getElementById("key-points").value = courseData.keyPoints;
+        document.getElementById("trainer").value = courseData.trainerName;
+        document.getElementById("audience").value = courseData.targetAudience;
+        document.getElementById("max-participants").value = courseData.maxParticipation;
+
+        const modeRadioButtons = document.getElementsByName("mode");
+        for (const radio of modeRadioButtons) {
+          if (radio.value === courseData.mode) {
+            radio.checked = true; // Set the correct mode as checked
+          }
+        }
+      } else {
+        console.log("No course data available");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching course data:", error);
+    });
+} else {
+  console.error("No courseKey found in URL");
+}
 
 
 
+// Function to handle form submission for updating the course
+document.getElementById("update-page").addEventListener("submit", updateCourse);
+
+function updateCourse(e) {
+  e.preventDefault();
+
+  // Retrieve updated form data
+  const courseName = getElementVal("course-name");
+  const startDate = getElementVal("start-date");
+  const endDate = getElementVal("end-date");
+  const startTime = getElementVal("start-time");
+  const endTime = getElementVal("end-time");
+  const keyPoints = getElementVal("key-points");
+  const trainerName = getElementVal("trainer");
+  const targetAudience = getElementVal("audience");
+  const maxParticipation = getElementVal("max-participants");
+
+  // Get the selected radio button value
+  const mode = document.getElementsByName("mode");
+  let selectedValue = "";
+  for (const radio of mode) {
+    if (radio.checked) {
+      selectedValue = radio.value;
+      break;
+    }
+  }
+
+  // Update the data in Firebase using the existing courseKey
+  const courseRef = ref(db, `courses/${courseKey}`);
+  set(courseRef, {
+    courseName: courseName,
+    startDate: startDate,
+    endDate: endDate,
+    startTime: startTime,
+    endTime: endTime,
+    keyPoints: keyPoints,
+    trainerName: trainerName,
+    targetAudience: targetAudience,
+    maxParticipation: maxParticipation,
+    mode: selectedValue
+  })
+    .then(() => {
+      // Success! Show success popup and redirect
+      showPopup("Course updated successfully!", "success");
+      setTimeout(() => {
+        window.location.href = "viewAllCourse.html"; // Redirect to the courses page after 2 seconds
+      }, 2000);
+    })
+    .catch((error) => {
+      // Error occurred, show error popup
+      showPopup("Failed to update the course. Please try again.", "error");
+      console.error("Error updating course: ", error);
+    });
+}
+
+// Utility function to get the value of form elements by id
+const getElementVal = (id) => {
+  return document.getElementById(id).value;
+};
+
+// Function to show a popup message
+const showPopup = (message, type) => {
+  const popup = document.createElement("div");
+  popup.style.position = "fixed";
+  popup.style.top = "50%";
+  popup.style.left = "50%";
+  popup.style.transform = "translate(-50%, -50%)";
+  popup.style.padding = "20px";
+  popup.style.backgroundColor = type === "success" ? "#4CAF50" : "#f44336";
+  popup.style.color = "white";
+  popup.style.fontSize = "18px";
+  popup.style.borderRadius = "10px";
+  popup.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
+  popup.innerHTML = message;
+
+  document.body.appendChild(popup);
+
+  setTimeout(() => {
+    document.body.removeChild(popup);
+  }, 2000); // Remove popup after 2 seconds
+};
 
 
-// document.getElementById("create-page").addEventListener("submit", sumbitCourse);
-// function sumbitCourse(e) {
-//   e.preventDefault();
-
-  // const courseName = getElementVal("course-name");
-  // const startDate = getElementVal("start-date");
-  // const endDate = getElementVal("end-date");
-  // const startTime = getElementVal("start-time");
-  // const endTime = getElementVal("end-time");
-  // const keyPoints = getElementVal("key-points");
-  // const trainerName = getElementVal("trainer");
-  // const targetAudience = getElementVal("audience");
-  // const maxParticipation = getElementVal("max-participants");
-
-//   const mode = document.getElementsByName("mode");
-//   let selectedValue = "";
-//   for (const radio of mode) {
-//     if (radio.checked) {
-//       selectedValue = radio.value;
-//       break;
-//     }
-//   }
-//   saveInDB(
-//     courseName,
-//     startDate,
-//     endDate,
-//     startTime,
-//     endTime,
-//     keyPoints,
-//     trainerName,
-//     targetAudience,
-//     maxParticipation,
-//     selectedValue
-//   );
-// }
-
-// const saveInDB = (
-//   courseName,
-//   startDate,
-//   endDate,
-//   startTime,
-//   endTime,
-//   keyPoints,
-//   trainerName,
-//   targetAudience,
-//   maxParticipation,
-//   mode
-// ) => {
-//   const coursesRef = ref(db, "courses");
-//   const newCourseRef = push(coursesRef);
-  // set(newCourseRef, {
-  //   courseName: courseName,
-  //   startDate: startDate,
-  //   endDate: endDate,
-  //   startTime: startTime,
-  //   endTime: endTime,
-  //   keyPoints: keyPoints,
-  //   trainerName: trainerName,
-  //   targetAudience: targetAudience,
-  //   maxParticipation: maxParticipation,
-  //   mode: mode,
-  // })
-//     .then(() => {
-//       // Success! Show popup and redirect to home page
-//       showPopup("Course added successfully!", "success");
-//       setTimeout(() => {
-//         window.location.href = "viewAllCourse.html"; // Redirect to home page
-//       }, 2000); // 2-second delay before redirecting
-//     })
-//     .catch((error) => {
-//       // Error occurred, show an error popup
-//       showPopup("Failed to add the course. Please try again.", "error");
-//       console.error("Error adding course: ", error);
-//     });
-// };
-// const getElementVal = (id) => {
-//   return document.getElementById(id).value;
-// };
-
-// const showPopup = (message, type) => {
-//   const popup = document.createElement("div");
-//   popup.style.position = "fixed";
-//   popup.style.top = "50%";
-//   popup.style.left = "50%";
-//   popup.style.transform = "translate(-50%, -50%)";
-//   popup.style.padding = "20px";
-//   popup.style.backgroundColor = type === "success" ? "#4CAF50" : "#f44336";
-//   popup.style.color = "white";
-//   popup.style.fontSize = "18px";
-//   popup.style.borderRadius = "10px";
-//   popup.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
-//   popup.innerHTML = message;
-
-//   document.body.appendChild(popup);
-
-//   setTimeout(() => {
-//     document.body.removeChild(popup);
-//   }, 2000);
-// };
-
-
-// document.getElementById("create-page").addEventListener("submit", sumbitCourse);
-// function sumbitCourse(e) {
-//   e.preventDefault();
-
-//   const courseName = getElementVal("course-name");
-//   const startDate = getElementVal("start-date");
-//   const endDate = getElementVal("end-date");
-//   const startTime = getElementVal("start-time");
-//   const endTime = getElementVal("end-time");
-//   const keyPoints = getElementVal("key-points");
-//   const trainerName = getElementVal("trainer");
-//   const targetAudience = getElementVal("audience");
-//   const maxParticipation = getElementVal("max-participants");
-
-//   const mode = document.getElementsByName("mode");
-//   let selectedValue = "";
-//   for (const radio of mode) {
-//     if (radio.checked) {
-//       selectedValue = radio.value;
-//       break;
-//     }
-//   }
-//   saveInDB(
-//     courseName,
-//     startDate,
-//     endDate,
-//     startTime,
-//     endTime,
-//     keyPoints,
-//     trainerName,
-//     targetAudience,
-//     maxParticipation,
-//     selectedValue
-//   );
-// }
-
-// const saveInDB = (
-//   courseName,
-//   startDate,
-//   endDate,
-//   startTime,
-//   endTime,
-//   keyPoints,
-//   trainerName,
-//   targetAudience,
-//   maxParticipation,
-//   mode
-// ) => {
-//   const coursesRef = ref(db, "courses");
-//   const newCourseRef = push(coursesRef);
-//   set(newCourseRef, {
-//     courseName: courseName,
-//     startDate: startDate,
-//     endDate: endDate,
-//     startTime: startTime,
-//     endTime: endTime,
-//     keyPoints: keyPoints,
-//     trainerName: trainerName,
-//     targetAudience: targetAudience,
-//     maxParticipation: maxParticipation,
-//     mode: mode,
-//   })
-//     .then(() => {
-//       // Success! Show popup and redirect to home page
-//       showPopup("Course added successfully!", "success");
-//       setTimeout(() => {
-//         window.location.href = "viewAllCourse.html"; // Redirect to home page
-//       }, 2000); // 2-second delay before redirecting
-//     })
-//     .catch((error) => {
-//       // Error occurred, show an error popup
-//       showPopup("Failed to add the course. Please try again.", "error");
-//       console.error("Error adding course: ", error);
-//     });
-// };
-// const getElementVal = (id) => {
-//   return document.getElementById(id).value;
-// };
-
-// const showPopup = (message, type) => {
-//   const popup = document.createElement("div");
-//   popup.style.position = "fixed";
-//   popup.style.top = "50%";
-//   popup.style.left = "50%";
-//   popup.style.transform = "translate(-50%, -50%)";
-//   popup.style.padding = "20px";
-//   popup.style.backgroundColor = type === "success" ? "#4CAF50" : "#f44336";
-//   popup.style.color = "white";
-//   popup.style.fontSize = "18px";
-//   popup.style.borderRadius = "10px";
-//   popup.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
-//   popup.innerHTML = message;
-
-//   document.body.appendChild(popup);
-
-//   setTimeout(() => {
-//     document.body.removeChild(popup);
-//   }, 2000);
-// };
