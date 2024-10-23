@@ -24,6 +24,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+    display: fixed;
+
 }
 .head {
   background-color: #d9d9d9;
@@ -32,10 +34,80 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  display: fixed;
+}
+.right-section{
+  background-color: #d9d9d9;
+
+}
+.logoutHoverText{
+  color: #0b0b0b;
+}
+/* Logout button hover styles*/
+#onHoverLogout{
+  visibility: hidden;
+}
+#logout_button:hover #onHoverLogout{
+  visibility: visible;
+  
+}
+
+/* Export button hover styles */
+#onHoverExport{
+  visibility: hidden;
+}
+.expo:hover #onHoverExport{
+  visibility: visible;
+}
+.filterHoverText{
+color: white;
+padding-left: 4.5px;
+padding-top: 3px;
+font-size: 17px;
+}
+.addHoverText{
+  color: white;
+  padding-left: 7px;
+  padding-top: 3px;
+  font-size: 17px;
+
+}
+
+/* Filter button hover styles */
+#onHoverFilter{
+  visibility: hidden;
+}
+#iconButton:hover #onHoverFilter{
+  visibility: visible;
+}
+
+/* Add button hover styles */
+#onHoverAdd{
+  visibility: hidden;
+}
+.addicon:hover #onHoverAdd{
+  visibility: visible;
+}
+
+/* complete hover text styles */
+.hoverText{  
+  color: #ffffff;
+padding-left: 2px;
+}
+
+
+
+.right-section img{
+  background-color: #d9d9d9;
+}
+#logout_button{
+  background-color: #d9d9d9;
+  padding-top: 9px;
 }
 
 .header-content {
   display: flex;
+  display: inline block;
   justify-content: space-between;
   width: 100%;
   align-items: center;
@@ -50,11 +122,12 @@ body {
 }
 
 .search-bar {
-  display: flex;
+  display: inline-block;
   align-items: center;
   background-color: white;
   border-radius: 5px;
   padding: 5px 10px;
+  
 }
 
 .search-bar input {
@@ -63,6 +136,10 @@ body {
   padding: 5px;
   font-size: 16px;
   width: 500px;
+}
+.search-btn{
+  width: 30px;
+  height: auto;
 }
 
 .search-btn img {
