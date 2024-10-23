@@ -185,3 +185,16 @@ inputFields.forEach((input) => {
   input.addEventListener("input", changeBorderStyle); 
   input.addEventListener("blur", resetBorderStyle);
 });
+
+
+
+
+function goToLoginPage() {
+  window.location.href = "loginpage.html"; 
+}
+
+function goToViewAllCourses() {
+  window.location.href = "viewAllCourses.html"; 
+}
+
+

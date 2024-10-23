@@ -9,38 +9,43 @@
       href="https://fonts.googleapis.com/css?family=Montserrat"
       rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
-
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="container">
       <header class="header">
         <div class="left-section">
-          <img
-            src="../Images/experion.png"
-            alt="Experion Logo"
-            class="logo"
-          />
+          <img src="../Images/experion.png" alt="Experion Logo" class="logo" />
         </div>
         <div class="right-section">
-          <img
-            src="../Images/image (8).png"
-            alt="back button"
-            class="backbutton"
-          />
+          <button type="button" class="backbutton" onclick="goToLoginPage()">
+            <img
+              src="../Images/image (8).png"
+              alt="back button"
+              class="backimage"
+            />
+          </button>
         </div>
       </header>
 
       <div class="form-container">
         <form id="create-page">
-          <a href="viewAllCourse.html"><img
-            src="../Images/back-button (1).png"
-            alt="previous"
+          <button
+            type="button"
             class="previousbutton"
-          /></a>
-          <br />
-          <br />
-          <br />
+            onclick="goToViewAllCourses()"
+          >
+            <img
+              src="../Images/back-button (1).png"
+              alt="previous"
+              class="previousimage"
+            />
+          </button>
+          <br /><br /><br />
+
           <div class="form-group">
             <label for="course-name">Course Name:</label>
             <input
@@ -59,12 +64,7 @@
             </div>
             <div class="form-group">
               <label for="end-date">End Date:</label>
-              <input
-                type="date"
-                id="end-date"
-                name="end-date"
-               
-              />
+              <input type="date" id="end-date" name="end-date" />
             </div>
           </div>
 
@@ -158,12 +158,13 @@
             </div>
           </div>
 
-          <div class="button">
-            <button type="submit">SUBMIT</button>
+          <div class="downbar">
+            <button type="submit" class="button">SUBMIT</button>
           </div>
         </form>
       </div>
     </div>
+
     <script type="module" src="../firebaseConfig.mjs"></script>
     <script type="module" src="../js/createPage.mjs"></script>
   </body>
