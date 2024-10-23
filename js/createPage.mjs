@@ -47,23 +47,6 @@ function validateEndTime() {
     document.getElementById("end-time").value = "";
   }
 }
-function changeBorderStyle(event) {
-  event.target.style.border = "2px solid black "; 
-}
-
-function resetBorderStyle(event) {
-  event.target.style.border = ""; 
-}
-
-const inputFields = document.querySelectorAll(
-  'input[type="text"], input[type="date"], input[type="time"], textarea'
-);
-
-inputFields.forEach((input) => {
-  input.addEventListener("focus", changeBorderStyle);
-  input.addEventListener("input", changeBorderStyle); 
-  input.addEventListener("blur", resetBorderStyle);
-});
 
 
 document.getElementById('back-button').addEventListener('click', () => {

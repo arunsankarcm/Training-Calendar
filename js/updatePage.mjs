@@ -47,23 +47,7 @@ function validateEndTime() {
 }
 
 
-function changeBorderStyle(event) {
-  event.target.style.border = "2px solid black "; // Bold border with a specific color
-}
 
-function resetBorderStyle(event) {
-  event.target.style.border = ""; // Reset to default border style
-}
-
-const inputFields = document.querySelectorAll(
-  'input[type="text"], input[type="date"], input[type="time"], textarea'
-);
-
-inputFields.forEach((input) => {
-  input.addEventListener("focus", changeBorderStyle);
-  input.addEventListener("input", changeBorderStyle); // Optional: applies bold on input change as well
-  input.addEventListener("blur", resetBorderStyle);
-});
 
 document.getElementById('back-button').addEventListener('click', () => {
   window.location.href = 'viewAllCourse.html';

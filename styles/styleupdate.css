@@ -85,6 +85,27 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border: 3px solid #357ae8;
+  outline: none; 
+}
+
+input::placeholder,
+textarea::placeholder {
+  font-family: 'Montserrat', sans-serif;
+  color: #888;
+  opacity: 1;
+}
+
+input[type="date"]::placeholder {
+  font-family: 'Montserrat', sans-serif;
+  color: #888;
+  opacity: 1;
 }
 
 textarea {
@@ -205,15 +226,4 @@ button:hover {
   padding-left: 10px;
 }
 
-input::placeholder,
-textarea::placeholder {
-  font-family: "Montserrat", sans-serif;
-  color: #888;
-  opacity: 1;
-}
 
-input[type="date"]::placeholder {
-  font-family: "Montserrat", sans-serif;
-  color: #888;
-  opacity: 1;
-}
