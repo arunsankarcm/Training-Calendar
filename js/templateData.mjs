@@ -5,6 +5,7 @@ import {
   child,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
+const { jsPDF } = window.jspdf;
 const upcomingDiv = document.getElementById("upcoming-training-cards-section");
 const ongoingDiv = document.getElementById("ongoing-training-cards-section");
 let cardNo = 1;
@@ -211,65 +212,96 @@ else{
 getCourses();
 
 
-// function getCourses() {
-//   console.log("Fetching data from Firebase..."); // Log before fetching data
+document.getElementById('downloadPDFbtn').addEventListener('click', function (){
+  const doc = new jsPDF();
+  const upcomingCourses = document.getElementById("upcoming-training-cards-section");
+  const ongoingCourses = document.getElementById("ongoing-training-cards-section");
+  const dbref = ref(db);
 
-//   const dbref = ref(db);
+  get(child(dbref, "courses"))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log("Data fetched successfully!");
+        const courses = snapshot.val();
+        console.log("Courses data:", courses);
 
-//   get(child(dbref, "courses"))
-//     .then((snapshot) => {
+        // Render upcoming courses
+  if (upcomingCourses.length > 0) {
+    doc.setFontSize(12);
+    doc.text("Upcoming Courses:", 10, yOffset);
+    yOffset += 10;
 
-//       if (snapshot.exists()) {
-//         console.log("Data fetched successfully!"); // Log when data is fetched
-//         const courses = snapshot.val(); // Get the courses object
-//         console.log("Courses data:", courses); // Log the fetched courses data
+    upcomingCourses.forEach((courses) => {
+      doc.setFontSize(10);
+      const courseText = formatCourseText(courses);
+      // courseText.forEach((line) => {
+      //   doc.text(line, 10, yOffset);
+      //   yOffset += 6;
+      // });
+      yOffset += 6; // Add space between courses
+    });
+  }
 
-//         for (const courseId in courses) {
-//           if (courses.hasOwnProperty(courseId)) {
-//             console.log(`Rendering course: ${courses[courseId].courseName}`); // Log each course being rendered
-//             renderCourses(courses[courseId]);
-//           }
-//         }
+  // Render ongoing courses
+  if (ongoingCourses.length > 0) {
+    doc.setFontSize(12);
+    doc.text("Ongoing Courses:", 10, yOffset);
+    yOffset += 10;
 
-//         // chatGPTstarts
+    ongoingCourses.forEach((courses) => {
+      doc.setFontSize(10);
+      const courseText = formatCourseText(courses);
+      // courseText.forEach((line) => {
+      //   doc.text(line, 10, yOffset);
+      //   yOffset += 6;
+      // });
+      yOffset += 6; // Add space between courses
+    });
+  }
+        
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
 
-//         const coursesArray = Object.keys(courses).map((key) => courses[key]);
+  let yOffset = 10; // Initial y-offset for the text position
 
-//         // Sort courses by the start date
-//         const sortedCourses = coursesArray.sort((a, b) => {
-//           const dateA = new Date(a.startDate);
-//           const dateB = new Date(b.startDate);
-//           return dateA - dateB; // Ascending order
-//         });
+  // Add a title
+  doc.setFontSize(14);
+  doc.text("Training Calendar - October 2024", 10, yOffset);
+  yOffset += 10;
 
-//         // Get the current date
-//         const currentDate = new Date();
+  
 
-//         // Separate courses into ongoing and upcoming
-//         sortedCourses.forEach((course) => {
-//           const courseStartDate = new Date(course.startDate);
+  // Download the PDF
+  doc.save("Training_Calendar_October_2024.pdf");
+});
 
-//           if (courseStartDate >= currentDate) {
-            
-//             // Upcoming courses (Start date is today or later)
-//             console.log(`Rendering upcoming course: ${course.courseName}`);
-//             renderCourses(course, "upcoming");
-//           } else {
-//             // Ongoing courses (Start date is in the past)
-//             console.log(`Rendering ongoing course: ${course.courseName}`);
-//             renderCourses(course, "ongoing");
-//           }
-//         });
+// Helper function to format course details into text
+function formatCourseText(course) {
+  const courseText = [];
+  courseText.push(`Course Name: ${course.courseName}`);
+  courseText.push(`Target Audience: ${course.targetAudience}`);
+  courseText.push(`Date: ${course.startDate} to ${course.endDate}`);
+  courseText.push(`Duration: ${course.startTime, course.endTime}`);
+  courseText.push(`Trainer: ${course.trainerName}`);
+  courseText.push(`Mode: ${course.mode}`);
+  courseText.push(`Key Topics: ${course.keyPoints}`);
+  return courseText;
+}
 
-//         // chatGPTends
-
-
-//       } else {
-//         console.log("No data available"); // Log when no data is found
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("Error fetching data:", error); // Log any errors
-//     });
-
+// Helper function to calculate duration in hours and minutes
+// function calculateDuration(startTime, endTime) {
+//   const start = new Date(`1970-01-01T${startTime}`);
+//   const end = new Date(`1970-01-01T${endTime}`);
+//   const durationMs = end - start;
+//   const durationHours = Math.floor(durationMs / (1000 * 60 * 60));
+//   const durationMinutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
+//   return `${durationHours} hrs ${durationMinutes} mins`;
 // }
+
+// Attach the PDF generation function to a button
+document.getElementById("downloadPDFbtn").addEventListener("click", generatePDF);
