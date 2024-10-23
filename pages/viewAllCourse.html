@@ -23,10 +23,13 @@ rel='stylesheet'>
       <div class="right-section">
         <button id="logout_button" style="border: none;cursor: pointer;"><img
           src="../Images/sign_out.png"
-          alt="Back"
+          alt="Logout"
           class="icon"
-          style="width: 20px; height: 20px"
-        /></button>
+          style="width: 20px; height: 20px"/>  
+          <div class="logoutHoverText">       
+              <div id="onHoverLogout">Logout</div>
+          </div>
+      </button>
       </div>
     </header>
 
@@ -55,12 +58,18 @@ rel='stylesheet'>
 
           <div class="expo">
           <img src="../Images/export-file.png" alt="Export" />
+          <div class="hoverText">
+            <div id="onHoverExport">Export</div>
+          </div>
         </div>
 
           <div class="filter-section">
             <div class="container-f">
                 <button class="icon-btn" id="iconButton">
                     <img src="../Images/filter.png" alt="">
+                    <div class="filterHoverText">
+                      <div id="onHoverFilter">Filter</div>
+                     </div>
                   </svg>
                 </button>
                 <div class="popup-menu" id="popupMenuFilter">
@@ -75,6 +84,10 @@ rel='stylesheet'>
 
                <div class="addicon">
                  <a href="indexcreate.html" id="add_button"><img src="../Images/add.png" alt="Add" /></a> 
+                <div class="addHoverText">
+                  <div id="onHoverAdd">Add</div>
+                </div>
+
               </div>
 
         </div>
