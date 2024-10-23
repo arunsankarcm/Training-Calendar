@@ -323,6 +323,93 @@ function searchCourses() {
   });
 }
 
+const iconButton = document.getElementById('iconButton');
+const popupMenuFilter = document.getElementById('popupMenuFilter');
+
+function togglePopup() {
+  popupMenuFilter.style.display = popupMenuFilter.style.display === 'block' ? 'none' : 'block';
+}
+
+iconButton.addEventListener('click', (e) => {
+  e.stopPropagation();
+  togglePopup();
+});
+
+document.getElementById('filter-upcoming').addEventListener('click', () => {
+  filterCourses('upcoming');
+  popupMenuFilter.style.display = 'none';
+});
+
+document.getElementById('filter-ongoing').addEventListener('click', () => {
+  filterCourses('ongoing');
+  popupMenuFilter.style.display = 'none';
+});
+
+document.getElementById('filter-completed').addEventListener('click', () => {
+  filterCourses('completed');
+  popupMenuFilter.style.display = 'none';
+});
+
+function filterCourses(filterType) {
+  cardsDiv.innerHTML = "";
+  const currentDate = new Date();
+
+  // Step 1: Filter courses that belong to the currently selected month and year
+  const monthFilteredCourses = allCourses.filter((course) => {
+    const value = course.val();
+    const startDate = new Date(value.startDate);
+    const startMonth = startDate.getMonth();
+    const startYear = startDate.getFullYear();
+
+    return startMonth === currentMonth && startYear === currentYear;
+  });
+
+  let filteredCourses = [];
+
+  // Step 2: Further filter courses based on the filterType
+  switch (filterType) {
+    case "upcoming":
+      filteredCourses = monthFilteredCourses.filter((course) => {
+        const value = course.val();
+        const startDate = new Date(value.startDate);
+        return startDate > currentDate; // Course is upcoming if it starts after the current date
+      });
+      break;
+
+    case "ongoing":
+      filteredCourses = monthFilteredCourses.filter((course) => {
+        const value = course.val();
+        const startDate = new Date(value.startDate);
+        const endDate = value.endDate ? new Date(value.endDate) : null;
+        // Course is ongoing if it started before the current date and either has no end date or ends after the current date
+        return startDate <= currentDate && (!endDate || endDate >= currentDate);
+      });
+      break;
+
+    case "completed":
+      filteredCourses = monthFilteredCourses.filter((course) => {
+        const value = course.val();
+        const startDate = new Date(value.startDate);
+        const endDate = value.endDate ? new Date(value.endDate) : null;
+        // Course is completed if it ended before the current date
+        return endDate && endDate < currentDate;
+      });
+      break;
+
+    default:
+      filteredCourses = monthFilteredCourses; // If no specific filter is selected, use all courses for the month
+  }
+
+  // Step 3: Display the filtered courses with their monthly card numbers
+  filteredCourses.forEach((course) => {
+    const cardNumber = cardNumberMap.get(course.key);
+    if (cardNumber) {
+      AddCourseToCard(course, cardNumber); // Render each filtered course with its card number
+    }
+  });
+}
+
+
 // Add the event listener for real-time search
 document.getElementById("search-input").addEventListener("input", searchCourses);
 
