@@ -8,6 +8,18 @@ import {
 const upcomingDiv = document.getElementById("upcoming-training-cards-section");
 const ongoingDiv = document.getElementById("ongoing-training-cards-section");
 let cardNo = 1;
+let upcomingCardNo = 1;
+let ongoingCardNo = 1;
+
+    //month year static
+const todaysDate = new Date();
+const monthNamesArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const currentMonth = monthNamesArray[todaysDate.getMonth()];
+const currentYear = todaysDate.getFullYear();
+
+// Update the header with the current month and year
+const monthYearHeader = document.getElementById("month-year-header");
+monthYearHeader.innerHTML = `<h6>${currentMonth} ${currentYear}</h6>`;
 
 
 
@@ -35,6 +47,9 @@ function getCourses() {
 
         // Get the current date
         const currentDate = new Date();
+        const upcomingCourses = [];
+        const ongoingCourses = [];
+
 
         // Separate courses into ongoing and upcoming
         sortedCourses.forEach((course) => {
@@ -43,9 +58,6 @@ function getCourses() {
 
             // Extract current month and year
             const currentMonth = currentDate.getMonth(); 
-            const currentYear = currentDate.getFullYear();
-  
-            // Extract course start month and year
             const courseStartMonth = courseStartDate.getMonth();
       
 
@@ -56,19 +68,30 @@ function getCourses() {
             console.log(`Course '${course.courseName}' has ended, skipping.`);
           } 
 
-          else if ((courseStartDate >= currentDate) && (courseStartMonth >= currentMonth))
+          else if ((courseStartDate >= currentDate) && (courseStartMonth === currentMonth))
            {
             // Upcoming courses (Start date is in the future)
             console.log(`Rendering upcoming course: ${course.courseName}`);
-            renderCourses(course, "upcoming");
+            upcomingCourses.push(course);
           }
           else 
           {
             // Ongoing courses (Start date is in the past, but the end date is today or later)
             console.log(`Rendering ongoing course: ${course.courseName}`);
-            renderCourses(course, "ongoing");
+            ongoingCourses.push(course);
           }
+
         });
+
+
+        upcomingCourses.forEach((course, index) => {
+          renderCourses(course, "upcoming", upcomingCourses.length, index);
+        });
+
+        ongoingCourses.forEach((course, index) => {
+          renderCourses(course, "ongoing", ongoingCourses.length, index);
+        });
+
       } else {
         console.log("No data available");
       }
@@ -79,12 +102,13 @@ function getCourses() {
 }
 
 
-function renderCourses(course,section) {
+function renderCourses(course,section,totalCoursesInSection, currentIndex) {
   console.log(`Rendering course card for: ${course.courseName}`);
 
   // const courseDate = new Date(course.startDate);  
   const startTime = new Date(`${course.startDate}T${course.startTime}`); 
   const endTime = new Date(`${course.startDate}T${course.endTime}`); 
+
 
   const durationMs = endTime - startTime; 
   const durationHours = Math.floor(durationMs / (1000 * 60 * 60)); 
@@ -111,9 +135,6 @@ else{
   durationString = `NS`;
 }
 
-  
-  // const durationString = `${durationHours} hr(s) ${durationMinutes} min(s)`;
-
   let courseEndDateValid=course.endDate;
   if (courseEndDateValid === '')
   {
@@ -121,16 +142,26 @@ else{
   }
 
 
-  // Create the main card div
+
+  // main card div
   const card = document.createElement("div");
   card.classList.add("training-card");
+  
 
-  // Circle number
-  const circleNumber = document.createElement("div");
-  circleNumber.classList.add("circle-number");
-  circleNumber.innerHTML = `<span>${cardNo}</span>`;
+  
+   const circleNumber = document.createElement("div");
+   circleNumber.classList.add("circle-number");
+ 
+   if (section === "upcoming") {
+     circleNumber.innerHTML = `<span>${upcomingCardNo}</span>`; 
+     upcomingCardNo++;
+   } else {
+     circleNumber.innerHTML = `<span>${ongoingCardNo}</span>`; 
+     ongoingCardNo++; 
+   }
+ 
 
-  // Training details
+  // training details
   const trainingDetails = document.createElement("div");
   trainingDetails.classList.add("training-details");
   
@@ -142,33 +173,41 @@ else{
     <p><strong>Key topics:</strong> ${course.keyPoints}</p>
   `;
 
-  // Mode tag (Online/Offline)
+  //online/offline
   const modeTag = document.createElement("span");
   modeTag.classList.add("tag", course.mode);
   modeTag.textContent = course.mode.charAt(0).toUpperCase() + course.mode.slice(1); // Capitalize first letter of mode
 
-  // Append elements to the card
+
+
   card.appendChild(circleNumber);
   card.appendChild(trainingDetails);
   card.appendChild(modeTag);
-
-  // Append the card to the container
+  
   if (section === "upcoming") {
     upcomingDiv.appendChild(card);
+    // upcomingDiv.appendChild(separationLine)
   } else {    
     ongoingDiv.appendChild(card);
+    // ongoingDiv.appendChild(separationLine);
   }
 
-  // ongoingDiv.appendChild(card);
-  // upcomingDiv.appendChild(card);
+  // Only add a separation line if it's NOT the last course in the section
+  if (currentIndex < totalCoursesInSection - 1) {
+    const separationLine = document.createElement("div");
+    separationLine.classList.add("line");
 
+    if (section === "upcoming") {
+      upcomingDiv.appendChild(separationLine);
+    } else {
+      ongoingDiv.appendChild(separationLine);
+    }
+  }
 
   console.log(`Course card for '${course.courseName}' added to the DOM.`);
   cardNo++;
 }
 
-
-// Call the function to fetch and render courses
 getCourses();
 
 
