@@ -65,6 +65,11 @@ inputFields.forEach((input) => {
   input.addEventListener("blur", resetBackgroundColor);
 });
 
+
+document.getElementById('back-button').addEventListener('click', () => {
+  window.location.href = 'viewAllCourse.html';
+});
+
 // Submission event
 document.getElementById("create-page").addEventListener("submit", submitCourse);
 
@@ -214,33 +219,8 @@ onAuthStateChanged(auth, (user) => {
 
 });
 
-// function changeBorderStyle(event) {
-//   event.target.style.border = "2px solid black "; 
-// }
-
-// function resetBorderStyle(event) {
-//   event.target.style.border = ""; 
-// }
-
-// const inputFields = document.querySelectorAll(
-//   'input[type="text"], input[type="date"], input[type="time"], textarea'
-// );
-
-// inputFields.forEach((input) => {
-//   input.addEventListener("focus", changeBorderStyle);
-//   input.addEventListener("input", changeBorderStyle); 
-//   input.addEventListener("blur", resetBorderStyle);
-// });
 
 
 
-
-function goToLoginPage() {
-  window.location.href = "loginpage.html"; 
-}
-
-function goToViewAllCourses() {
-  window.location.href = "viewAllCourses.html"; 
-}
 
 

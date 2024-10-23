@@ -92,6 +92,22 @@ textarea {
 #logout_button{
   cursor: pointer;
 }
+.backbutton,
+.previousbutton {
+  background: transparent; 
+  border: none; 
+  padding: 0; 
+  cursor: pointer; 
+}
+
+.backimage,
+.previousimage {
+  display: block;
+
+
+  width: 25px; 
+  height: 25px; 
+}
 
 .button {
   display: flex;

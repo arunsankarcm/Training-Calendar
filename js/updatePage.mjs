@@ -65,6 +65,11 @@ inputFields.forEach((input) => {
   input.addEventListener("blur", resetBorderStyle);
 });
 
+document.getElementById('back-button').addEventListener('click', () => {
+  window.location.href = 'viewAllCourse.html';
+});
+
+
 const urlParams = new URLSearchParams(window.location.search);
 const courseKey = urlParams.get('courseKey');
 
