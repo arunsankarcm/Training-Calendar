@@ -145,12 +145,12 @@ function validateEndTime() {
 //   }, 2000);
 // };
 
-function changeBackgroundColor(event) {
-  event.target.style.backgroundColor = " #357ae8";
+function changeBorderStyle(event) {
+  event.target.style.border = "2px solid black "; // Bold border with a specific color
 }
 
-function resetBackgroundColor(event) {
-  event.target.style.backgroundColor = "";
+function resetBorderStyle(event) {
+  event.target.style.border = ""; // Reset to default border style
 }
 
 const inputFields = document.querySelectorAll(
@@ -158,7 +158,7 @@ const inputFields = document.querySelectorAll(
 );
 
 inputFields.forEach((input) => {
-  input.addEventListener("focus", changeBackgroundColor);
-  input.addEventListener("input", changeBackgroundColor);
-  input.addEventListener("blur", resetBackgroundColor);
+  input.addEventListener("focus", changeBorderStyle);
+  input.addEventListener("input", changeBorderStyle); // Optional: applies bold on input change as well
+  input.addEventListener("blur", resetBorderStyle);
 });

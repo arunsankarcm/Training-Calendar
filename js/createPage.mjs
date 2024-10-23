@@ -147,7 +147,7 @@ const showPopup = (message, type) => {
   popup.style.borderRadius = "15px";
   popup.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.15)";
   popup.style.textAlign = "center";
-  popup.style.zIndex = "1000"; 
+  popup.style.zIndex = "1000";
 
   // Adding the appropriate image based on the type
   const messageImg = document.createElement("img");
@@ -168,22 +168,20 @@ const showPopup = (message, type) => {
   document.body.appendChild(popup);
 };
 
-// Background change on input focus
-function changeBackgroundColor(event) {
-  event.target.style.backgroundColor = "#357ae8";
+function changeBorderStyle(event) {
+  event.target.style.border = "2px solid black "; 
 }
 
-function resetBackgroundColor(event) {
-  event.target.style.backgroundColor = "";
+function resetBorderStyle(event) {
+  event.target.style.border = ""; 
 }
 
-// Apply background change on all input fields
 const inputFields = document.querySelectorAll(
   'input[type="text"], input[type="date"], input[type="time"], textarea'
 );
 
 inputFields.forEach((input) => {
-  input.addEventListener("focus", changeBackgroundColor);
-  input.addEventListener("input", changeBackgroundColor);
-  input.addEventListener("blur", resetBackgroundColor);
+  input.addEventListener("focus", changeBorderStyle);
+  input.addEventListener("input", changeBorderStyle); 
+  input.addEventListener("blur", resetBorderStyle);
 });
