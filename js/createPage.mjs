@@ -166,7 +166,7 @@ const showPopup = (message, type) => {
   popup.style.borderRadius = "15px";
   popup.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.15)";
   popup.style.textAlign = "center";
-  popup.style.zIndex = "1000"; 
+  popup.style.zIndex = "1000";
 
   // Adding the appropriate image based on the type
   const messageImg = document.createElement("img");
@@ -211,4 +211,36 @@ onAuthStateChanged(auth, (user) => {
   } else {
     window.location.href = 'loginpage.html';
   }
+
 });
+
+// function changeBorderStyle(event) {
+//   event.target.style.border = "2px solid black "; 
+// }
+
+// function resetBorderStyle(event) {
+//   event.target.style.border = ""; 
+// }
+
+// const inputFields = document.querySelectorAll(
+//   'input[type="text"], input[type="date"], input[type="time"], textarea'
+// );
+
+// inputFields.forEach((input) => {
+//   input.addEventListener("focus", changeBorderStyle);
+//   input.addEventListener("input", changeBorderStyle); 
+//   input.addEventListener("blur", resetBorderStyle);
+// });
+
+
+
+
+function goToLoginPage() {
+  window.location.href = "loginpage.html"; 
+}
+
+function goToViewAllCourses() {
+  window.location.href = "viewAllCourses.html"; 
+}
+
+
