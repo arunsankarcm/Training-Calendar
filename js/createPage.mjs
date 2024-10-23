@@ -47,12 +47,12 @@ function validateEndTime() {
     document.getElementById("end-time").value = "";
   }
 }
-function changeBackgroundColor(event) {
-  event.target.style.backgroundColor = "#357ae8";
+function changeBorderStyle(event) {
+  event.target.style.border = "2px solid black "; 
 }
 
-function resetBackgroundColor(event) {
-  event.target.style.backgroundColor = "";
+function resetBorderStyle(event) {
+  event.target.style.border = ""; 
 }
 
 const inputFields = document.querySelectorAll(
@@ -60,9 +60,9 @@ const inputFields = document.querySelectorAll(
 );
 
 inputFields.forEach((input) => {
-  input.addEventListener("focus", changeBackgroundColor);
-  input.addEventListener("input", changeBackgroundColor);
-  input.addEventListener("blur", resetBackgroundColor);
+  input.addEventListener("focus", changeBorderStyle);
+  input.addEventListener("input", changeBorderStyle); 
+  input.addEventListener("blur", resetBorderStyle);
 });
 
 
