@@ -64,25 +64,6 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 border: 1px solid #ccc;
 }
 
-/* .header {
-background-color: lightgray;
-display: flex;
-justify-content: space-between;
-align-items: center;
-height: 60px;
-padding: 0 10px;
-border-top-left-radius: 8px;
-border-top-right-radius: 8px;
-border-bottom: 1px solid #ccc;
-width: 98%;
-} */
-
-/* .logo {
-width: 150px;
-height: 30px;
-padding-left: 13px;
-padding-top: 17px;
-} */
 
 .form-container {
 padding: 30px;
@@ -125,10 +106,6 @@ justify-content: space-between;
 width: 48%;
 }
 
-/* .radio-group {
-display: flex;
-flex-direction: column;
-} */
 
 .flex-container {
 display: flex;
@@ -196,8 +173,6 @@ background-color: #4a90e2;
 .backbutton {
 width: 20px;
 height: auto;
-/* display: flex;
-justify-content: flex-end; */
 padding-left: 375px;
 padding-top: 10px;
 }
