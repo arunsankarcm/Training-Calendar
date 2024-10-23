@@ -8,7 +8,7 @@ function downloadImage() {
       // Create a temporary link to download the image
       const link = document.createElement('a');
       link.href = imgData;
-      link.download = 'screenshot.png';
+      link.download = 'TrainingCalender.png';
       
       // Append the link to the document and click it to trigger download
       document.body.appendChild(link);
@@ -70,4 +70,3 @@ function downloadImage() {
 });
 
 
-//hello world
