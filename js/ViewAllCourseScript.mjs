@@ -417,3 +417,27 @@ window.addEventListener("load", () => {
   updateMonthYearDisplay(); // Show current month/year on page load
   getCourses(); // Fetch and display courses
 });
+
+
+
+// Logout function (sign out)
+document.getElementById('logout_button').addEventListener('click', () => {
+  signOut(auth).then(() => {
+    // Store the logout message in localStorage
+    localStorage.setItem('logoutMessage', 'Logged out successfully.');
+  
+    // Redirect to login page after logging out
+    window.location.href = 'loginpage.html';
+  }).catch((error) => {
+    console.error('Sign out error:', error);
+  });
+});
+
+// Check if user is authenticated
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log('User is signed in:', user.email);
+  } else {
+    window.location.href = 'loginpage.html';
+  }
+});
