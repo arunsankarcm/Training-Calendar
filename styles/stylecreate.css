@@ -2,7 +2,57 @@ body {
   font-family: 'Montserrat', sans-serif;
 background-color: #f4f4f4;
 margin: 0;
-padding: 20px;
+padding: 0;
+}
+html {
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.header {
+  background-color: #3e68b9;
+  color: white;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  display: fixed;
+
+}
+.head {
+  background-color: #d9d9d9;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  display: fixed;
+}
+.right-section{
+  background-color: #d9d9d9;
+
+}
+.logoutHoverText{
+  color: #0b0b0b;
+}
+/* Logout button hover styles*/
+#onHoverLogout{
+  visibility: hidden;
+}
+#logout_button:hover #onHoverLogout{
+  visibility: visible;
+  
+}
+.right-section img{
+  background-color: #d9d9d9;
+  
+}
+#logout_button{
+  background-color: #d9d9d9;
+  padding-top: 9px;
 }
 
 .container {
@@ -14,7 +64,7 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 border: 1px solid #ccc;
 }
 
-.header {
+/* .header {
 background-color: lightgray;
 display: flex;
 justify-content: space-between;
@@ -25,14 +75,14 @@ border-top-left-radius: 8px;
 border-top-right-radius: 8px;
 border-bottom: 1px solid #ccc;
 width: 98%;
-}
+} */
 
-.logo {
+/* .logo {
 width: 150px;
 height: 30px;
 padding-left: 13px;
 padding-top: 17px;
-}
+} */
 
 .form-container {
 padding: 30px;
@@ -85,8 +135,8 @@ display: flex;
 justify-content: space-between;
 }
 
-.left-section,
-.right-section {
+.left-section-bottom,
+.right-section-bottom {
 width: 48%;
 }
 #logout_button{
