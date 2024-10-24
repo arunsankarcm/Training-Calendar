@@ -156,7 +156,6 @@ body {
 
   .login-box {
     width: 90%;
-    /* padding: 20px; */
   }
 
   .form-group input {
@@ -180,7 +179,6 @@ body {
   }
 
   .login-box {
-    /* padding: 15px; */
     box-shadow: none;
   }
 

@@ -36,7 +36,7 @@ html {
 .logoutHoverText {
   color: #0b0b0b;
 }
-/* Logout button hover styles*/
+
 #onHoverLogout {
   visibility: hidden;
 }
@@ -85,7 +85,7 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  transition: border-color 0.3s ease; /* Smooth transition for border color */
+  transition: border-color 0.3s ease;
 }
 
 input:focus,
@@ -164,7 +164,7 @@ button {
   font-size: 16px;
 }
 
-button:hover {
+#button:hover {
   background-color: #357ae8;
 }
 

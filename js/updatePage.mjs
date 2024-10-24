@@ -64,7 +64,6 @@ if (courseKey) {
       if (snapshot.exists()) {
         const courseData = snapshot.val();
         console.log(courseData);
-        // Populate your form or fields with the course data
         document.getElementById('course-name').value = courseData.courseName;
         document.getElementById('start-date').value = courseData.startDate;
         document.getElementById('end-date').value = courseData.endDate || '';
@@ -78,7 +77,7 @@ if (courseKey) {
         const modeRadioButtons = document.getElementsByName("mode");
         for (const radio of modeRadioButtons) {
           if (radio.value === courseData.mode) {
-            radio.checked = true; // Set the correct mode as checked
+            radio.checked = true; 
           }
         }
       } else {
@@ -94,7 +93,6 @@ if (courseKey) {
 
 
 
-// Function to handle form submission for updating the course
 document.getElementById("update-page").addEventListener("submit", updateCourse);
 
 function updateCourse(e) {
@@ -136,14 +134,12 @@ function updateCourse(e) {
     mode: selectedValue
   })
     .then(() => {
-      // Success! Show success popup and redirect
       showPopup("Course updated successfully!", "success");
       setTimeout(() => {
-        window.location.href = "viewAllCourse.html"; // Redirect to the courses page after 2 seconds
+        window.location.href = "viewAllCourse.html";
       }, 2000);
     })
     .catch((error) => {
-      // Error occurred, show error popup
       showPopup("Failed to update the course. Please try again.", "error");
       console.error("Error updating course: ", error);
     });
@@ -195,10 +191,8 @@ const showPopup = (message, type) => {
 // Logout function (sign out)
 document.getElementById('logout_button').addEventListener('click', () => {
   signOut(auth).then(() => {
-    // Store the logout message in localStorage
     localStorage.setItem('logoutMessage', 'Logged out successfully.');
   
-    // Redirect to login page after logging out
     window.location.href = 'loginpage.html';
   }).catch((error) => {
     console.error('Sign out error:', error);

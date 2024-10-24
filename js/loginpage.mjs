@@ -19,9 +19,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
       window.location.href = "viewAllCourse.html";
 
       const user = userCredential.user;
-      const dt = new Date().toISOString(); // Store date in ISO format for consistency
-
-      // Update only the last_login field in Firebase without affecting other fields
+      const dt = new Date().toISOString(); 
       update(ref(db, "users/" + user.uid), {
         last_login: dt
       })
@@ -42,11 +40,11 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
 
 document.getElementById("email").addEventListener("focus", () => {
   const errorMessage = document.getElementById("error-message");
-  errorMessage.textContent = ""; // Clear the error message
+  errorMessage.textContent = "";
 });
 document.getElementById("password").addEventListener("focus", () => {
   const errorMessage = document.getElementById("error-message");
-  errorMessage.textContent = ""; // Clear the error message
+  errorMessage.textContent = ""; 
 });
 
 // Check if user is authenticated
@@ -60,14 +58,11 @@ onAuthStateChanged(auth, (user) => {
 });
 
 window.addEventListener('load', () => {
-  // Check if the logout message exists
   const logoutMessage = localStorage.getItem('logoutMessage');
 
   if (logoutMessage) {
-    // Display the alert with the logout message
     alert(logoutMessage);
 
-    // Clear the message from localStorage to avoid showing it again
     localStorage.removeItem('logoutMessage');
   }
 });
