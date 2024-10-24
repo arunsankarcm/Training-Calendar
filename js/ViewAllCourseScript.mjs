@@ -1,5 +1,8 @@
 import { auth, db } from "../firebaseConfig.mjs";
-import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {
+  signOut,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 import {
   ref,
@@ -15,9 +18,8 @@ let currentMonth = new Date().getMonth(); // Current month (0-11)
 let currentYear = new Date().getFullYear(); // Current year
 
 let monthYearText = ""; // Declare monthYearText as a global variable
-let month = '';
-let year = '';
-
+let month = "";
+let year = "";
 
 function getMonthName(monthIndex) {
   const monthNames = [
@@ -47,7 +49,7 @@ function updateMonthYearDisplay() {
   console.log("Inside function:", monthYearText);
 }
 
-document.getElementById('export-img').addEventListener('click', () => {
+document.getElementById("export-img").addEventListener("click", () => {
   window.location.href = `templatePage.html?month=${month}&year=${year}`;
 });
 
@@ -251,10 +253,10 @@ function AddCourseToCard(course, cardNo) {
     </div>
     <div class="popup-menu">
       <ul>
-        <li class="edit-tag">Edit</li>
+        <li class="edit-tag"><img src="../Images/edit (1).png" alt="experion-rhombus-white" /></li>
         <hr>
         <div class="del-tag">
-          <li>Delete</li>
+          <li><img src="../Images/dustbin.png" alt="experion-rhombus-white" /></li>
         </div>
       </ul>
     </div>
@@ -282,7 +284,9 @@ function AddCourseToCard(course, cardNo) {
 
   deleteBtn.addEventListener("click", () => {
     // Confirm deletion
-    const confirmDelete = confirm("Are you sure you want to delete this course?");
+    const confirmDelete = confirm(
+      "Are you sure you want to delete this course?"
+    );
     if (confirmDelete) {
       // Remove the course from Firebase
       const courseRef = ref(db, `courses/${courseKey}`);
@@ -305,7 +309,9 @@ function AddCourseToCard(course, cardNo) {
 }
 
 function searchCourses() {
-  const searchTerm = document.getElementById("search-input").value.toLowerCase();
+  const searchTerm = document
+    .getElementById("search-input")
+    .value.toLowerCase();
   cardsDiv.innerHTML = "";
 
   if (searchTerm === "") {
@@ -336,31 +342,32 @@ function searchCourses() {
   });
 }
 
-const iconButton = document.getElementById('iconButton');
-const popupMenuFilter = document.getElementById('popupMenuFilter');
+const iconButton = document.getElementById("iconButton");
+const popupMenuFilter = document.getElementById("popupMenuFilter");
 
 function togglePopup() {
-  popupMenuFilter.style.display = popupMenuFilter.style.display === 'block' ? 'none' : 'block';
+  popupMenuFilter.style.display =
+    popupMenuFilter.style.display === "block" ? "none" : "block";
 }
 
-iconButton.addEventListener('click', (e) => {
+iconButton.addEventListener("click", (e) => {
   e.stopPropagation();
   togglePopup();
 });
 
-document.getElementById('filter-upcoming').addEventListener('click', () => {
-  filterCourses('upcoming');
-  popupMenuFilter.style.display = 'none';
+document.getElementById("filter-upcoming").addEventListener("click", () => {
+  filterCourses("upcoming");
+  popupMenuFilter.style.display = "none";
 });
 
-document.getElementById('filter-ongoing').addEventListener('click', () => {
-  filterCourses('ongoing');
-  popupMenuFilter.style.display = 'none';
+document.getElementById("filter-ongoing").addEventListener("click", () => {
+  filterCourses("ongoing");
+  popupMenuFilter.style.display = "none";
 });
 
-document.getElementById('filter-completed').addEventListener('click', () => {
-  filterCourses('completed');
-  popupMenuFilter.style.display = 'none';
+document.getElementById("filter-completed").addEventListener("click", () => {
+  filterCourses("completed");
+  popupMenuFilter.style.display = "none";
 });
 
 function filterCourses(filterType) {
@@ -422,35 +429,36 @@ function filterCourses(filterType) {
   });
 }
 
-
 // Add the event listener for real-time search
-document.getElementById("search-input").addEventListener("input", searchCourses);
+document
+  .getElementById("search-input")
+  .addEventListener("input", searchCourses);
 
 window.addEventListener("load", () => {
   updateMonthYearDisplay(); // Show current month/year on page load
   getCourses(); // Fetch and display courses
 });
 
-
-
 // Logout function (sign out)
-document.getElementById('logout_button').addEventListener('click', () => {
-  signOut(auth).then(() => {
-    // Store the logout message in localStorage
-    localStorage.setItem('logoutMessage', 'Logged out successfully.');
-  
-    // Redirect to login page after logging out
-    window.location.href = 'loginpage.html';
-  }).catch((error) => {
-    console.error('Sign out error:', error);
-  });
+document.getElementById("logout_button").addEventListener("click", () => {
+  signOut(auth)
+    .then(() => {
+      // Store the logout message in localStorage
+      localStorage.setItem("logoutMessage", "Logged out successfully.");
+
+      // Redirect to login page after logging out
+      window.location.href = "loginpage.html";
+    })
+    .catch((error) => {
+      console.error("Sign out error:", error);
+    });
 });
 
 // Check if user is authenticated
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log('User is signed in:', user.email);
+    console.log("User is signed in:", user.email);
   } else {
-    window.location.href = 'loginpage.html';
+    window.location.href = "loginpage.html";
   }
 });

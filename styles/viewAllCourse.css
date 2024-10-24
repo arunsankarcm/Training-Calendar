@@ -127,6 +127,8 @@ padding-left: 2px;
   background-color: white;
   border-radius: 5px;
   padding: 5px 10px;
+  position: absolute;
+  left: 350px;
   
 }
 
@@ -161,6 +163,7 @@ padding-left: 2px;
 .action-icons {
   display: flex;
   margin-right: 80px;
+
 }
 
 .card-grid {
@@ -200,7 +203,7 @@ padding-left: 2px;
 }
 
 .yellow {
-  background-color: #d0bf26;
+  background-color: #a59613;
   width: 17px;
   height: 17px;
   padding-right: 4px;
@@ -304,6 +307,7 @@ padding-left: 2px;
 
 #course-number {
   padding-right: 10px;
+  color: white;
 }
 
 /* ------------ */
@@ -320,8 +324,8 @@ padding-left: 2px;
   line-height: 11px;
   width: 120px;
   height: 126px;
-  margin-top: 115px;
-  margin-left: 780px;
+  margin-top: 120px;
+  margin-left: 720px;
 }
 
 #popupMenuFilter.popup-menu hr {
@@ -411,11 +415,11 @@ padding-left: 2px;
 /* -------------------------popup three-dots ---------------------------- */
 
 .popup-menu {
-  display: none;
+  display: flex;
   position: absolute;
-  left: 260px;
-  top: 50px;
-  width: 80px;
+  left: 310px;
+  top: 40px;
+  width: 50px;
   height: 80px;
   background-color: #eeeeee;
   border: 1px solid #ccc;
@@ -428,7 +432,7 @@ padding-left: 2px;
 .popup-menu hr {
   display: flex;
   padding-right: 20px;
-  width: 50px;
+  width: 20px;
   padding-top: 5px;
 }
 
@@ -436,6 +440,7 @@ padding-left: 2px;
   list-style-type: none;
   margin: 0;
   padding: 0;
+  /* display: flex; */
 }
 
 .popup-menu ul li {
@@ -448,6 +453,16 @@ padding-left: 2px;
   padding-right: 10px;
 }
 
+.del-tag img{
+  width: 20px;
+}
+
+.edit-tag img{
+  width: 20px;
+}
+
 .popup-menu ul li:hover {
   background-color: #f4f4f9;
 }
+
+
