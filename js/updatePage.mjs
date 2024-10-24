@@ -1,17 +1,29 @@
 import { db, auth } from "../firebaseConfig.mjs";
-import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {
+  signOut,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {
   ref,
   set,
-  get
+  get,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const endDateInput = document.getElementById("end-date");
+  const startDateInput = document.getElementById("start-date");
   const endTimeInput = document.getElementById("end-time");
+  const startTimeInput = document.getElementById("start-time");
+  const maxParticipantsInput = document.getElementById("max-participants");
 
-  endDateInput.addEventListener("change", validateEndDate);
-  endTimeInput.addEventListener("change", validateEndTime);
+  // Event listeners for date and time validation
+  startDateInput.addEventListener("blur", validateEndDate);
+  endDateInput.addEventListener("blur", validateEndDate);
+  startTimeInput.addEventListener("blur", validateEndTime);
+  endTimeInput.addEventListener("blur", validateEndTime);
+
+  // Event listener for maximum participants validation
+  maxParticipantsInput.addEventListener("input", validateMaxParticipants);
 });
 
 function validateEndDate() {
@@ -24,7 +36,11 @@ function validateEndDate() {
     return;
   }
 
-  if (endDate !== "" && startDate > endDate) {
+  // Convert to Date objects for comparison
+  const startDateObj = new Date(startDate);
+  const endDateObj = new Date(endDate);
+
+  if (endDate !== "" && startDateObj >= endDateObj) {
     alert("End date must be after the start date.");
     document.getElementById("end-date").value = "";
   }
@@ -40,22 +56,37 @@ function validateEndTime() {
     return;
   }
 
-  if (endTime !== "" && startTime >= endTime) {
-    alert("End time must be after the start time.");
-    document.getElementById("end-time").value = "";
+  if (endTime !== "") {
+    // Convert time strings to Date objects for comparison
+    const [startHours, startMinutes] = startTime.split(":").map(Number);
+    const [endHours, endMinutes] = endTime.split(":").map(Number);
+
+    const startTimeDate = new Date(0, 0, 0, startHours, startMinutes);
+    const endTimeDate = new Date(0, 0, 0, endHours, endMinutes);
+
+    // Compare the two times
+    if (startTimeDate >= endTimeDate) {
+      alert("End time must be after the start time.");
+      document.getElementById("end-time").value = "";
+    }
   }
 }
 
+// Validation for maximum participants
+function validateMaxParticipants() {
+  const maxParticipantsInput = document.getElementById("max-participants");
+  const value = maxParticipantsInput.value;
 
+  // Check if value is not an integer
+  if (!/^\d+$/.test(value) && value !== "") {
+    alert("Please enter a valid integer for maximum participants.");
+    maxParticipantsInput.value = "";
+  }
+}
 
-
-document.getElementById('back-button').addEventListener('click', () => {
-  window.location.href = 'viewAllCourse.html';
-});
-
-
+// Fetching existing course data
 const urlParams = new URLSearchParams(window.location.search);
-const courseKey = urlParams.get('courseKey');
+const courseKey = urlParams.get("courseKey");
 
 if (courseKey) {
   const courseRef = ref(db, `courses/${courseKey}`);
@@ -63,21 +94,22 @@ if (courseKey) {
     .then((snapshot) => {
       if (snapshot.exists()) {
         const courseData = snapshot.val();
-        console.log(courseData);
-        document.getElementById('course-name').value = courseData.courseName;
-        document.getElementById('start-date').value = courseData.startDate;
-        document.getElementById('end-date').value = courseData.endDate || '';
+        // Populate your form with the fetched course data
+        document.getElementById("course-name").value = courseData.courseName;
+        document.getElementById("start-date").value = courseData.startDate;
+        document.getElementById("end-date").value = courseData.endDate || "";
         document.getElementById("start-time").value = courseData.startTime;
         document.getElementById("end-time").value = courseData.endTime;
         document.getElementById("key-points").value = courseData.keyPoints;
         document.getElementById("trainer").value = courseData.trainerName;
         document.getElementById("audience").value = courseData.targetAudience;
-        document.getElementById("max-participants").value = courseData.maxParticipation;
+        document.getElementById("max-participants").value =
+          courseData.maxParticipation;
 
         const modeRadioButtons = document.getElementsByName("mode");
         for (const radio of modeRadioButtons) {
           if (radio.value === courseData.mode) {
-            radio.checked = true; 
+            radio.checked = true;
           }
         }
       } else {
@@ -91,8 +123,7 @@ if (courseKey) {
   console.error("No courseKey found in URL");
 }
 
-
-
+// Function to handle form submission for updating the course
 document.getElementById("update-page").addEventListener("submit", updateCourse);
 
 function updateCourse(e) {
@@ -131,7 +162,7 @@ function updateCourse(e) {
     trainerName: trainerName,
     targetAudience: targetAudience,
     maxParticipation: maxParticipation,
-    mode: selectedValue
+    mode: selectedValue,
   })
     .then(() => {
       showPopup("Course updated successfully!", "success");
@@ -167,9 +198,8 @@ const showPopup = (message, type) => {
   popup.style.borderRadius = "15px";
   popup.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.15)";
   popup.style.textAlign = "center";
-  popup.style.zIndex = "1000"; 
+  popup.style.zIndex = "1000";
 
-  // Adding the appropriate image based on the type
   const messageImg = document.createElement("img");
   messageImg.src =
     type === "success"
@@ -188,22 +218,23 @@ const showPopup = (message, type) => {
   document.body.appendChild(popup);
 };
 
-// Logout function (sign out)
-document.getElementById('logout_button').addEventListener('click', () => {
-  signOut(auth).then(() => {
-    localStorage.setItem('logoutMessage', 'Logged out successfully.');
-  
-    window.location.href = 'loginpage.html';
-  }).catch((error) => {
-    console.error('Sign out error:', error);
-  });
+// Logout function
+document.getElementById("logout_button").addEventListener("click", () => {
+  signOut(auth)
+    .then(() => {
+      localStorage.setItem("logoutMessage", "Logged out successfully.");
+      window.location.href = "loginpage.html";
+    })
+    .catch((error) => {
+      console.error("Sign out error:", error);
+    });
 });
 
 // Check if user is authenticated
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log('User is signed in:', user.email);
+    console.log("User is signed in:", user.email);
   } else {
-    window.location.href = 'loginpage.html';
+    window.location.href = "loginpage.html";
   }
 });
