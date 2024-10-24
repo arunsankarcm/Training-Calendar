@@ -147,38 +147,84 @@ const saveInDB = (
     maxParticipation: maxParticipation,
     mode: mode,
   })
-    .then(() => {
-      alert("Course registered successfully!");
+  .then(() => {
+    showPopup("Course added successfully!", "success");
+    setTimeout(() => {
       window.location.href = "viewAllCourse.html";
-    })
-    .catch((error) => {
-      alert("Error registering course: " + error);
-    });
+    }, 3000);
+  })
+  .catch((error) => {
+    showPopup("Failed to add the course. Please try again.", "error");
+    console.error("Error adding course: ", error);
+  });
 };
 
-// Authentication handling
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in, continue to the page
-  } else {
-    // User is signed out, redirect to login page
-    window.location.href = "login.html";
-  }
-});
-
-// Logout button functionality
-document.getElementById("logout_button").addEventListener("click", () => {
-  signOut(auth)
-    .then(() => {
-      alert("Successfully logged out.");
-      window.location.href = "login.html";
-    })
-    .catch((error) => {
-      alert("Error signing out: " + error.message);
-    });
-});
-
-// Helper function to get element value
+// Get input value by ID
 const getElementVal = (id) => {
-  return document.getElementById(id).value;
+return document.getElementById(id).value;
 };
+
+// Popup function
+const showPopup = (message, type) => {
+const popup = document.createElement("div");
+popup.style.position = "fixed";
+popup.style.top = "50%";
+popup.style.left = "50%";
+popup.style.transform = "translate(-50%, -50%)";
+popup.style.width = "350px";
+popup.style.height = "200px";
+popup.style.padding = "20px";
+popup.style.backgroundColor = "white";
+popup.style.color = "#333";
+popup.style.fontSize = "20px";
+popup.style.fontFamily = "'Montserrat', sans-serif";
+popup.style.borderRadius = "15px";
+popup.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.15)";
+popup.style.textAlign = "center";
+popup.style.zIndex = "1000";
+
+// Adding the appropriate image based on the type
+const messageImg = document.createElement("img");
+messageImg.src =
+  type === "success"
+    ? "https://cdn-icons-png.flaticon.com/128/190/190411.png"
+    : "https://cdn-icons-png.flaticon.com/128/1828/1828950.png";
+messageImg.style.width = "50px";
+messageImg.style.height = "50px";
+messageImg.style.marginBottom = "20px";
+
+const messageText = document.createElement("p");
+messageText.textContent = message;
+messageText.style.margin = "0";
+
+popup.appendChild(messageImg);
+popup.appendChild(messageText);
+document.body.appendChild(popup);
+};
+
+
+
+
+
+// Logout function (sign out)
+document.getElementById('logout_button').addEventListener('click', () => {
+signOut(auth).then(() => {
+  // Store the logout message in localStorage
+  localStorage.setItem('logoutMessage', 'Logged out successfully.');
+
+  // Redirect to login page after logging out
+  window.location.href = 'loginpage.html';
+}).catch((error) => {
+  console.error('Sign out error:', error);
+});
+});
+
+// Check if user is authenticated
+onAuthStateChanged(auth, (user) => {
+if (user) {
+  console.log('User is signed in:', user.email);
+} else {
+  window.location.href = 'loginpage.html';
+}
+
+});
