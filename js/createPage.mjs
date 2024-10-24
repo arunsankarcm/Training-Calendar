@@ -1,32 +1,39 @@
 import { db, auth } from "../firebaseConfig.mjs";
 import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-
 import {
   ref,
   set,
   push,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
-// Validation code
 document.addEventListener("DOMContentLoaded", () => {
   const endDateInput = document.getElementById("end-date");
+  const startDateInput = document.getElementById("start-date");
   const endTimeInput = document.getElementById("end-time");
+  const startTimeInput = document.getElementById("start-time");
+  const maxParticipantsInput = document.getElementById("max-participants");
 
-  endDateInput.addEventListener("change", validateEndDate);
-  endTimeInput.addEventListener("change", validateEndTime);
+  // Event listeners for date and time validation
+  startDateInput.addEventListener("blur", validateEndDate);
+  endDateInput.addEventListener("blur", validateEndDate);
+  startTimeInput.addEventListener("blur", validateEndTime);
+  endTimeInput.addEventListener("blur", validateEndTime);
+
+  // Event listener for maximum participants validation
+  maxParticipantsInput.addEventListener("input", validateMaxParticipants);
 });
 
 function validateEndDate() {
   const startDate = document.getElementById("start-date").value;
   const endDate = document.getElementById("end-date").value;
 
-  if (startDate === "") {
-    alert("Please select a start date first.");
-    document.getElementById("end-date").value = "";
-    return;
-  }
+ 
 
-  if (endDate !== "" && startDate > endDate) {
+  // Convert to Date objects for comparison
+  const startDateObj = new Date(startDate);
+  const endDateObj = new Date(endDate);
+
+  if (endDate !== "" && startDateObj >= endDateObj) {
     alert("End date must be after the start date.");
     document.getElementById("end-date").value = "";
   }
@@ -36,19 +43,39 @@ function validateEndTime() {
   const startTime = document.getElementById("start-time").value;
   const endTime = document.getElementById("end-time").value;
 
-  if (startTime === "") {
-    alert("Please select a start time first.");
-    document.getElementById("end-time").value = "";
-    return;
-  }
+  
 
-  if (endTime !== "" && startTime >= endTime) {
-    alert("End time must be after the start time.");
-    document.getElementById("end-time").value = "";
+  if (endTime !== "") {
+    // Convert time strings to Date objects for comparison
+    const [startHours, startMinutes] = startTime.split(':').map(Number);
+    const [endHours, endMinutes] = endTime.split(':').map(Number);
+
+    const startTimeDate = new Date(0, 0, 0, startHours, startMinutes);
+    const endTimeDate = new Date(0, 0, 0, endHours, endMinutes);
+
+    // Compare the two times
+    if (startTimeDate >= endTimeDate) {
+      alert("End time must be after the start time.");
+      document.getElementById("end-time").value = "";
+    }
+  }
+}
+
+// Validation for maximum participants
+function validateMaxParticipants() {
+  const maxParticipantsInput = document.getElementById("max-participants");
+  const value = maxParticipantsInput.value;
+
+  // Check if value is not an integer
+  if (!/^\d+$/.test(value) && value !== "") {
+    alert("Please enter a valid integer for maximum participants.");
+    maxParticipantsInput.value = "";
   }
 }
 
 
+
+// Back button functionality
 document.getElementById('back-button').addEventListener('click', () => {
   window.location.href = 'viewAllCourse.html';
 });
@@ -121,89 +148,37 @@ const saveInDB = (
     mode: mode,
   })
     .then(() => {
-      showPopup("Course added successfully!", "success");
-      setTimeout(() => {
-        window.location.href = "viewAllCourse.html";
-      }, 3000);
+      alert("Course registered successfully!");
+      window.location.href = "viewAllCourse.html";
     })
     .catch((error) => {
-      showPopup("Failed to add the course. Please try again.", "error");
-      console.error("Error adding course: ", error);
+      alert("Error registering course: " + error);
     });
 };
 
-// Get input value by ID
+// Authentication handling
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, continue to the page
+  } else {
+    // User is signed out, redirect to login page
+    window.location.href = "login.html";
+  }
+});
+
+// Logout button functionality
+document.getElementById("logout_button").addEventListener("click", () => {
+  signOut(auth)
+    .then(() => {
+      alert("Successfully logged out.");
+      window.location.href = "login.html";
+    })
+    .catch((error) => {
+      alert("Error signing out: " + error.message);
+    });
+});
+
+// Helper function to get element value
 const getElementVal = (id) => {
   return document.getElementById(id).value;
 };
-
-// Popup function
-const showPopup = (message, type) => {
-  const popup = document.createElement("div");
-  popup.style.position = "fixed";
-  popup.style.top = "50%";
-  popup.style.left = "50%";
-  popup.style.transform = "translate(-50%, -50%)";
-  popup.style.width = "350px";
-  popup.style.height = "200px";
-  popup.style.padding = "20px";
-  popup.style.backgroundColor = "white";
-  popup.style.color = "#333";
-  popup.style.fontSize = "20px";
-  popup.style.fontFamily = "'Montserrat', sans-serif";
-  popup.style.borderRadius = "15px";
-  popup.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.15)";
-  popup.style.textAlign = "center";
-  popup.style.zIndex = "1000";
-
-  // Adding the appropriate image based on the type
-  const messageImg = document.createElement("img");
-  messageImg.src =
-    type === "success"
-      ? "https://cdn-icons-png.flaticon.com/128/190/190411.png"
-      : "https://cdn-icons-png.flaticon.com/128/1828/1828950.png";
-  messageImg.style.width = "50px";
-  messageImg.style.height = "50px";
-  messageImg.style.marginBottom = "20px";
-
-  const messageText = document.createElement("p");
-  messageText.textContent = message;
-  messageText.style.margin = "0";
-
-  popup.appendChild(messageImg);
-  popup.appendChild(messageText);
-  document.body.appendChild(popup);
-};
-
-
-
-
-
-// Logout function (sign out)
-document.getElementById('logout_button').addEventListener('click', () => {
-  signOut(auth).then(() => {
-    // Store the logout message in localStorage
-    localStorage.setItem('logoutMessage', 'Logged out successfully.');
-  
-    // Redirect to login page after logging out
-    window.location.href = 'loginpage.html';
-  }).catch((error) => {
-    console.error('Sign out error:', error);
-  });
-});
-
-// Check if user is authenticated
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log('User is signed in:', user.email);
-  } else {
-    window.location.href = 'loginpage.html';
-  }
-
-});
-
-
-
-
-
-
