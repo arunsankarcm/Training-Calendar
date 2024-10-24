@@ -5,12 +5,12 @@ import {
   child,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
-const { jsPDF } = window.jspdf;
 const upcomingDiv = document.getElementById("upcoming-training-cards-section");
 const ongoingDiv = document.getElementById("ongoing-training-cards-section");
 let cardNo = 1;
 let upcomingCardNo = 1;
 let ongoingCardNo = 1;
+const { jsPDF } = window.jspdf;
 
     //month year static
 const todaysDate = new Date();
@@ -211,97 +211,73 @@ else{
 
 getCourses();
 
-
-document.getElementById('downloadPDFbtn').addEventListener('click', function (){
+document.getElementById('downloadPDFbtn').addEventListener('click', function () {
   const doc = new jsPDF();
-  const upcomingCourses = document.getElementById("upcoming-training-cards-section");
-  const ongoingCourses = document.getElementById("ongoing-training-cards-section");
-  const dbref = ref(db);
+  let yOffset = 10; // Initial y-offset for the text position
+  const pageHeight = doc.internal.pageSize.height - 20; // Page height minus bottom margin
 
-  get(child(dbref, "courses"))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        console.log("Data fetched successfully!");
-        const courses = snapshot.val();
-        console.log("Courses data:", courses);
+  // Helper function to check if content exceeds page height
+  function checkPageBreak(yOffset) {
+    if (yOffset > pageHeight) {
+      doc.addPage();
+      return 10; // Reset yOffset for the new page
+    }
+    return yOffset;
+  }
 
-        // Render upcoming courses
-  if (upcomingCourses.length > 0) {
+    //month year static
+const todaysDate = new Date();
+const monthNamesArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const currentMonth = monthNamesArray[todaysDate.getMonth()];
+const currentYear = todaysDate.getFullYear();
+
+
+
+  // Add a title to the PDF
+  doc.setFontSize(14);
+  doc.text(`Training Calendar - ${currentMonth} ${currentYear}`, 10, yOffset);
+  yOffset += 10;
+
+  // Get the text from upcoming and ongoing sections
+  const upcomingCoursesText = document.getElementById("upcoming-training-cards-section").innerText;
+  const ongoingCoursesText = document.getElementById("ongoing-training-cards-section").innerText;
+
+  // Print Upcoming Courses
+  if (upcomingCoursesText.trim().length > 0) {
     doc.setFontSize(12);
     doc.text("Upcoming Courses:", 10, yOffset);
     yOffset += 10;
 
-    upcomingCourses.forEach((courses) => {
+    // Split upcoming courses text into lines and print each line
+    const upcomingCoursesLines = upcomingCoursesText.split('\n');
+    upcomingCoursesLines.forEach((line) => {
       doc.setFontSize(10);
-      const courseText = formatCourseText(courses);
-      // courseText.forEach((line) => {
-      //   doc.text(line, 10, yOffset);
-      //   yOffset += 6;
-      // });
-      yOffset += 6; // Add space between courses
+      doc.text(line, 10, yOffset);
+      yOffset += 6;
+      yOffset = checkPageBreak(yOffset); // Check for page break
     });
+    yOffset += 10; // Add space after the section
+    yOffset = checkPageBreak(yOffset); // Check for page break
   }
 
-  // Render ongoing courses
-  if (ongoingCourses.length > 0) {
+  // Print Ongoing Courses
+  if (ongoingCoursesText.trim().length > 0) {
     doc.setFontSize(12);
     doc.text("Ongoing Courses:", 10, yOffset);
     yOffset += 10;
 
-    ongoingCourses.forEach((courses) => {
+    // Split ongoing courses text into lines and print each line
+    const ongoingCoursesLines = ongoingCoursesText.split('\n');
+    ongoingCoursesLines.forEach((line) => {
       doc.setFontSize(10);
-      const courseText = formatCourseText(courses);
-      // courseText.forEach((line) => {
-      //   doc.text(line, 10, yOffset);
-      //   yOffset += 6;
-      // });
-      yOffset += 6; // Add space between courses
+      doc.text(line, 10, yOffset);
+      yOffset += 6;
+      yOffset = checkPageBreak(yOffset); // Check for page break
     });
+    yOffset += 10; // Add space after the section
+    yOffset = checkPageBreak(yOffset); // Check for page break
   }
-        
-      } else {
-        console.log("No data available");
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
 
-  let yOffset = 10; // Initial y-offset for the text position
-
-  // Add a title
-  doc.setFontSize(14);
-  doc.text("Training Calendar - October 2024", 10, yOffset);
-  yOffset += 10;
-
-  
-
-  // Download the PDF
-  doc.save("Training_Calendar_October_2024.pdf");
+  // Download the generated PDF
+  doc.save(`Training_Calendar_${currentMonth}_${currentYear}.pdf`);
 });
-
-// Helper function to format course details into text
-function formatCourseText(course) {
-  const courseText = [];
-  courseText.push(`Course Name: ${course.courseName}`);
-  courseText.push(`Target Audience: ${course.targetAudience}`);
-  courseText.push(`Date: ${course.startDate} to ${course.endDate}`);
-  courseText.push(`Duration: ${course.startTime, course.endTime}`);
-  courseText.push(`Trainer: ${course.trainerName}`);
-  courseText.push(`Mode: ${course.mode}`);
-  courseText.push(`Key Topics: ${course.keyPoints}`);
-  return courseText;
-}
-
-// Helper function to calculate duration in hours and minutes
-// function calculateDuration(startTime, endTime) {
-//   const start = new Date(`1970-01-01T${startTime}`);
-//   const end = new Date(`1970-01-01T${endTime}`);
-//   const durationMs = end - start;
-//   const durationHours = Math.floor(durationMs / (1000 * 60 * 60));
-//   const durationMinutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
-//   return `${durationHours} hrs ${durationMinutes} mins`;
-// }
-
-// Attach the PDF generation function to a button
-document.getElementById("downloadPDFbtn").addEventListener("click", generatePDF);
