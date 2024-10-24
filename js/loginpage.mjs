@@ -19,9 +19,17 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
       window.location.href = "viewAllCourse.html";
 
       const user = userCredential.user;
-      const dt = new Date();
+      const dt = new Date().toISOString(); // Store date in ISO format for consistency
+
+      // Update only the last_login field in Firebase without affecting other fields
       update(ref(db, "users/" + user.uid), {
-        last_login: dt,
+        last_login: dt
+      })
+      .then(() => {
+        console.log("Last login updated successfully");
+      })
+      .catch((error) => {
+        console.error("Error updating last login:", error);
       });
     })
     .catch((error) => {
@@ -32,10 +40,20 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
     });
 });
 
+document.getElementById("email").addEventListener("focus", () => {
+  const errorMessage = document.getElementById("error-message");
+  errorMessage.textContent = ""; // Clear the error message
+});
+document.getElementById("password").addEventListener("focus", () => {
+  const errorMessage = document.getElementById("error-message");
+  errorMessage.textContent = ""; // Clear the error message
+});
+
 // Check if user is authenticated
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log('User is signed in:', user.uid);
+    
+    console.log('User is signed in:', user.email);
   } else {
     console.log('User is signed out.');
   }

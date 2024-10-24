@@ -10,6 +10,7 @@ https://fonts.googleapis.com/css?family=Montserrat'
 rel='stylesheet'>
   </head>
   <body>
+    <div id="message" style="color: green;"></div>
     <header class="head">
       <div class="left-section">
         <img
@@ -20,12 +21,15 @@ rel='stylesheet'>
         />
       </div>
       <div class="right-section">
-        <button id="logout_button" style="border: none;"><img
+        <button id="logout_button" style="border: none;cursor: pointer;"><img
           src="../Images/sign_out.png"
-          alt="Back"
+          alt="Logout"
           class="icon"
-          style="width: 20px; height: 20px"
-        /></button>
+          style="width: 20px; height: 20px"/>  
+          <div class="logoutHoverText">       
+              <div id="onHoverLogout">Logout</div>
+          </div>
+      </button>
       </div>
     </header>
 
@@ -40,7 +44,6 @@ rel='stylesheet'>
               <img src="../Images/right-arr.png" alt="right_arrow" id="right-arrow" />
             </span>
           </h1>
-          
         <div class="search-bar">
           <input type="text" placeholder="Search here..." id="search-input" />
           <button class="search-btn">
@@ -51,40 +54,42 @@ rel='stylesheet'>
           </button>
         </div>
         <div class="action-icons">
-
-          <div class="expo">
-          <img src="../Images/export-file.png" alt="Export" />
+          <div class="expo" id="export-img">
+          <img src="../Images/export-file.png" alt="Export"/>
+          <div class="hoverText">
+            <div id="onHoverExport">Export</div>
+          </div>
         </div>
-
           <div class="filter-section">
             <div class="container-f">
                 <button class="icon-btn" id="iconButton">
                     <img src="../Images/filter.png" alt="">
+                    <div class="filterHoverText">
+                      <div id="onHoverFilter">Filter</div>
+                     </div>
                   </svg>
                 </button>
                 <div class="popup-menu" id="popupMenuFilter">
-                  <p>Upcoming</p>
+                  <p id="filter-upcoming">Upcoming</p>
                   <hr>
-                  <p>Ongoing</p>
+                  <p id="filter-ongoing">Ongoing</p>
                   <hr>
-                  <p>Completed</p>
+                  <p id="filter-completed">Completed</p>
                 </div>
               </div>
            </div>
-
                <div class="addicon">
                  <a href="indexcreate.html" id="add_button"><img src="../Images/add.png" alt="Add" /></a> 
+                <div class="addHoverText">
+                  <div id="onHoverAdd">Add</div>
+                </div>
+
               </div>
 
         </div>
       </div>
     </div>
     <div class="card-grid" id="card-grid"></div>
-  
-
-
-    
-
     <script type="module" src="../firebaseConfig.mjs"></script>
     <script type="module" src="../js/ViewAllCourseScript.mjs"></script>
     <script type="module" src="../js/viewAllCourse.js"></script>

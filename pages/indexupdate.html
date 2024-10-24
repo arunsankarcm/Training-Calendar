@@ -6,33 +6,48 @@
     <title>Course Updation Form</title>
     <link rel="stylesheet" href="../styles/styleupdate.css" />
     <link
-      href="
-https://fonts.googleapis.com/css?family=Montserrat"
+      href="https://fonts.googleapis.com/css?family=Montserrat"
       rel="stylesheet"
     />
   </head>
   <body>
+    <header class="head">
+      <div class="left-section">
+        <img
+          src="../Images/exp_logo.png"
+          alt="Experion Logo"
+          class="logo"
+          style="width: 150px; height: 30px"
+        />
+      </div>
+      <div class="right-section">
+        <button id="logout_button" style="border: none;cursor: pointer;"><img
+          src="../Images/sign_out.png"
+          alt="Logout"
+          class="icon"
+          style="width: 20px; height: 20px "/>  
+          <div class="logoutHoverText">       
+              <div id="onHoverLogout">Logout</div>
+          </div>
+      </button>
+      </div>
+    </header>
     <div class="container">
-      <header class="header">
-        <div class="left-section">
-          <img
-            src="../Images/experion.png"
-            alt="Experion Logo"
-            class="logo"
-          />
-        </div>
-        <div class="right-section">
-          <img src="../Images/image (8).png" alt="back button" class="backbutton" />
-        </div>
-      </header>
-
       <div class="form-container">
-        <form>
-          <a href="viewAllCourse.html"><img
+        <form id="update-page">
+          <!-- Add id for easier selection -->
+          <button
+          type="button"
+          class="previousbutton"
+          id="back-button"
+        >
+          <img
             src="../Images/back-button (1).png"
             alt="previous"
-            class="previousbutton"
-          /></a>
+            class="previousimage"
+          />
+        </button>
+
           <br />
           <br />
           <br />
@@ -45,7 +60,6 @@ https://fonts.googleapis.com/css?family=Montserrat"
               placeholder="Update the Course title"
             />
           </div>
-
           <div class="inline-group">
             <div class="form-group">
               <label for="start-date">Start Date:</label>
@@ -56,7 +70,6 @@ https://fonts.googleapis.com/css?family=Montserrat"
               <input type="date" id="end-date" name="end-date" />
             </div>
           </div>
-
           <div class="inline-group">
             <div class="form-group">
               <label for="start-time">Start Time:</label>
@@ -67,7 +80,6 @@ https://fonts.googleapis.com/css?family=Montserrat"
               <input type="time" id="end-time" name="end-time" />
             </div>
           </div>
-
           <div class="form-group">
             <label for="key-points">Key Points to be covered:</label>
             <textarea
@@ -76,9 +88,8 @@ https://fonts.googleapis.com/css?family=Montserrat"
               placeholder="Update the description of the course here"
             ></textarea>
           </div>
-
           <div class="flex-container">
-            <div class="left-section">
+            <div class="left-section-bottom">
               <div class="form-group">
                 <label for="trainer">Trainer:</label>
                 <input
@@ -104,8 +115,7 @@ https://fonts.googleapis.com/css?family=Montserrat"
                 />
               </div>
             </div>
-
-            <div class="right-section">
+            <div class="right-section-bottom">
               <div class="form-group">
                 <div class="radio-group">
                   <label>
@@ -116,29 +126,38 @@ https://fonts.googleapis.com/css?family=Montserrat"
                       class="online"
                     />
                     Online
-                    <img src="../Images/image (6).png" alt="online" class="onlinepic" />
+                    <img
+                      src="../Images/image (6).png"
+                      alt="online"
+                      class="onlinepic"
+                    />
                   </label>
                   <br />
                   <label>
-                    <input
+                    <input 
                       type="radio"
                       name="mode"
                       value="offline"
                       class="offline"
                     />
                     Offline
-                    <img src="../Images/image (7).png" alt="offline" class="offlinepic" />
+                    <img
+                      src="../Images/image (7).png"
+                      alt="offline"
+                      class="offlinepic"
+                    />
                   </label>
                 </div>
               </div>
             </div>
           </div>
-
           <div class="button">
             <button type="submit">UPDATE</button>
           </div>
         </form>
       </div>
     </div>
+    <script type="module" src="../firebaseConfig.mjs"></script>
+    <script type="module" src="../js/updatePage.mjs"></script>
   </body>
 </html>
