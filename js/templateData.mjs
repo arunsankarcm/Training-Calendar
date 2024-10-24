@@ -12,17 +12,40 @@ let cardNo = 1;
 let upcomingCardNo = 1;
 let ongoingCardNo = 1;
 
-    //month year static
+// Month and year variables
 const todaysDate = new Date();
-const monthNamesArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const currentMonth = monthNamesArray[todaysDate.getMonth()];
-const currentYear = todaysDate.getFullYear();
+const monthNamesArray = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+let currentMonth = monthNamesArray[todaysDate.getMonth()];
+let currentYear = todaysDate.getFullYear();
 
-// Update the header with the current month and year
+const urlParams = new URLSearchParams(window.location.search);
+const monthText = urlParams.get("month");
+const yearText = urlParams.get("year");
+console.log("URL Parameters - Month:", monthText, "Year:", yearText);
+
+if (monthText && yearText) {
+  if (monthNamesArray.includes(monthText) && !isNaN(yearText)) {
+    currentMonth = monthText;
+    currentYear = yearText;
+  }
+}
+
+// Update the header with the selected month and year
 const monthYearHeader = document.getElementById("month-year-header");
 monthYearHeader.innerHTML = `<h6>${currentMonth} ${currentYear}</h6>`;
-
-
 
 function getCourses() {
   console.log("Fetching data from Firebase...");
@@ -46,44 +69,64 @@ function getCourses() {
           return dateA - dateB; // Ascending order
         });
 
-        // Get the current date
-        const currentDate = new Date();
+        // Convert currentMonth and currentYear to numerical values
+        const currentMonthIndex = monthNamesArray.indexOf(currentMonth); // 0-based index
+        const currentYearNumber = parseInt(currentYear);
+
         const upcomingCourses = [];
         const ongoingCourses = [];
 
-
-        // Separate courses into ongoing and upcoming
         sortedCourses.forEach((course) => {
           const courseStartDate = new Date(course.startDate);
-          const courseEndDate = new Date(course.endDate);
+          const courseEndDate = course.endDate
+            ? new Date(course.endDate)
+            : null;
 
-            // Extract current month and year
-            const currentMonth = currentDate.getMonth(); 
-            const courseStartMonth = courseStartDate.getMonth();
-      
+          const courseStartMonth = courseStartDate.getMonth();
+          const courseStartYear = courseStartDate.getFullYear();
+          const courseEndMonth = courseEndDate
+            ? courseEndDate.getMonth()
+            : null;
+          const courseEndYear = courseEndDate
+            ? courseEndDate.getFullYear()
+            : null;
 
+          // Check if course occurs in the selected month and year
+          const courseOccursInSelectedMonth =
+            (courseStartYear < currentYearNumber ||
+              (courseStartYear === currentYearNumber &&
+                courseStartMonth <= currentMonthIndex)) &&
+            (!courseEndDate ||
+              courseEndYear > currentYearNumber ||
+              (courseEndYear === currentYearNumber &&
+                courseEndMonth >= currentMonthIndex));
 
-          if (courseEndDate < currentDate) 
-          {
-            // Ignore courses that have already ended
-            console.log(`Course '${course.courseName}' has ended, skipping.`);
-          } 
-
-          else if ((courseStartDate >= currentDate) && (courseStartMonth === currentMonth))
-           {
-            // Upcoming courses (Start date is in the future)
+          if (!courseOccursInSelectedMonth) {
+            // Course does not occur in the selected month and year
+            console.log(
+              `Course '${course.courseName}' does not occur in ${currentMonth} ${currentYear}, skipping.`
+            );
+          } else if (
+            courseStartMonth === currentMonthIndex &&
+            courseStartYear === currentYearNumber
+          ) {
+            // Course starts in the selected month and year
             console.log(`Rendering upcoming course: ${course.courseName}`);
             upcomingCourses.push(course);
-          }
-          else 
-          {
-            // Ongoing courses (Start date is in the past, but the end date is today or later)
+          } else {
+            // Course spans the selected month and year but started earlier
             console.log(`Rendering ongoing course: ${course.courseName}`);
             ongoingCourses.push(course);
           }
-
         });
 
+        if (upcomingCourses.length === 0 && ongoingCourses.length === 0) {
+          const noCoursesMessage = document.createElement("p");
+          noCoursesMessage.textContent = `No courses available for ${currentMonth} ${currentYear}.`;
+          noCoursesMessage.style.textAlign = "center";
+          noCoursesMessage.style.marginTop = "20px";
+          document.getElementById("courses-section").appendChild(noCoursesMessage);
+        }
 
         upcomingCourses.forEach((course, index) => {
           renderCourses(course, "upcoming", upcomingCourses.length, index);
@@ -92,7 +135,6 @@ function getCourses() {
         ongoingCourses.forEach((course, index) => {
           renderCourses(course, "ongoing", ongoingCourses.length, index);
         });
-
       } else {
         console.log("No data available");
       }
@@ -102,70 +144,57 @@ function getCourses() {
     });
 }
 
-
-function renderCourses(course,section,totalCoursesInSection, currentIndex) {
+function renderCourses(course, section, totalCoursesInSection, currentIndex) {
+  // Existing renderCourses function
   console.log(`Rendering course card for: ${course.courseName}`);
 
-  // const courseDate = new Date(course.startDate);  
-  const startTime = new Date(`${course.startDate}T${course.startTime}`); 
-  const endTime = new Date(`${course.startDate}T${course.endTime}`); 
+  const startTime = new Date(`${course.startDate}T${course.startTime}`);
+  const endTime = new Date(`${course.startDate}T${course.endTime}`);
 
+  const durationMs = endTime - startTime;
+  const durationHours = Math.floor(durationMs / (1000 * 60 * 60));
+  const durationMinutes = Math.floor(
+    (durationMs % (1000 * 60 * 60)) / (1000 * 60)
+  );
+  let durationString = null;
+  if (durationHours > 1 && durationMinutes > 0) {
+    durationString = `${durationHours} hrs ${durationMinutes} mins`;
+  } else if (durationHours > 1 && durationMinutes === 0) {
+    durationString = `${durationHours} hrs`;
+  } else if (durationHours === 1 && durationMinutes > 0) {
+    durationString = `${durationHours} hr ${durationMinutes} mins`;
+  } else if (durationHours === 1 && durationMinutes === 0) {
+    durationString = `${durationHours} hr`;
+  } else if (durationHours === 0 && durationMinutes > 0) {
+    durationString = `${durationMinutes} mins`;
+  } else {
+    durationString = `NS`;
+  }
 
-  const durationMs = endTime - startTime; 
-  const durationHours = Math.floor(durationMs / (1000 * 60 * 60)); 
-  const durationMinutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
- let durationString = null;
-if ((durationHours > 1) && ( durationMinutes > 0)) 
-{
-  durationString = `${durationHours} hrs ${durationMinutes} mins`;
-}
-else if ((durationHours > 1) && (durationMinutes === 0))
-{
-  durationString = `${durationHours} hrs`;
-}
-else if ((durationHours === 1) && ( durationMinutes > 0)) {
-  durationString = `${durationHours} hr ${durationMinutes} mins`;
-}
-else if ((durationHours === 1) && ( durationMinutes === 0)) {
-  durationString = `${durationHours} hr`;
-}
-else if ((durationHours === 0) && (durationMinutes > 0)){
-  durationString = `${durationMinutes} mins`;
-}
-else{
-  durationString = `NS`;
-}
-
-  let courseEndDateValid=course.endDate;
-  if (courseEndDateValid === '')
-  {
+  let courseEndDateValid = course.endDate;
+  if (courseEndDateValid === "") {
     courseEndDateValid = "TBD";
   }
 
-
-
-  // main card div
+  // Main card div
   const card = document.createElement("div");
   card.classList.add("training-card");
-  
 
-  
-   const circleNumber = document.createElement("div");
-   circleNumber.classList.add("circle-number");
- 
-   if (section === "upcoming") {
-     circleNumber.innerHTML = `<span>${upcomingCardNo}</span>`; 
-     upcomingCardNo++;
-   } else {
-     circleNumber.innerHTML = `<span>${ongoingCardNo}</span>`; 
-     ongoingCardNo++; 
-   }
- 
+  const circleNumber = document.createElement("div");
+  circleNumber.classList.add("circle-number");
 
-  // training details
+  if (section === "upcoming") {
+    circleNumber.innerHTML = `<span>${upcomingCardNo}</span>`;
+    upcomingCardNo++;
+  } else {
+    circleNumber.innerHTML = `<span>${ongoingCardNo}</span>`;
+    ongoingCardNo++;
+  }
+
+  // Training details
   const trainingDetails = document.createElement("div");
   trainingDetails.classList.add("training-details");
-  
+
   trainingDetails.innerHTML = `
     <h3>${course.courseName}</h3>
     <p><strong>Target Audience:</strong> ${course.targetAudience}</p>
@@ -174,23 +203,20 @@ else{
     <p><strong>Key topics:</strong> ${course.keyPoints}</p>
   `;
 
-  //online/offline
+  // Online/offline
   const modeTag = document.createElement("span");
-  modeTag.classList.add("tag", course.mode);
-  modeTag.textContent = course.mode.charAt(0).toUpperCase() + course.mode.slice(1); // Capitalize first letter of mode
-
-
+  modeTag.classList.add("tag", course.mode.toLowerCase());
+  modeTag.textContent =
+    course.mode.charAt(0).toUpperCase() + course.mode.slice(1); // Capitalize first letter of mode
 
   card.appendChild(circleNumber);
   card.appendChild(trainingDetails);
   card.appendChild(modeTag);
-  
+
   if (section === "upcoming") {
     upcomingDiv.appendChild(card);
-    // upcomingDiv.appendChild(separationLine)
-  } else {    
+  } else {
     ongoingDiv.appendChild(card);
-    // ongoingDiv.appendChild(separationLine);
   }
 
   // Only add a separation line if it's NOT the last course in the section
@@ -211,97 +237,92 @@ else{
 
 getCourses();
 
-
-document.getElementById('downloadPDFbtn').addEventListener('click', function (){
+// PDF Generation Function
+function generatePDF() {
+  // Existing generatePDF function
   const doc = new jsPDF();
-  const upcomingCourses = document.getElementById("upcoming-training-cards-section");
-  const ongoingCourses = document.getElementById("ongoing-training-cards-section");
-  const dbref = ref(db);
+  let yOffset = 20; // Initial y-offset for the text position
 
-  get(child(dbref, "courses"))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        console.log("Data fetched successfully!");
-        const courses = snapshot.val();
-        console.log("Courses data:", courses);
+  // Add a title with the correct month and year
+  doc.setFontSize(14);
+  doc.text(`Training Calendar - ${currentMonth} ${currentYear}`, 10, yOffset);
+  yOffset += 10;
 
-        // Render upcoming courses
+  const upcomingCoursesSection = document.getElementById(
+    "upcoming-training-cards-section"
+  );
+  const ongoingCoursesSection = document.getElementById(
+    "ongoing-training-cards-section"
+  );
+
+  // Render upcoming courses
+  const upcomingCourses =
+    upcomingCoursesSection.querySelectorAll(".training-card");
   if (upcomingCourses.length > 0) {
     doc.setFontSize(12);
     doc.text("Upcoming Courses:", 10, yOffset);
     yOffset += 10;
 
-    upcomingCourses.forEach((courses) => {
+    upcomingCourses.forEach((courseCard) => {
       doc.setFontSize(10);
-      const courseText = formatCourseText(courses);
-      // courseText.forEach((line) => {
-      //   doc.text(line, 10, yOffset);
-      //   yOffset += 6;
-      // });
+      const courseText = formatCourseTextFromDOM(courseCard);
+      courseText.forEach((line) => {
+        doc.text(line, 10, yOffset);
+        yOffset += 6;
+
+        // Check for page overflow
+        if (yOffset > doc.internal.pageSize.getHeight() - 20) {
+          doc.addPage();
+          yOffset = 20;
+        }
+      });
       yOffset += 6; // Add space between courses
     });
   }
 
   // Render ongoing courses
+  const ongoingCourses =
+    ongoingCoursesSection.querySelectorAll(".training-card");
   if (ongoingCourses.length > 0) {
     doc.setFontSize(12);
     doc.text("Ongoing Courses:", 10, yOffset);
     yOffset += 10;
 
-    ongoingCourses.forEach((courses) => {
+    ongoingCourses.forEach((courseCard) => {
       doc.setFontSize(10);
-      const courseText = formatCourseText(courses);
-      // courseText.forEach((line) => {
-      //   doc.text(line, 10, yOffset);
-      //   yOffset += 6;
-      // });
+      const courseText = formatCourseTextFromDOM(courseCard);
+      courseText.forEach((line) => {
+        doc.text(line, 10, yOffset);
+        yOffset += 6;
+
+        // Check for page overflow
+        if (yOffset > doc.internal.pageSize.getHeight() - 20) {
+          doc.addPage();
+          yOffset = 20;
+        }
+      });
       yOffset += 6; // Add space between courses
     });
   }
-        
-      } else {
-        console.log("No data available");
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
-
-  let yOffset = 10; // Initial y-offset for the text position
-
-  // Add a title
-  doc.setFontSize(14);
-  doc.text("Training Calendar - October 2024", 10, yOffset);
-  yOffset += 10;
-
-  
 
   // Download the PDF
-  doc.save("Training_Calendar_October_2024.pdf");
-});
+  doc.save(`Training_Calendar_${currentMonth}_${currentYear}.pdf`);
+}
 
-// Helper function to format course details into text
-function formatCourseText(course) {
+// Helper function to extract course details from the DOM
+function formatCourseTextFromDOM(courseCard) {
   const courseText = [];
-  courseText.push(`Course Name: ${course.courseName}`);
-  courseText.push(`Target Audience: ${course.targetAudience}`);
-  courseText.push(`Date: ${course.startDate} to ${course.endDate}`);
-  courseText.push(`Duration: ${course.startTime, course.endTime}`);
-  courseText.push(`Trainer: ${course.trainerName}`);
-  courseText.push(`Mode: ${course.mode}`);
-  courseText.push(`Key Topics: ${course.keyPoints}`);
+  const courseName = courseCard.querySelector(".training-details h3").innerText;
+  const details = courseCard.querySelectorAll(".training-details p");
+
+  courseText.push(`Course Name: ${courseName}`);
+  details.forEach((detail) => {
+    courseText.push(detail.innerText);
+  });
   return courseText;
 }
 
-// Helper function to calculate duration in hours and minutes
-// function calculateDuration(startTime, endTime) {
-//   const start = new Date(`1970-01-01T${startTime}`);
-//   const end = new Date(`1970-01-01T${endTime}`);
-//   const durationMs = end - start;
-//   const durationHours = Math.floor(durationMs / (1000 * 60 * 60));
-//   const durationMinutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
-//   return `${durationHours} hrs ${durationMinutes} mins`;
-// }
-
-// Attach the PDF generation function to a button
-document.getElementById("downloadPDFbtn").addEventListener("click", generatePDF);
+// Attach the PDF generation function to the button
+document
+  .getElementById("downloadPDFbtn")
+  .addEventListener("click", generatePDF);
