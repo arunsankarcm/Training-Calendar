@@ -53,89 +53,7 @@ document.getElementById('back-button').addEventListener('click', () => {
   window.location.href = 'viewAllCourse.html';
 });
 
-// Submission event
-document.getElementById("create-page").addEventListener("submit", submitCourse);
 
-function submitCourse(e) {
-  e.preventDefault();
-
-  const courseName = getElementVal("course-name");
-  const startDate = getElementVal("start-date");
-  const endDate = getElementVal("end-date");
-  const startTime = getElementVal("start-time");
-  const endTime = getElementVal("end-time");
-  const keyPoints = getElementVal("key-points");
-  const trainerName = getElementVal("trainer");
-  const targetAudience = getElementVal("audience");
-  const maxParticipation = getElementVal("max-participants");
-
-  const mode = document.getElementsByName("mode");
-  let selectedValue = "";
-  for (const radio of mode) {
-    if (radio.checked) {
-      selectedValue = radio.value;
-      break;
-    }
-  }
-
-  saveInDB(
-    courseName,
-    startDate,
-    endDate,
-    startTime,
-    endTime,
-    keyPoints,
-    trainerName,
-    targetAudience,
-    maxParticipation,
-    selectedValue
-  );
-}
-
-// Save to Firebase
-const saveInDB = (
-  courseName,
-  startDate,
-  endDate,
-  startTime,
-  endTime,
-  keyPoints,
-  trainerName,
-  targetAudience,
-  maxParticipation,
-  mode
-) => {
-  const coursesRef = ref(db, "courses");
-  const newCourseRef = push(coursesRef);
-
-  set(newCourseRef, {
-    courseName: courseName,
-    startDate: startDate,
-    endDate: endDate,
-    startTime: startTime,
-    endTime: endTime,
-    keyPoints: keyPoints,
-    trainerName: trainerName,
-    targetAudience: targetAudience,
-    maxParticipation: maxParticipation,
-    mode: mode,
-  })
-    .then(() => {
-      showPopup("Course added successfully!", "success");
-      setTimeout(() => {
-        window.location.href = "viewAllCourse.html";
-      }, 3000);
-    })
-    .catch((error) => {
-      showPopup("Failed to add the course. Please try again.", "error");
-      console.error("Error adding course: ", error);
-    });
-};
-
-// Get input value by ID
-const getElementVal = (id) => {
-  return document.getElementById(id).value;
-};
 
 // Popup function
 const showPopup = (message, type) => {
@@ -205,5 +123,257 @@ onAuthStateChanged(auth, (user) => {
 
 
 
+// document.addEventListener("DOMContentLoaded", () => {
+//   const courseContainer = document.getElementById("courses-container");
+//   const addCourseButton = document.getElementById("add-course");
+//   let courseCount = 1;  // To track the number of courses
+
+//   // Add new course fields with a remove button
+//   addCourseButton.addEventListener("click", () => {
+//     courseCount++; // Increment course count for each new course added
+
+//     // Clone the existing course form
+//     const newCourseFields = document.querySelector(".course-fields").cloneNode(true);
+
+//     // Clear the input values in the cloned fields
+//     newCourseFields.querySelectorAll("input").forEach(input => input.value = "");
+
+//     // Make radio buttons independent by assigning unique name attributes
+//     const radioButtons = newCourseFields.querySelectorAll('[name="mode"]');
+//     radioButtons.forEach(radio => {
+//       radio.name = `mode-${courseCount}`; // Assign a unique name to each radio group
+//     });
+
+//     // Add a separating line before the new course form
+//     const separator = document.createElement("div");
+//     separator.style.borderTop = "5px solid #333"; // 5px solid line
+//     separator.style.margin = "20px 0"; // Add margin above and below the line
+
+//     // Add the remove button to the cloned course form
+//     const removeButton = document.createElement("button");
+//     removeButton.type = "button";
+//     removeButton.classList.add("remove-course");
+//     removeButton.textContent = "Remove Course";
+//     newCourseFields.appendChild(removeButton);
+
+//     // Append the separator and then the new form
+//     courseContainer.appendChild(separator);
+//     courseContainer.appendChild(newCourseFields);
+//   });
+
+//   // Remove course fields
+//   courseContainer.addEventListener("click", (e) => {
+//     if (e.target.classList.contains("remove-course")) {
+//       e.target.closest(".course-fields").previousElementSibling.remove();  // Remove the separator
+//       e.target.closest(".course-fields").remove();  // Remove the course form
+//     }
+//   });
+
+//   // Form submission to Firebase for multiple courses
+//   document.getElementById("create-page").addEventListener("submit", submitCourses);
+
+//   function submitCourses(e) {
+//     e.preventDefault();
+
+//     const allCourses = document.querySelectorAll(".course-fields");  // Select all course forms
+
+//     allCourses.forEach((course, index) => {
+//       const courseName = course.querySelector(`[name="course-name"]`).value;
+//       const startDate = course.querySelector(`[name="start-date"]`).value;
+//       const endDate = course.querySelector(`[name="end-date"]`).value;
+//       const startTime = course.querySelector(`[name="start-time"]`).value;
+//       const endTime = course.querySelector(`[name="end-time"]`).value;
+//       const keyPoints = course.querySelector(`[name="key-points"]`).value;
+//       const trainerName = course.querySelector(`[name="trainer"]`).value;
+//       const targetAudience = course.querySelector(`[name="audience"]`).value;
+//       const maxParticipation = course.querySelector(`[name="max-participants"]`).value;
+
+//       // Use unique name for mode selection by index
+//       const modeName = `mode-${index + 1}`; // Update index for each course dynamically
+//       const selectedMode = course.querySelector(`input[name="${modeName}"]:checked`)?.value;
+
+//       if (!selectedMode) {
+//         alert(`Please select a mode for course ${index + 1}`);
+//         return;
+//       }
+
+//       // Save each course to Firebase
+//       saveInDB(
+//         courseName,
+//         startDate,
+//         endDate,
+//         startTime,
+//         endTime,
+//         keyPoints,
+//         trainerName,
+//         targetAudience,
+//         maxParticipation,
+//         selectedMode
+//       );
+//     });
+
+//     alert("All courses submitted!");
+//   }
+
+//   // Save each course to Firebase
+//   const saveInDB = (
+//     courseName,
+//     startDate,
+//     endDate,
+//     startTime,
+//     endTime,
+//     keyPoints,
+//     trainerName,
+//     targetAudience,
+//     maxParticipation,
+//     mode
+//   ) => {
+//     const coursesRef = ref(db, "courses");
+//     const newCourseRef = push(coursesRef);
+
+//     set(newCourseRef, {
+//       courseName: courseName,
+//       startDate: startDate,
+//       endDate: endDate,
+//       startTime: startTime,
+//       endTime: endTime,
+//       keyPoints: keyPoints,
+//       trainerName: trainerName,
+//       targetAudience: targetAudience,
+//       maxParticipation: maxParticipation,
+//       mode: mode,
+//     })
+//       .then(() => {
+//         showPopup("Course added successfully!", "success");
+//       })
+//       .catch((error) => {
+//         showPopup("Failed to add the course. Please try again.", "error");
+//         console.error("Error adding course: ", error);
+//       });
+//   };
+// });
+
+// Popup function (remains unchanged)
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const courseContainer = document.getElementById("courses-container");
+  const addCourseButton = document.getElementById("add-course");
+  let courseCount = 1;
+
+  addCourseButton.addEventListener("click", () => {
+    courseCount++;
+
+    const newCourseFields = document.querySelector(".course-fields").cloneNode(true);
+    newCourseFields.querySelectorAll("input").forEach(input => input.value = "");
+
+    const radioButtons = newCourseFields.querySelectorAll('[name="mode"]');
+    radioButtons.forEach(radio => {
+      radio.name = `mode-${courseCount}`;
+    });
+
+    const separator = document.createElement("div");
+    separator.style.borderTop = "5px solid #333";
+    separator.style.margin = "20px 0";
+
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.classList.add("remove-course");
+    removeButton.textContent = "Remove Course";
+    newCourseFields.appendChild(removeButton);
+
+    courseContainer.appendChild(separator);
+    courseContainer.appendChild(newCourseFields);
+  });
+
+  courseContainer.addEventListener("click", (e) => {
+    if (e.target.classList.contains("remove-course")) {
+      e.target.closest(".course-fields").previousElementSibling.remove();
+      e.target.closest(".course-fields").remove();
+    }
+  });
+
+  document.getElementById("create-page").addEventListener("submit", submitCourses);
+
+  function submitCourses(e) {
+    e.preventDefault();
+
+    const allCourses = document.querySelectorAll(".course-fields");
+
+    allCourses.forEach((course, index) => {
+      const courseName = course.querySelector(`[name="course-name"]`).value;
+      const startDate = course.querySelector(`[name="start-date"]`).value;
+      const endDate = course.querySelector(`[name="end-date"]`).value;
+      const startTime = course.querySelector(`[name="start-time"]`).value;
+      const endTime = course.querySelector(`[name="end-time"]`).value;
+      const keyPoints = course.querySelector(`[name="key-points"]`).value;
+      const trainerName = course.querySelector(`[name="trainer"]`).value;
+      const targetAudience = course.querySelector(`[name="audience"]`).value;
+      const maxParticipation = course.querySelector(`[name="max-participants"]`).value;
+
+      const modeName = `mode-${index + 1}`;
+      const selectedMode = course.querySelector(`input[name="${modeName}"]:checked`)?.value;
+
+      if (!selectedMode) {
+        alert(`Please select a mode for course ${index + 1}`);
+        return;
+      }
+
+      saveInDB(
+        courseName,
+        startDate,
+        endDate,
+        startTime,
+        endTime,
+        keyPoints,
+        trainerName,
+        targetAudience,
+        maxParticipation,
+        selectedMode
+      );
+    });
+
+    alert("All courses submitted!");
+  }
+
+  const saveInDB = (
+    courseName,
+    startDate,
+    endDate,
+    startTime,
+    endTime,
+    keyPoints,
+    trainerName,
+    targetAudience,
+    maxParticipation,
+    mode
+  ) => {
+    const coursesRef = ref(db, "courses");
+    const newCourseRef = push(coursesRef);
+
+    set(newCourseRef, {
+      courseName: courseName,
+      startDate: startDate,
+      endDate: endDate,
+      startTime: startTime,
+      endTime: endTime,
+      keyPoints: keyPoints,
+      trainerName: trainerName,
+      targetAudience: targetAudience,
+      maxParticipation: maxParticipation,
+      mode: mode,
+    })
+      .then(() => {
+        showPopup("Course added successfully!", "success");
+      })
+      .catch((error) => {
+        showPopup("Failed to add the course. Please try again.", "error");
+        console.error("Error adding course: ", error);
+      });
+  };
+});
 
 
