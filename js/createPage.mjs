@@ -209,10 +209,10 @@ document.body.appendChild(popup);
 // Logout function (sign out)
 document.getElementById('logout_button').addEventListener('click', () => {
 signOut(auth).then(() => {
-  // Store the logout message in localStorage
+ 
   localStorage.setItem('logoutMessage', 'Logged out successfully.');
 
-  // Redirect to login page after logging out
+ 
   window.location.href = 'loginpage.html';
 }).catch((error) => {
   console.error('Sign out error:', error);

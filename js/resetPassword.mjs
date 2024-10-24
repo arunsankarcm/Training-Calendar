@@ -12,14 +12,11 @@ document.getElementById("backToLogin").addEventListener("click", (e) => {
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // User is signed in, so you can access the email
     const userEmail = user.email;
     console.log("User's email address:", userEmail);
 
-    // You can use the email address in your logic, for example, autofill fields
     document.getElementById("resetEmail").value = userEmail;
   } else {
-    // No user is signed in, handle accordingly (e.g., redirect to login)
     console.log("No user is logged in.");
   }
 });

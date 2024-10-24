@@ -21,6 +21,11 @@ body {
     width: auto;
     
 }}
+.back_button{
+    padding-left: 10px;
+    justify-content: start;
+    display: flex;
+}
 
 /* Hovering download Options */
 .sheetHover{
