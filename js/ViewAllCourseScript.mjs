@@ -251,7 +251,7 @@ function AddCourseToCard(course, cardNo) {
     <div class="three-dots">
       ⋮
     </div>
-    <div class="popup-menu">
+    <div class="popup-menu" style="display:none;">
       <ul>
         <li class="edit-tag"><img src="../Images/edit (1).png" alt="experion-rhombus-white" /></li>
         <hr>
