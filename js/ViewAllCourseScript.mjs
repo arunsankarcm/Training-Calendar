@@ -14,6 +14,11 @@ let cardNumberMap = new Map(); // Store original card numbers
 let currentMonth = new Date().getMonth(); // Current month (0-11)
 let currentYear = new Date().getFullYear(); // Current year
 
+let monthYearText = ""; // Declare monthYearText as a global variable
+let month = '';
+let year = '';
+
+
 function getMonthName(monthIndex) {
   const monthNames = [
     "January",
@@ -33,10 +38,18 @@ function getMonthName(monthIndex) {
 }
 
 function updateMonthYearDisplay() {
-  document.getElementById(
-    "month-year"
-  ).textContent = `${getMonthName(currentMonth)} ${currentYear}`;
+  month = `${getMonthName(currentMonth)}`;
+  year = `${currentYear}`;
+  monthYearText = `${getMonthName(currentMonth)} ${currentYear}`; // Set the global variable
+  document.getElementById("month-year").textContent = monthYearText;
+
+  // Log the updated value of 'month-year' to the console
+  console.log("Inside function:", monthYearText);
 }
+
+document.getElementById('export-img').addEventListener('click', () => {
+  window.location.href = `templatePage.html?month=${month}&year=${year}`;
+});
 
 function getCourses() {
   const dbref = ref(db);
