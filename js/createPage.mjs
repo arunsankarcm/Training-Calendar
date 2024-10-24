@@ -6,30 +6,34 @@ import {
   push,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
-// Validation code
 document.addEventListener("DOMContentLoaded", () => {
   const endDateInput = document.getElementById("end-date");
   const startDateInput = document.getElementById("start-date");
   const endTimeInput = document.getElementById("end-time");
   const startTimeInput = document.getElementById("start-time");
+  const maxParticipantsInput = document.getElementById("max-participants");
 
-  startDateInput.addEventListener("change", validateEndDate);
-  endDateInput.addEventListener("change", validateEndDate);
-  startTimeInput.addEventListener("change", validateEndTime);
-  endTimeInput.addEventListener("change", validateEndTime);
+  // Event listeners for date and time validation
+  startDateInput.addEventListener("blur", validateEndDate);
+  endDateInput.addEventListener("blur", validateEndDate);
+  startTimeInput.addEventListener("blur", validateEndTime);
+  endTimeInput.addEventListener("blur", validateEndTime);
+
+  // Event listener for maximum participants validation
+  maxParticipantsInput.addEventListener("input", validateMaxParticipants);
 });
 
 function validateEndDate() {
   const startDate = document.getElementById("start-date").value;
   const endDate = document.getElementById("end-date").value;
 
-  if (startDate === "") {
-    alert("Please select a start date first.");
-    document.getElementById("end-date").value = "";
-    return;
-  }
+ 
 
-  if (endDate !== "" && startDate > endDate) {
+  // Convert to Date objects for comparison
+  const startDateObj = new Date(startDate);
+  const endDateObj = new Date(endDate);
+
+  if (endDate !== "" && startDateObj >= endDateObj) {
     alert("End date must be after the start date.");
     document.getElementById("end-date").value = "";
   }
@@ -39,18 +43,39 @@ function validateEndTime() {
   const startTime = document.getElementById("start-time").value;
   const endTime = document.getElementById("end-time").value;
 
-  if (startTime === "") {
-    alert("Please select a start time first.");
-    document.getElementById("end-time").value = "";
-    return;
-  }
+  
 
-  if (endTime !== "" && startTime >= endTime) {
-    alert("End time must be after the start time.");
-    document.getElementById("end-time").value = "";
+  if (endTime !== "") {
+    // Convert time strings to Date objects for comparison
+    const [startHours, startMinutes] = startTime.split(':').map(Number);
+    const [endHours, endMinutes] = endTime.split(':').map(Number);
+
+    const startTimeDate = new Date(0, 0, 0, startHours, startMinutes);
+    const endTimeDate = new Date(0, 0, 0, endHours, endMinutes);
+
+    // Compare the two times
+    if (startTimeDate >= endTimeDate) {
+      alert("End time must be after the start time.");
+      document.getElementById("end-time").value = "";
+    }
   }
 }
 
+// Validation for maximum participants
+function validateMaxParticipants() {
+  const maxParticipantsInput = document.getElementById("max-participants");
+  const value = maxParticipantsInput.value;
+
+  // Check if value is not an integer
+  if (!/^\d+$/.test(value) && value !== "") {
+    alert("Please enter a valid integer for maximum participants.");
+    maxParticipantsInput.value = "";
+  }
+}
+
+
+
+// Back button functionality
 document.getElementById('back-button').addEventListener('click', () => {
   window.location.href = 'viewAllCourse.html';
 });
