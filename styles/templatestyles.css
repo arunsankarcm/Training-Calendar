@@ -20,7 +20,49 @@ body {
     height: 30px;
     width: auto;
     
+}}
+
+/* Hovering download Options */
+.sheetHover{
+    color: white;
+    padding-left: 1px;
+    padding-top: 1px;
+    font-size: 10px;
 }
+ 
+#onSheetHover{
+    visibility: hidden;
+}
+.downloadSheetHover :hover #onSheetHover {
+    visibility: visible;
+}
+ 
+.pdfHover{
+    color: white;
+    padding-left: 1px;
+    padding-top: 1px;
+    font-size: 10px;
+}
+ 
+#onPdfHover{
+    visibility: hidden;
+}
+.downloadPdfHover :hover #onPdfHover {
+    visibility: visible;
+}
+ 
+.pngHover{
+    color: white;
+    padding-left: 1px;
+    padding-top: 1px;
+    font-size: 10px;
+}
+ 
+#onPngHover{
+    visibility: hidden;
+}
+.downloadPngHover :hover #onPngHover {
+    visibility: visible;
 }
 
 .container {
