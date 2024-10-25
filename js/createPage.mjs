@@ -329,7 +329,7 @@ const showPopup = (message, type) => {
   document.body.appendChild(popup);
 };
 
-// Add this CSS to your stylesheet
+//style for error message - checking
 const style = document.createElement("style");
 style.textContent = `
   .invalid {
