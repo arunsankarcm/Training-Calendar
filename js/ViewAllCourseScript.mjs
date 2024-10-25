@@ -53,8 +53,10 @@ function updateMonthYearDisplay() {
 }
 
 document.getElementById("export-img").addEventListener("click", () => {
-  window.location.href = `templatePage.html?month=${month}&year=${year}`;
+  const url = `templatePage.html?month=${month}&year=${year}`;
+  window.open(url, '_blank');
 });
+
 
 //Fetches all courses from the Firebase database and initializes the course display.
 
