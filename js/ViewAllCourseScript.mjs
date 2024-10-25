@@ -1,5 +1,8 @@
 import { auth, db } from "../firebaseConfig.mjs";
-import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {
+  signOut,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 import {
   ref,
@@ -10,14 +13,15 @@ import {
 
 const cardsDiv = document.getElementById("card-grid");
 let allCourses = [];
-let cardNumberMap = new Map(); // Store original card numbers
-let currentMonth = new Date().getMonth(); // Current month (0-11)
-let currentYear = new Date().getFullYear(); // Current year
+let cardNumberMap = new Map();
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
 
-let monthYearText = ""; // Declare monthYearText as a global variable
-let month = '';
-let year = '';
+let monthYearText = "";
+let month = "";
+let year = "";
 
+//Returns the full name of a month based on its index (0-11).
 
 function getMonthName(monthIndex) {
   const monthNames = [
@@ -37,19 +41,24 @@ function getMonthName(monthIndex) {
   return monthNames[monthIndex];
 }
 
+//Updates the month and year display on the page based on the current month and year.
+
 function updateMonthYearDisplay() {
   month = `${getMonthName(currentMonth)}`;
   year = `${currentYear}`;
-  monthYearText = `${getMonthName(currentMonth)} ${currentYear}`; // Set the global variable
+  monthYearText = `${getMonthName(currentMonth)} ${currentYear}`;
   document.getElementById("month-year").textContent = monthYearText;
 
-  // Log the updated value of 'month-year' to the console
   console.log("Inside function:", monthYearText);
 }
 
-document.getElementById('export-img').addEventListener('click', () => {
-  window.location.href = `templatePage.html?month=${month}&year=${year}`;
+document.getElementById("export-img").addEventListener("click", () => {
+  const url = `templatePage.html?month=${month}&year=${year}`;
+  window.open(url, '_blank');
 });
+
+
+//Fetches all courses from the Firebase database and initializes the course display.
 
 function getCourses() {
   const dbref = ref(db);
@@ -62,7 +71,7 @@ function getCourses() {
           allCourses.push(course);
         });
         assignCardNumbersForCurrentMonth();
-        filterCoursesByMonth(); // Initial display of courses
+        filterCoursesByMonth();
       } else {
         console.log("No data available");
       }
@@ -72,10 +81,11 @@ function getCourses() {
     });
 }
 
-function assignCardNumbersForCurrentMonth() {
-  cardNumberMap.clear(); // Clear the card number map for the current month
+//Assigns sequential card numbers to courses that start in the current month.
 
-  // Filter the courses for the current month and year
+function assignCardNumbersForCurrentMonth() {
+  cardNumberMap.clear();
+
   const filteredCourses = allCourses.filter((course) => {
     const value = course.val();
     const startDate = new Date(value.startDate);
@@ -85,17 +95,18 @@ function assignCardNumbersForCurrentMonth() {
     );
   });
 
-  // Assign card numbers to the filtered courses
   let cardNo = 1;
   filteredCourses.forEach((course) => {
     cardNumberMap.set(course.key, cardNo++);
   });
 }
 
+
+ //Filters courses to display only those that are relevant to the current month.
+
 function filterCoursesByMonth() {
   cardsDiv.innerHTML = "";
 
-  // Filter courses for the current month and year
   const filteredCourses = allCourses.filter((course) => {
     const value = course.val();
     const startDate = new Date(value.startDate);
@@ -112,7 +123,6 @@ function filterCoursesByMonth() {
     return isStartingThisMonth || isOngoingThisMonth;
   });
 
-  // Display the courses using their assigned card numbers
   filteredCourses.forEach((course) => {
     const cardNumber = cardNumberMap.get(course.key);
     if (cardNumber) {
@@ -145,13 +155,16 @@ document.getElementById("right-arrow").addEventListener("click", () => {
   filterCoursesByMonth();
 });
 
+
+ //* Creates a course card element and appends it to the DOM.
+ 
 function AddCourseToCard(course, cardNo) {
   const value = course.val();
   const card = document.createElement("div");
   const courseKey = course.key;
   card.classList.add("training-card");
 
-  // Function to convert 12-hour format to 24-hour format
+  // Converts time from 12-hour format to 24-hour format.
   function convertTo24Hour(timeStr) {
     const [time, modifier] = timeStr.split(" ");
     let [hours, minutes] = time.split(":");
@@ -163,42 +176,35 @@ function AddCourseToCard(course, cardNo) {
     return `${hours}:${minutes}`;
   }
 
-  // Get the current date
   const currentDate = new Date();
 
-  // Parse course start and end dates
   const startDate = new Date(value.startDate);
   let endDate = value.endDate ? new Date(value.endDate) : null;
 
-  // Handle case where endDate is not provided (show "TBD")
   let endDateText = endDate ? value.endDate : "TBD";
 
-  // Determine course status and set the color dynamically
+  // Determines the status color based on the current date and course dates.
   let statusColor = "";
   if (currentDate < startDate) {
-    statusColor = "#CA1919"; // Upcoming
+    statusColor = "#CA1919"; 
   } else if (currentDate >= startDate && (!endDate || currentDate <= endDate)) {
-    statusColor = "#D0BF26"; // Ongoing or TBD
+    statusColor = "#D0BF26"; 
   } else if (endDate && currentDate > endDate) {
-    statusColor = "#156B1F"; // Finished
+    statusColor = "#156B1F"; 
   }
 
-  // Convert start and end time to 24-hour format
   const startTime = convertTo24Hour(value.startTime || "00:00 AM");
   const endTime = convertTo24Hour(value.endTime || "00:00 AM");
 
-  // Convert time to Date objects for duration calculation
   const start = new Date(`1970-01-01T${startTime}:00`);
   const end = new Date(`1970-01-01T${endTime}:00`);
 
-  // Calculate the duration in hours and minutes
   const durationMs = end - start;
   const durationHours = Math.floor(durationMs / (1000 * 60 * 60));
   const durationMinutes = Math.floor(
     (durationMs % (1000 * 60 * 60)) / (1000 * 60)
   );
 
-  // Format the duration (e.g., "2 hours 30 minutes")
   let formattedDuration = "";
   if (durationHours > 0) {
     formattedDuration += `${durationHours} hour${durationHours > 1 ? "s" : ""}`;
@@ -210,15 +216,12 @@ function AddCourseToCard(course, cardNo) {
     }`;
   }
 
-  // If both hours and minutes are zero, set a default duration
   if (!formattedDuration) {
     formattedDuration = "0 minutes";
   }
 
-  // Generate the date string including both start and end dates (or "TBD")
   const dateString = `${value.startDate || "N/A"} to ${endDateText}`;
 
-  // Determine the correct icon based on the course mode
   const modeIcon =
     value.mode === "online" ? "../images/laptop.png" : "../images/people.png";
 
@@ -249,12 +252,12 @@ function AddCourseToCard(course, cardNo) {
     <div class="three-dots">
       ⋮
     </div>
-    <div class="popup-menu">
+    <div class="popup-menu" style="display:none;">
       <ul>
-        <li class="edit-tag">Edit</li>
+        <li class="edit-tag"><img src="../Images/edit (1).png" alt="edit icon" /></li>
         <hr>
         <div class="del-tag">
-          <li>Delete</li>
+          <li><img src="../Images/dustbin.png" alt="delete icon" /></li>
         </div>
       </ul>
     </div>
@@ -267,28 +270,28 @@ function AddCourseToCard(course, cardNo) {
   const deleteBtn = card.querySelector(".del-tag");
   const editBtn = card.querySelector(".edit-tag");
 
+  // Event listener to toggle the popup menu when the three dots are clicked.
   threeDots.addEventListener("click", (e) => {
-    // Toggle the visibility of the popup menu
     popupMenu.style.display =
       popupMenu.style.display === "block" ? "none" : "block";
   });
 
-  // Hide the popup if clicking outside of the card
+  // Hides the popup menu when clicking outside of it.
   document.addEventListener("click", (e) => {
     if (!threeDots.contains(e.target) && !popupMenu.contains(e.target)) {
       popupMenu.style.display = "none";
     }
   });
 
+  // Deletes the course from the database and UI after confirmation.
   deleteBtn.addEventListener("click", () => {
-    // Confirm deletion
-    const confirmDelete = confirm("Are you sure you want to delete this course?");
+    const confirmDelete = confirm(
+      "Are you sure you want to delete this course?"
+    );
     if (confirmDelete) {
-      // Remove the course from Firebase
       const courseRef = ref(db, `courses/${courseKey}`);
       remove(courseRef)
         .then(() => {
-          // Remove the course card from the UI
           card.remove();
           console.log("Course deleted successfully.");
         })
@@ -298,14 +301,19 @@ function AddCourseToCard(course, cardNo) {
     }
   });
 
+  // Redirects to the course edit page with the course key as a parameter.
   editBtn.addEventListener("click", () => {
-    // Redirect to the edit page, passing the course key as a query parameter
     window.location.href = `indexupdate.html?courseKey=${courseKey}`;
   });
 }
 
+
+//Performs a real-time search of courses based on the user's input
+
 function searchCourses() {
-  const searchTerm = document.getElementById("search-input").value.toLowerCase();
+  const searchTerm = document
+    .getElementById("search-input")
+    .value.toLowerCase();
   cardsDiv.innerHTML = "";
 
   if (searchTerm === "") {
@@ -318,7 +326,6 @@ function searchCourses() {
     const courseName = value.courseName.toLowerCase();
     const startDate = new Date(value.startDate);
 
-    // Check if course is in current month and matches search term
     const isInCurrentMonth =
       startDate.getMonth() === currentMonth &&
       startDate.getFullYear() === currentYear;
@@ -327,7 +334,6 @@ function searchCourses() {
     return isInCurrentMonth && matchesSearch;
   });
 
-  // Display filtered results with their monthly card numbers
   filteredCourses.forEach((course) => {
     const cardNumber = cardNumberMap.get(course.key);
     if (cardNumber) {
@@ -336,38 +342,45 @@ function searchCourses() {
   });
 }
 
-const iconButton = document.getElementById('iconButton');
-const popupMenuFilter = document.getElementById('popupMenuFilter');
+const iconButton = document.getElementById("iconButton");
+const popupMenuFilter = document.getElementById("popupMenuFilter");
+
+
+//Toggles the visibility of the filter popup menu when the filter icon is clicked.
 
 function togglePopup() {
-  popupMenuFilter.style.display = popupMenuFilter.style.display === 'block' ? 'none' : 'block';
+  popupMenuFilter.style.display =
+    popupMenuFilter.style.display === "block" ? "none" : "block";
 }
 
-iconButton.addEventListener('click', (e) => {
+iconButton.addEventListener("click", (e) => {
   e.stopPropagation();
   togglePopup();
 });
 
-document.getElementById('filter-upcoming').addEventListener('click', () => {
-  filterCourses('upcoming');
-  popupMenuFilter.style.display = 'none';
+document.getElementById("filter-upcoming").addEventListener("click", () => {
+  filterCourses("upcoming");
+  popupMenuFilter.style.display = "none";
 });
 
-document.getElementById('filter-ongoing').addEventListener('click', () => {
-  filterCourses('ongoing');
-  popupMenuFilter.style.display = 'none';
+document.getElementById("filter-ongoing").addEventListener("click", () => {
+  filterCourses("ongoing");
+  popupMenuFilter.style.display = "none";
 });
 
-document.getElementById('filter-completed').addEventListener('click', () => {
-  filterCourses('completed');
-  popupMenuFilter.style.display = 'none';
+document.getElementById("filter-completed").addEventListener("click", () => {
+  filterCourses("completed");
+  popupMenuFilter.style.display = "none";
 });
 
+/**
+ * Filters courses based on their status (upcoming, ongoing, completed)
+ * and displays the filtered courses on the page.
+ */
 function filterCourses(filterType) {
   cardsDiv.innerHTML = "";
   const currentDate = new Date();
 
-  // Step 1: Filter courses that belong to the currently selected month and year
   const monthFilteredCourses = allCourses.filter((course) => {
     const value = course.val();
     const startDate = new Date(value.startDate);
@@ -379,13 +392,12 @@ function filterCourses(filterType) {
 
   let filteredCourses = [];
 
-  // Step 2: Further filter courses based on the filterType
   switch (filterType) {
     case "upcoming":
       filteredCourses = monthFilteredCourses.filter((course) => {
         const value = course.val();
         const startDate = new Date(value.startDate);
-        return startDate > currentDate; // Course is upcoming if it starts after the current date
+        return startDate > currentDate;
       });
       break;
 
@@ -394,7 +406,7 @@ function filterCourses(filterType) {
         const value = course.val();
         const startDate = new Date(value.startDate);
         const endDate = value.endDate ? new Date(value.endDate) : null;
-        // Course is ongoing if it started before the current date and either has no end date or ends after the current date
+
         return startDate <= currentDate && (!endDate || endDate >= currentDate);
       });
       break;
@@ -402,55 +414,49 @@ function filterCourses(filterType) {
     case "completed":
       filteredCourses = monthFilteredCourses.filter((course) => {
         const value = course.val();
-        const startDate = new Date(value.startDate);
         const endDate = value.endDate ? new Date(value.endDate) : null;
-        // Course is completed if it ended before the current date
+
         return endDate && endDate < currentDate;
       });
       break;
 
     default:
-      filteredCourses = monthFilteredCourses; // If no specific filter is selected, use all courses for the month
+      filteredCourses = monthFilteredCourses;
   }
 
-  // Step 3: Display the filtered courses with their monthly card numbers
   filteredCourses.forEach((course) => {
     const cardNumber = cardNumberMap.get(course.key);
     if (cardNumber) {
-      AddCourseToCard(course, cardNumber); // Render each filtered course with its card number
+      AddCourseToCard(course, cardNumber);
     }
   });
 }
 
-
-// Add the event listener for real-time search
-document.getElementById("search-input").addEventListener("input", searchCourses);
+document
+  .getElementById("search-input")
+  .addEventListener("input", searchCourses);
 
 window.addEventListener("load", () => {
-  updateMonthYearDisplay(); // Show current month/year on page load
-  getCourses(); // Fetch and display courses
+  updateMonthYearDisplay();
+  getCourses();
 });
 
+document.getElementById("logout_button").addEventListener("click", () => {
+  signOut(auth)
+    .then(() => {
+      localStorage.setItem("logoutMessage", "Logged out successfully.");
 
-
-// Logout function (sign out)
-document.getElementById('logout_button').addEventListener('click', () => {
-  signOut(auth).then(() => {
-    // Store the logout message in localStorage
-    localStorage.setItem('logoutMessage', 'Logged out successfully.');
-  
-    // Redirect to login page after logging out
-    window.location.href = 'loginpage.html';
-  }).catch((error) => {
-    console.error('Sign out error:', error);
-  });
+      window.location.href = "loginpage.html";
+    })
+    .catch((error) => {
+      console.error("Sign out error:", error);
+    });
 });
 
-// Check if user is authenticated
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log('User is signed in:', user.email);
+    console.log("User is signed in:", user.email);
   } else {
-    window.location.href = 'loginpage.html';
+    window.location.href = "loginpage.html";
   }
 });
