@@ -446,7 +446,7 @@ document.getElementById("logout_button").addEventListener("click", () => {
     .then(() => {
       localStorage.setItem("logoutMessage", "Logged out successfully.");
 
-      window.location.href = "loginpage.html";
+      window.location.href = "index.html";
     })
     .catch((error) => {
       console.error("Sign out error:", error);
@@ -457,6 +457,6 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User is signed in:", user.email);
   } else {
-    window.location.href = "loginpage.html";
+    window.location.href = "index.html";
   }
 });

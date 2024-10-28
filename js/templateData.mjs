@@ -396,7 +396,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User is signed in:", user.email);
   } else {
-    window.location.href = "loginpage.html";
+    window.location.href = "index.html";
   }
 });
 

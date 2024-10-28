@@ -6,7 +6,7 @@ import {
 
 document.getElementById("backToLogin").addEventListener("click", (e) => {
   e.preventDefault();
-  window.location.href = "loginpage.html";
+  window.location.href = "index.html";
 });
 
 
