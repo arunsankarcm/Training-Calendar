@@ -199,7 +199,7 @@ document.getElementById('logout_button').addEventListener('click', () => {
     localStorage.setItem('logoutMessage', 'Logged out successfully.');
   
     // Redirect to login page after logging out
-    window.location.href = 'index.html';
+    window.location.href = '../index.html';
   }).catch((error) => {
     console.error('Sign out error:', error);
   });
