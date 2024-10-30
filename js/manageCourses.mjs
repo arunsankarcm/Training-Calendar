@@ -376,7 +376,9 @@ const showPopup = (message, type) => {
 };
 
 
-
+document.getElementById('back-button').addEventListener('click', () => {
+    window.location.href = 'viewAllCourse.html';
+  });
 
 
 document.getElementById("logout_button").addEventListener("click", () => {
