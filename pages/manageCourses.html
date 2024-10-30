@@ -52,17 +52,17 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="text" class="course-name" placeholder="Course Name"></td>
-                    <td><input type="date" class="date-input"></td>
-                    <td><input type="date" class="date-input"></td>
-                    <td><input type="time" class="time-input"></td>
-                    <td><input type="time" class="time-input"></td>
-                    <td><input type="text" class="key-points" placeholder="Key Points"></td>
-                    <td><input type="text" class="trainer-name" placeholder="Trainer Name"></td>
-                    <td><input type="text" class="audience" placeholder="Audience"></td>
+                    <td><input type="text" name="course-name" class="course-name" placeholder="Course Name"></td>
+                    <td><input type="date" name="start-date"  class="date-input"></td>
+                    <td><input type="date" name="end-date" class="date-input"></td>
+                    <td><input type="time" name="start-time" class="time-input"></td>
+                    <td><input type="time" name="end-time" class="time-input"></td>
+                    <td><input type="text" name="key-points" class="key-points" placeholder="Key Points"></td>
+                    <td><input type="text" name="trainer" class="trainer-name" placeholder="Trainer Name"></td>
+                    <td><input type="text" name="audience" class="audience" placeholder="Audience"></td>
                     <td><input type="number" class="max-participants" placeholder="Max Participants"></td>
                     <td>
-                        <select>
+                        <select name="mode">
                             <option value="online">Online</option>
                             <option value="offline">Offline</option>
                         </select>
@@ -80,7 +80,8 @@
         <button id="submitBtn">Submit</button>
     </div>
     
-    <script src="../js/manageCourses.js"></script>
-    <script src="../firebaseConfig.mjs"></script>
+
+    <script type="module" src="../firebaseConfig.mjs"></script>
+    <script type="module" src="../js/manageCourses.mjs"></script>
 </body>
 </html>

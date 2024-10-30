@@ -1,3 +1,9 @@
+import { db, auth } from "../firebaseConfig.mjs";
+import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { ref, set, push } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     // Get references to the buttons and table
     const addRowBtn = document.getElementById("addRowBtn");
@@ -135,17 +141,17 @@ document.addEventListener("DOMContentLoaded", function () {
     function addRow() {
         const newRow = document.createElement("tr");
         newRow.innerHTML = `
-            <td><input type="text" class="course-name" placeholder="Course Name"></td>
-            <td><input type="date" class="date-input"></td>
-            <td><input type="date" class="date-input"></td>
-            <td><input type="time" class="time-input"></td>
-            <td><input type="time" class="time-input"></td>
-            <td><input type="text" class="key-points" placeholder="Key Points"></td>
-            <td><input type="text" class="trainer-name" placeholder="Trainer Name"></td>
-            <td><input type="text" class="audience" placeholder="Audience"></td>
-            <td><input type="number" class="max-participants" placeholder="Max Participants"></td>
+            <td><input name="course-name" type="text" class="course-name" placeholder="Course Name"></td>
+            <td><input name="start-date" type="date" class="date-input"></td>
+            <td><input name="end-date" type="date" class="date-input"></td>
+            <td><input name="start-time" type="time" class="time-input"></td>
+            <td><input name="end-time" type="time" class="time-input"></td>
+            <td><input name="key-points" type="text" class="key-points" placeholder="Key Points"></td>
+            <td><input name="trainer" type="text" class="trainer-name" placeholder="Trainer Name"></td>
+            <td><input name="audience" type="text" class="audience" placeholder="Audience"></td>
+            <td><input name="max-participants" type="number" class="max-participants" placeholder="Max Participants"></td>
             <td>
-                <select>
+                <select name="mode">
                     <option value="online">Online</option>
                     <option value="offline">Offline</option>
                 </select>
@@ -185,41 +191,68 @@ document.addEventListener("DOMContentLoaded", function () {
     function handleSubmit() {
         let isValid = true;
         const rows = coursesTable.getElementsByTagName('tr');
-
+        const coursesData = []; // Array to hold all courses data
+    
         // Validate all rows
         Array.from(rows).forEach(row => {
-            if (!validateRow(row)) {
-                isValid = false;
+            if (validateRow(row)) { // Only if the row is valid
+                const inputs = row.getElementsByTagName('input');
+                const select = row.querySelector('select');
+    
+                // Collect course data
+                const courseData = {
+                    courseName: inputs[0].value,
+                    startDate: inputs[1].value,
+                    endDate: inputs[2].value,
+                    startTime: inputs[3].value,
+                    endTime: inputs[4].value,
+                    keyPoints: inputs[5].value,
+                    trainer: inputs[6].value,
+                    audience: inputs[7].value,
+                    maxParticipants: inputs[8].value,
+                    mode: select.value
+                };
+                coursesData.push(courseData); // Add to the array
+            } else {
+                isValid = false; // If any row is invalid, mark overall as invalid
             }
         });
-
+    
         if (!isValid) {
             alert('Please fill all details correctly before submitting.');
             return;
         }
-
-        // If valid, collect all data
-        const coursesData = Array.from(rows).map(row => {
-            const inputs = row.getElementsByTagName('input');
-            const select = row.querySelector('select');
-            
-            return {
-                courseName: inputs[0].value,
-                startDate: inputs[1].value,
-                endDate: inputs[2].value,
-                startTime: inputs[3].value,
-                endTime: inputs[4].value,
-                keyPoints: inputs[5].value,
-                trainer: inputs[6].value,
-                audience: inputs[7].value,
-                maxParticipants: inputs[8].value,
-                mode: select.value
-            };
+    
+        // Save all valid courses to the database
+        const promises = coursesData.map(course => {
+            return saveInDB(
+                course.courseName,
+                course.startDate,
+                course.endDate,
+                course.startTime,
+                course.endTime,
+                course.keyPoints,
+                course.trainer,
+                course.audience,
+                course.maxParticipants,
+                course.mode
+            );
         });
-
-        console.log('Submitted data:', coursesData);
-        alert('Data submitted successfully!');
+    
+        Promise.all(promises)
+        .then(() => {
+            showPopup("Course added successfully!", "success");
+            setTimeout(() => {
+              window.location.href = "viewAllCourse.html";
+            }, 2000);
+          })
+        .catch((error) => {
+            showPopup("Failed to add the course. Please try again.", "error");
+            console.error("Error adding course: ", error);
+            throw error; // Rethrow error to handle it in Promise.all
+        });
     }
+    
 
     // Add event listeners
     addRowBtn.addEventListener("click", addRow);
@@ -258,4 +291,111 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
     document.head.appendChild(style);
 });
+
+
+
+const saveInDB = (
+    courseName,
+    startDate,
+    endDate,
+    startTime,
+    endTime,
+    keyPoints,
+    trainerName,
+    targetAudience,
+    maxParticipation,
+    mode
+) => {
+    const coursesRef = ref(db, "courses");
+    const newCourseRef = push(coursesRef);
+
+    return set(newCourseRef, {
+        courseName: courseName,
+        startDate: startDate,
+        endDate: endDate,
+        startTime: startTime,
+        endTime: endTime,
+        keyPoints: keyPoints,
+        trainerName: trainerName,
+        targetAudience: targetAudience,
+        maxParticipation: maxParticipation,
+        mode: mode,
+    })
+    .then(() => {
+        console.log("Couses added Succesfullty");
+      })
+      .catch((error) => {
+        // showPopup("Failed to add the course. Please try again.", "error");
+        console.error("Error adding course: ", error);
+      });
+    
+};
+
+
+// Function to display a popup message
+// Popup function
+const showPopup = (message, type) => {
+    const popup = document.createElement("div");
+    popup.style.position = "fixed";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.width = "350px";
+    popup.style.height = "200px";
+    popup.style.padding = "20px";
+    popup.style.backgroundColor = "white";
+    popup.style.color = "#333";
+    popup.style.fontSize = "20px";
+    popup.style.fontFamily = "'Montserrat', sans-serif";
+    popup.style.borderRadius = "15px";
+    popup.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.15)";
+    popup.style.textAlign = "center";
+    popup.style.zIndex = "1000";
+  
+    const messageImg = document.createElement("img");
+    messageImg.src =
+      type === "success"
+        ? "https://cdn-icons-png.flaticon.com/128/190/190411.png"
+        : "https://cdn-icons-png.flaticon.com/128/1828/1828950.png";
+    messageImg.style.width = "50px";
+    messageImg.style.height = "50px";
+    messageImg.style.marginBottom = "20px";
+  
+    const messageText = document.createElement("p");
+    messageText.textContent = message;
+    messageText.style.margin = "0";
+  
+    popup.appendChild(messageImg);
+    popup.appendChild(messageText);
+    document.body.appendChild(popup);
+
+    // Add auto-close feature
+    setTimeout(() => {
+        popup.remove();
+    }, 1500); // Automatically close after 3 seconds
+};
+
+
+
+
+
+document.getElementById("logout_button").addEventListener("click", () => {
+    signOut(auth)
+      .then(() => {
+        localStorage.setItem("logoutMessage", "Logged out successfully.");
+  
+        window.location.href = "../index.html";
+      })
+      .catch((error) => {
+        console.error("Sign out error:", error);
+      });
+  });
+  
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("User is signed in:", user.email);
+    } else {
+      window.location.href = "../index.html";
+    }
+  });
 
