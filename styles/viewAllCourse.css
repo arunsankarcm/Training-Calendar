@@ -22,6 +22,11 @@ body {
   color: white;
   padding: 32px;
   display: flex;
+  position: sticky;
+  width: 100%;
+  height: 96px;
+  top: 0;
+  z-index: 1;
   justify-content: space-between;
   align-items: center;
     display: fixed;
@@ -32,6 +37,8 @@ body {
   color: white;
   padding: 20px;
   display: flex;
+  width: 100%; 
+  height: 65px;
   justify-content: space-between;
   align-items: center;
   display: fixed;
@@ -72,6 +79,9 @@ font-size: 17px;
   font-size: 17px;
 
 }
+#iconButton img{
+  padding-top: 23px;
+}
 
 /* Filter button hover styles */
 #onHoverFilter{
@@ -102,7 +112,7 @@ padding-left: 2px;
 }
 #logout_button{
   background-color: #d9d9d9;
-  padding-top: 9px;
+  padding-top: 15px;
 }
 
 .header-content {
@@ -127,7 +137,8 @@ padding-left: 2px;
   background-color: white;
   border-radius: 5px;
   padding: 5px 10px;
-  position: absolute;
+  /* position: absolute; */
+  
   left: 350px;
   
 }
@@ -138,15 +149,21 @@ padding-left: 2px;
   padding: 5px;
   font-size: 16px;
   width: 500px;
+  box-sizing: border-box;
 }
 .search-btn{
   width: 30px;
   height: auto;
+  border-style: none;
+  background-color: white;
 }
 
 .search-btn img {
   width: 25px;
   cursor: pointer;
+  position: relative;
+  /* margin-top: 10px; */
+  transform: translateY(17%);
 }
 .month-year img {
   width: 17px;
@@ -169,7 +186,7 @@ padding-left: 2px;
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 70px;
+  gap: 27px;
   padding: 20px;
 }
 
@@ -284,11 +301,11 @@ padding-left: 2px;
   cursor: pointer;
 }
 .expo img {
-  padding-top: 7px;
+  padding-top: 30px;
   width: 38px;
 }
 .addicon img {
-  padding-top: 10px;
+  padding-top: 33px;
 }
 
 .popup-menu {
@@ -324,8 +341,8 @@ padding-left: 2px;
   line-height: 11px;
   width: 120px;
   height: 126px;
-  margin-top: 127px;
-  margin-left: 720px;
+  margin-top: 33px;
+  margin-left: 673px;
 }
 
 #popupMenuFilter.popup-menu hr {
