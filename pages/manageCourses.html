@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Courses</title>
+    <link rel="stylesheet" href="../styles/manageCourses.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
+</head>
+<body>
+    <header class="head">
+        <div class="left-section">
+          <img
+            src="../Images/exp_logo.png"
+            alt="Experion Logo"
+            class="logo"
+            style="width: 150px; height: 30px"
+          />
+        </div>
+        <div class="header-title">Manage Courses</div>
+        <div class="right-section">
+          <button id="logout_button" style="border: none; cursor: pointer">
+            <img
+              src="../Images/sign_out.png"
+              alt="Logout"
+              class="icon"
+              style="width: 20px; height: 20px"
+            />
+            <div class="logoutHoverText">
+              <div id="onHoverLogout">Logout</div>
+            </div>
+          </button>
+        </div>
+      </header>
+    
+    <div class="table-container">
+        <table id="coursesTable">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Key Points</th>
+                    <th>Trainer</th>
+                    <th>Audience</th>
+                    <th>Max Participants</th>
+                    <th>Mode</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="course-name" placeholder="Course Name"></td>
+                    <td><input type="date" class="date-input"></td>
+                    <td><input type="date" class="date-input"></td>
+                    <td><input type="time" class="time-input"></td>
+                    <td><input type="time" class="time-input"></td>
+                    <td><input type="text" class="key-points" placeholder="Key Points"></td>
+                    <td><input type="text" class="trainer-name" placeholder="Trainer Name"></td>
+                    <td><input type="text" class="audience" placeholder="Audience"></td>
+                    <td><input type="number" class="max-participants" placeholder="Max Participants"></td>
+                    <td>
+                        <select>
+                            <option value="online">Online</option>
+                            <option value="offline">Offline</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="delete-btn">-</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="button-container">
+        <button id="addRowBtn">+</button>
+        <button id="submitBtn">Submit</button>
+    </div>
+    
+    <script src="../js/manageCourses.js"></script>
+</body>
+</html>

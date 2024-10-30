@@ -102,13 +102,15 @@ function validateEndDate() {
   const startDateObj = new Date(startDate);
   const endDateObj = new Date(endDate);
 
-  if (endDate !== "" && startDateObj >= endDateObj) {
-    showError("End date must be after the start date.");
+  
+  if (endDate !== "" && startDateObj > endDateObj) {
+    showError("End date must be the same as or after the start date.");
     document.getElementById("end-date").value = "";
     return false;
   }
   return true;
 }
+
 
 function validateEndTime() {
   const startTime = document.getElementById("start-time").value;
