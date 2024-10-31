@@ -311,15 +311,18 @@ function AddCourseToCard(course, cardNo) {
 //Performs a real-time search of courses based on the user's input
 
 function searchCourses() {
-  const searchTerm = document
-    .getElementById("search-input")
-    .value.toLowerCase();
-  cardsDiv.innerHTML = "";
+  const searchTerm = document.getElementById("search-input").value.toLowerCase();
+  const existingPopup = document.getElementById("no-course-popup");
 
   if (searchTerm === "") {
+    if (existingPopup) {
+      existingPopup.remove();
+    }
     filterCoursesByMonth();
     return;
   }
+
+  cardsDiv.innerHTML = "";
 
   const filteredCourses = allCourses.filter((course) => {
     const value = course.val();
@@ -334,28 +337,32 @@ function searchCourses() {
     return isInCurrentMonth && matchesSearch;
   });
 
-  // Popup message for no search results found
+  // Check if there are any matching courses and handle the popup message
   if (filteredCourses.length === 0) {
-    const popup = document.createElement("div");
-    popup.innerText = "No courses found for your search.";
-    popup.style.position = "fixed";
-    popup.style.bottom = "220px";
-    popup.style.left = "50%";
-    popup.style.transform = "translateX(-50%)";
-    popup.style.color = "#555555";
-    popup.style.fontSize = "x-large";
-    popup.style.padding = "10px 20px";
-    popup.style.borderRadius = "5px";
-    popup.style.zIndex = "1000";
-    document.body.appendChild(popup);
-
-    setTimeout(() => {
-      popup.remove();
-    }, 3000); // Popup disappears after 3 seconds
-    
+    // If no matching courses, show the popup and keep it there
+    if (!existingPopup) {
+      const popup = document.createElement("div");
+      popup.id = "no-course-popup";
+      popup.innerText = "No courses found for your search.";
+      popup.style.position = "fixed";
+      popup.style.bottom = "220px";
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)";
+      popup.style.color = "#555555";
+      popup.style.fontSize = "x-large";
+      popup.style.padding = "10px 20px";
+      popup.style.borderRadius = "5px";
+      popup.style.zIndex = "1000";
+      document.body.appendChild(popup);
+    }
+  } else {
+    // If there are matches, remove the popup if it exists
+    if (existingPopup) {
+      existingPopup.remove();
+    }
   }
 
-
+  // Display the filtered courses
   filteredCourses.forEach((course) => {
     const cardNumber = cardNumberMap.get(course.key);
     if (cardNumber) {
@@ -363,6 +370,9 @@ function searchCourses() {
     }
   });
 }
+
+
+
 
 const iconButton = document.getElementById("iconButton");
 const popupMenuFilter = document.getElementById("popupMenuFilter");
