@@ -515,19 +515,19 @@ document
   .getElementById("search-input")
   .addEventListener("input", searchCourses);
 
-document
-  .getElementById("customMail")
-  .setAttribute(
-    "href",
-    "mailto:" +
-      benefit.emails[0].to +
-      "?cc=" +
-      benefit.emails[0].cc +
-      "&subject=" +
-      benefit.emails[0].subject +
-      "&body=" +
-      encodedBody
-  );
+// document
+//   .getElementById("customMail")
+//   .setAttribute(
+//     "href",
+//     "mailto:" +
+//       benefit.emails[0].to +
+//       "?cc=" +
+//       benefit.emails[0].cc +
+//       "&subject=" +
+//       benefit.emails[0].subject +
+//       "&body=" +
+//       encodedBody
+//   );
 
 window.addEventListener("load", () => {
   updateMonthYearDisplay();
