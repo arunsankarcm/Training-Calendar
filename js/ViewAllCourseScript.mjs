@@ -484,6 +484,40 @@ if (filteredCourses.length === 0) {
   });
 }
 
+const addButton = document.getElementById("add_button");
+const popupMenuAdd = document.getElementById("popupMenuAdd");
+
+// Function to toggle the "Add" popup menu
+function toggleAddPopup() {
+  popupMenuAdd.style.display =
+    popupMenuAdd.style.display === "block" ? "none" : "block";
+}
+
+// Event listener to open/close the "Add" popup menu
+addButton.addEventListener("click", (e) => {
+  e.stopPropagation();
+  toggleAddPopup();
+});
+
+// Event listeners for the "One Course" and "Multiple Courses" options
+document.getElementById("add-one-course").addEventListener("click", () => {
+  window.location.href = "indexcreate.html"; // Redirect to indexcreate.html
+});
+
+document
+  .getElementById("add-multiple-courses")
+  .addEventListener("click", () => {
+    window.location.href = "manageCourses.html"; // Redirect to manageCourses.html
+  });
+
+// Close the "Add" popup menu when clicking outside
+document.addEventListener("click", (e) => {
+  if (!addButton.contains(e.target) && !popupMenuAdd.contains(e.target)) {
+    popupMenuAdd.style.display = "none";
+  }
+});
+
+
 document
   .getElementById("search-input")
   .addEventListener("input", searchCourses);
