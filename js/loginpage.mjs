@@ -16,7 +16,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
     .then((userCredential) => {
       errorMessage.textContent = "";
       sessionStorage.setItem("successMessage", "Successfully logged in!");
-      window.location.href = "viewAllCourse.html";
+      window.location.href = "pages/viewAllCourse.html";
 
       const user = userCredential.user;
       const dt = new Date().toISOString(); 

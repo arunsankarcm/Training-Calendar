@@ -223,7 +223,7 @@ function AddCourseToCard(course, cardNo) {
   const dateString = `${value.startDate || "N/A"} to ${endDateText}`;
 
   const modeIcon =
-    value.mode === "online" ? "../images/laptop.png" : "../images/people.png";
+    value.mode === "online" ? "../Images/laptop.png" : "../Images/people.png";
 
   card.innerHTML = `
     <div class="status">
@@ -488,7 +488,7 @@ document.getElementById("logout_button").addEventListener("click", () => {
     .then(() => {
       localStorage.setItem("logoutMessage", "Logged out successfully.");
 
-      window.location.href = "index.html";
+      window.location.href = "../index.html";
     })
     .catch((error) => {
       console.error("Sign out error:", error);
@@ -499,6 +499,6 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User is signed in:", user.email);
   } else {
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
   }
 });
