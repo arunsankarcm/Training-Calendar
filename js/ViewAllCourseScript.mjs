@@ -384,6 +384,18 @@ iconButton.addEventListener("click", (e) => {
   togglePopup();
 });
 
+//To make the popup disappear once clicked outside
+document.addEventListener("click", (e) => {
+  if (
+    popupMenuFilter.style.display === "block" && // Check if the popup is open
+    !popupMenuFilter.contains(e.target) && // Check if the click is outside the popup
+    e.target !== iconButton // Check if the click is not on the icon button
+  ) {
+    popupMenuFilter.style.display = "none";
+  }
+});
+
+
 document.getElementById("filter-upcoming").addEventListener("click", () => {
   filterCourses("upcoming");
   popupMenuFilter.style.display = "none";
