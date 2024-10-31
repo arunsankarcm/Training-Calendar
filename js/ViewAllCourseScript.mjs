@@ -54,9 +54,8 @@ function updateMonthYearDisplay() {
 
 document.getElementById("export-img").addEventListener("click", () => {
   const url = `templatePage.html?month=${month}&year=${year}`;
-  window.open(url, '_blank');
+  window.open(url, "_blank");
 });
-
 
 //Fetches all courses from the Firebase database and initializes the course display.
 
@@ -101,8 +100,7 @@ function assignCardNumbersForCurrentMonth() {
   });
 }
 
-
- //Filters courses to display only those that are relevant to the current month.
+//Filters courses to display only those that are relevant to the current month.
 
 function filterCoursesByMonth() {
   cardsDiv.innerHTML = "";
@@ -155,9 +153,8 @@ document.getElementById("right-arrow").addEventListener("click", () => {
   filterCoursesByMonth();
 });
 
+//* Creates a course card element and appends it to the DOM.
 
- //* Creates a course card element and appends it to the DOM.
- 
 function AddCourseToCard(course, cardNo) {
   const value = course.val();
   const card = document.createElement("div");
@@ -186,11 +183,11 @@ function AddCourseToCard(course, cardNo) {
   // Determines the status color based on the current date and course dates.
   let statusColor = "";
   if (currentDate < startDate) {
-    statusColor = "#CA1919"; 
+    statusColor = "#CA1919";
   } else if (currentDate >= startDate && (!endDate || currentDate <= endDate)) {
-    statusColor = "#D0BF26"; 
+    statusColor = "#D0BF26";
   } else if (endDate && currentDate > endDate) {
-    statusColor = "#156B1F"; 
+    statusColor = "#156B1F";
   }
 
   const startTime = convertTo24Hour(value.startTime || "00:00 AM");
@@ -307,11 +304,12 @@ function AddCourseToCard(course, cardNo) {
   });
 }
 
-
 //Performs a real-time search of courses based on the user's input
 
 function searchCourses() {
-  const searchTerm = document.getElementById("search-input").value.toLowerCase();
+  const searchTerm = document
+    .getElementById("search-input")
+    .value.toLowerCase();
   const existingPopup = document.getElementById("no-course-popup");
 
   if (searchTerm === "") {
@@ -371,12 +369,8 @@ function searchCourses() {
   });
 }
 
-
-
-
 const iconButton = document.getElementById("iconButton");
 const popupMenuFilter = document.getElementById("popupMenuFilter");
-
 
 //Toggles the visibility of the filter popup menu when the filter icon is clicked.
 
@@ -455,26 +449,26 @@ function filterCourses(filterType) {
     default:
       filteredCourses = monthFilteredCourses;
   }
-//Popup to display when filter courses is empty
-if (filteredCourses.length === 0) {
-  const popup = document.createElement("div");
-  popup.innerText = "No courses to display";
-  
-  // Styling for the text (adjust as needed)
-  popup.style.position = "fixed";
-  popup.style.bottom = "220px";
-  popup.style.left = "50%";
-  popup.style.transform = "translateX(-50%)";
-  popup.style.color = "#555555";
-  popup.style.fontSize = "x-large";
-  popup.style.zIndex = "1000";
+  //Popup to display when filter courses is empty
+  if (filteredCourses.length === 0) {
+    const popup = document.createElement("div");
+    popup.innerText = "No courses to display";
 
-  document.body.appendChild(popup);
+    // Styling for the text (adjust as needed)
+    popup.style.position = "fixed";
+    popup.style.bottom = "220px";
+    popup.style.left = "50%";
+    popup.style.transform = "translateX(-50%)";
+    popup.style.color = "#555555";
+    popup.style.fontSize = "x-large";
+    popup.style.zIndex = "1000";
 
-  setTimeout(() => {
-    popup.remove(); // Remove the popup after 2 seconds
-  }, 3000);
-}
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+      popup.remove(); // Remove the popup after 2 seconds
+    }, 3000);
+  }
 
   filteredCourses.forEach((course) => {
     const cardNumber = cardNumberMap.get(course.key);
@@ -517,10 +511,23 @@ document.addEventListener("click", (e) => {
   }
 });
 
-
 document
   .getElementById("search-input")
   .addEventListener("input", searchCourses);
+
+document
+  .getElementById("customMail")
+  .setAttribute(
+    "href",
+    "mailto:" +
+      benefit.emails[0].to +
+      "?cc=" +
+      benefit.emails[0].cc +
+      "&subject=" +
+      benefit.emails[0].subject +
+      "&body=" +
+      encodedBody
+  );
 
 window.addEventListener("load", () => {
   updateMonthYearDisplay();
