@@ -372,7 +372,7 @@ const showPopup = (message, type) => {
     // Add auto-close feature
     setTimeout(() => {
         popup.remove();
-    }, 1500); // Automatically close after 3 seconds
+    }, 3000); // Automatically close after 3 seconds
 };
 
 

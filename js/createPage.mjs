@@ -329,6 +329,11 @@ const showPopup = (message, type) => {
   popup.appendChild(messageImg);
   popup.appendChild(messageText);
   document.body.appendChild(popup);
+
+  // Add auto-close feature
+  setTimeout(() => {
+    popup.remove();
+}, 3000); // Automatically close after 3 seconds
 };
 
 //style for error message - checking
