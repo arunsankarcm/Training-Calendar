@@ -69,6 +69,14 @@ function getCourses() {
         snapshot.forEach((course) => {
           allCourses.push(course);
         });
+
+        // Sort the courses by start date in ascending order
+        allCourses.sort((a, b) => {
+          const dateA = new Date(a.val().startDate);
+          const dateB = new Date(b.val().startDate);
+          return dateA - dateB;
+        });
+
         assignCardNumbersForCurrentMonth();
         filterCoursesByMonth();
       } else {
@@ -79,6 +87,7 @@ function getCourses() {
       console.error("Error fetching data: ", error);
     });
 }
+
 
 //Assigns sequential card numbers to courses that start in the current month.
 
