@@ -88,7 +88,6 @@ function getCourses() {
     });
 }
 
-
 //Assigns sequential card numbers to courses that start in the current month.
 
 function assignCardNumbersForCurrentMonth() {
@@ -162,7 +161,7 @@ function filterCoursesByMonth() {
     const cardNumber = cardNumberMap.get(course.key);
     if (cardNumber) {
       AddCourseToCard(course, cardNumber);
-    } 
+    }
   });
 }
 
@@ -427,7 +426,6 @@ document.addEventListener("click", (e) => {
     popupMenuFilter.style.display === "block" && // Check if the popup is open
     !popupMenuFilter.contains(e.target) && // Check if the click is outside the popup
     e.target !== iconButton // Check if the click is not on the icon button
-
   ) {
     popupMenuFilter.style.display = "none";
   }
@@ -435,7 +433,6 @@ document.addEventListener("click", (e) => {
 addButton.addEventListener("click", () => {
   popupMenuFilter.style.display = "none";
 });
-
 
 document.getElementById("filter-upcoming").addEventListener("click", () => {
   filterCourses("upcoming");
@@ -503,35 +500,35 @@ function filterCourses(filterType) {
       filteredCourses = monthFilteredCourses;
   }
 
- // Styles for "no courses to display" popup
-if (filteredCourses.length === 0) {
-  // Check if the popup already exists
-  let popup = document.getElementById("noCoursesPopup");
+  // Styles for "no courses to display" popup
+  if (filteredCourses.length === 0) {
+    // Check if the popup already exists
+    let popup = document.getElementById("noCoursesPopup");
 
-  // Create the popup if it doesn't exist
-  if (!popup) {
-    popup = document.createElement("div");
-    popup.id = "noCoursesPopup"; // Assign an ID to identify the popup
-    popup.innerText = "No courses to display";
-    popup.style.position = "fixed";
-    popup.style.bottom = "220px";
-    popup.style.left = "50%";
-    popup.style.transform = "translateX(-50%)";
-    popup.style.color = "#555555";
-    popup.style.fontSize = "x-large";
-    popup.style.padding = "10px 20px";
-    popup.style.borderRadius = "3px";
-    popup.style.zIndex = "1000";
+    // Create the popup if it doesn't exist
+    if (!popup) {
+      popup = document.createElement("div");
+      popup.id = "noCoursesPopup"; // Assign an ID to identify the popup
+      popup.innerText = "No courses to display";
+      popup.style.position = "fixed";
+      popup.style.bottom = "220px";
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)";
+      popup.style.color = "#555555";
+      popup.style.fontSize = "x-large";
+      popup.style.padding = "10px 20px";
+      popup.style.borderRadius = "3px";
+      popup.style.zIndex = "1000";
 
-    document.body.appendChild(popup);
+      document.body.appendChild(popup);
+    }
+  } else {
+    // Remove the popup if courses are available
+    const popup = document.getElementById("noCoursesPopup");
+    if (popup) {
+      popup.remove();
+    }
   }
-} else {
-  // Remove the popup if courses are available
-  const popup = document.getElementById("noCoursesPopup");
-  if (popup) {
-    popup.remove();
-  }
-}
 
   filteredCourses.forEach((course) => {
     const cardNumber = cardNumberMap.get(course.key);
@@ -569,8 +566,8 @@ document
 
 // Close the "Add" popup menu when clicking outside
 document.addEventListener("click", (e) => {
-  if (!addButton.contains(e.target) && !popupMenuAdd.contains(e.target) )// Ensure "Filter" button closes the popup
-  {
+  if (!addButton.contains(e.target) && !popupMenuAdd.contains(e.target)) {
+    // Ensure "Filter" button closes the popup
     popupMenuAdd.style.display = "none";
   }
 });
