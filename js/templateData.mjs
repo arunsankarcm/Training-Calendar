@@ -186,8 +186,10 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
     <p><strong>Target Audience:</strong> ${course.targetAudience}</p>
     <p><strong>Date & Time:</strong> ${course.startDate} to ${courseEndDateValid} || (${durationString})</p>
     <p><strong>Trainer:</strong> ${course.trainerName}</p>
-    <p><strong>Key topics:</strong> ${course.keyPoints}</p>
+    
   `;
+  //if need copy and paste
+  // <p><strong>Key topics:</strong> ${course.keyPoints}</p>
 
   const modeTag = document.createElement("span");
   modeTag.classList.add("tag");
@@ -304,24 +306,6 @@ document
 
     doc.save(`Training_Calendar_${currentMonth}_${currentYear}.pdf`);
   });
-
-// PNG screenshot function
-function downloadImage() {
-  const element = document.getElementById("container-capture");
-
-  html2canvas(element).then((canvas) => {
-    const imgData = canvas.toDataURL("image/png");
-
-    const link = document.createElement("a");
-    link.href = imgData;
-    link.download = `TrainingCalender${currentMonth}${currentYear}.png`;
-
-    document.body.appendChild(link);
-    link.click();
-
-    document.body.removeChild(link);
-  });
-}
 
 // excel sheet downloading function
 document.getElementById("downloadBtn").addEventListener("click", function () {
