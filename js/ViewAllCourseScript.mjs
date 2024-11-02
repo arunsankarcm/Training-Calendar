@@ -69,6 +69,14 @@ function getCourses() {
         snapshot.forEach((course) => {
           allCourses.push(course);
         });
+
+        // Sort the courses by start date in ascending order
+        allCourses.sort((a, b) => {
+          const dateA = new Date(a.val().startDate);
+          const dateB = new Date(b.val().startDate);
+          return dateA - dateB;
+        });
+
         assignCardNumbersForCurrentMonth();
         filterCoursesByMonth();
       } else {
@@ -121,6 +129,34 @@ function filterCoursesByMonth() {
     return isStartingThisMonth || isOngoingThisMonth;
   });
 
+  //  styles for no courses for this month popup
+  if (filteredCourses.length === 0) {
+    let popup = document.getElementById("noCoursesPopup");
+
+    // Create the popup if it doesn't already exist
+    if (!popup) {
+      popup = document.createElement("div");
+      popup.id = "noCoursesPopup";
+      popup.innerText = "No courses available for this month";
+      popup.style.position = "fixed";
+      popup.style.bottom = "220px";
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)";
+      popup.style.color = "#555555";
+      popup.style.fontSize = "x-large";
+      popup.style.padding = "10px 20px";
+      popup.style.borderRadius = "3px";
+      popup.style.zIndex = "1000";
+
+      document.body.appendChild(popup);
+    }
+  } else {
+    // Remove the popup if courses are available
+    const popup = document.getElementById("noCoursesPopup");
+    if (popup) {
+      popup.remove();
+    }
+  }
   filteredCourses.forEach((course) => {
     const cardNumber = cardNumberMap.get(course.key);
     if (cardNumber) {
@@ -151,6 +187,23 @@ document.getElementById("right-arrow").addEventListener("click", () => {
   updateMonthYearDisplay();
   assignCardNumbersForCurrentMonth();
   filterCoursesByMonth();
+});
+
+
+// Global variable for user role
+let userRole;
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    user.getIdTokenResult().then((idTokenResult) => {
+      userRole = idTokenResult.claims.role; 
+      console.log("User Role:", userRole); 
+      handleRoleBasedFunctionality(userRole);
+    });
+    console.log("User is signed in:", user.email);
+  } else {
+    window.location.href = "../index.html";
+  }
 });
 
 //* Creates a course card element and appends it to the DOM.
@@ -266,42 +319,45 @@ function AddCourseToCard(course, cardNo) {
   const popupMenu = card.querySelector(".popup-menu");
   const deleteBtn = card.querySelector(".del-tag");
   const editBtn = card.querySelector(".edit-tag");
+// Conditionally show the three-dots menu for superadmin
+if (userRole === "superadmin") {
+  // Show the three-dot menu only for superadmin
+  threeDots.style.display = "block";
 
-  // Event listener to toggle the popup menu when the three dots are clicked.
+  // Toggle popup menu when the three dots are clicked
   threeDots.addEventListener("click", (e) => {
-    popupMenu.style.display =
-      popupMenu.style.display === "block" ? "none" : "block";
+    popupMenu.style.display = popupMenu.style.display === "block" ? "none" : "block";
   });
 
-  // Hides the popup menu when clicking outside of it.
+  // Hide the popup menu when clicking outside of it
   document.addEventListener("click", (e) => {
     if (!threeDots.contains(e.target) && !popupMenu.contains(e.target)) {
       popupMenu.style.display = "none";
     }
   });
 
-  // Deletes the course from the database and UI after confirmation.
+  // Enable delete functionality for superadmin
   deleteBtn.addEventListener("click", () => {
-    const confirmDelete = confirm(
-      "Are you sure you want to delete this course?"
-    );
+    const confirmDelete = confirm("Are you sure you want to delete this course?");
     if (confirmDelete) {
       const courseRef = ref(db, `courses/${courseKey}`);
       remove(courseRef)
         .then(() => {
-          card.remove();
-          console.log("Course deleted successfully.");
+          card.remove(); // Remove the card element from the UI
+          console.log("Course deleted successfully from the database and UI.");
         })
-        .catch((error) => {
-          console.error("Error deleting course:", error);
-        });
+        .catch((error) => console.error("Error deleting course:", error));
     }
   });
 
-  // Redirects to the course edit page with the course key as a parameter.
+  // Redirects to the course edit page with the course key as a parameter
   editBtn.addEventListener("click", () => {
     window.location.href = `indexupdate.html?courseKey=${courseKey}`;
   });
+}
+else{
+  threeDots.style.display = "none";
+}
 }
 
 //Performs a real-time search of courses based on the user's input
@@ -341,7 +397,7 @@ function searchCourses() {
     if (!existingPopup) {
       const popup = document.createElement("div");
       popup.id = "no-course-popup";
-      popup.innerText = "No courses found for your search.";
+      popup.innerText = "No results found";
       popup.style.position = "fixed";
       popup.style.bottom = "220px";
       popup.style.left = "50%";
@@ -349,7 +405,7 @@ function searchCourses() {
       popup.style.color = "#555555";
       popup.style.fontSize = "x-large";
       popup.style.padding = "10px 20px";
-      popup.style.borderRadius = "5px";
+      popup.style.borderRadius = "3px";
       popup.style.zIndex = "1000";
       document.body.appendChild(popup);
     }
@@ -368,7 +424,7 @@ function searchCourses() {
     }
   });
 }
-
+const addButton = document.getElementById("add_button");
 const iconButton = document.getElementById("iconButton");
 const popupMenuFilter = document.getElementById("popupMenuFilter");
 
@@ -394,7 +450,9 @@ document.addEventListener("click", (e) => {
     popupMenuFilter.style.display = "none";
   }
 });
-
+addButton.addEventListener("click", () => {
+  popupMenuFilter.style.display = "none";
+});
 
 document.getElementById("filter-upcoming").addEventListener("click", () => {
   filterCourses("upcoming");
@@ -461,25 +519,35 @@ function filterCourses(filterType) {
     default:
       filteredCourses = monthFilteredCourses;
   }
-  //Popup to display when filter courses is empty
+
+  // Styles for "no courses to display" popup
   if (filteredCourses.length === 0) {
-    const popup = document.createElement("div");
-    popup.innerText = "No courses to display";
+    // Check if the popup already exists
+    let popup = document.getElementById("noCoursesPopup");
 
-    // Styling for the text (adjust as needed)
-    popup.style.position = "fixed";
-    popup.style.bottom = "220px";
-    popup.style.left = "50%";
-    popup.style.transform = "translateX(-50%)";
-    popup.style.color = "#555555";
-    popup.style.fontSize = "x-large";
-    popup.style.zIndex = "1000";
+    // Create the popup if it doesn't exist
+    if (!popup) {
+      popup = document.createElement("div");
+      popup.id = "noCoursesPopup"; // Assign an ID to identify the popup
+      popup.innerText = "No courses to display";
+      popup.style.position = "fixed";
+      popup.style.bottom = "220px";
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)";
+      popup.style.color = "#555555";
+      popup.style.fontSize = "x-large";
+      popup.style.padding = "10px 20px";
+      popup.style.borderRadius = "3px";
+      popup.style.zIndex = "1000";
 
-    document.body.appendChild(popup);
-
-    setTimeout(() => {
-      popup.remove(); // Remove the popup after 2 seconds
-    }, 3000);
+      document.body.appendChild(popup);
+    }
+  } else {
+    // Remove the popup if courses are available
+    const popup = document.getElementById("noCoursesPopup");
+    if (popup) {
+      popup.remove();
+    }
   }
 
   filteredCourses.forEach((course) => {
@@ -490,7 +558,7 @@ function filterCourses(filterType) {
   });
 }
 
-const addButton = document.getElementById("add_button");
+// const addButton = document.getElementById("add_button");
 const popupMenuAdd = document.getElementById("popupMenuAdd");
 
 // Function to toggle the "Add" popup menu
@@ -519,8 +587,12 @@ document
 // Close the "Add" popup menu when clicking outside
 document.addEventListener("click", (e) => {
   if (!addButton.contains(e.target) && !popupMenuAdd.contains(e.target)) {
+    // Ensure "Filter" button closes the popup
     popupMenuAdd.style.display = "none";
   }
+});
+iconButton.addEventListener("click", () => {
+  popupMenuAdd.style.display = "none";
 });
 
 document
@@ -558,10 +630,31 @@ document.getElementById("logout_button").addEventListener("click", () => {
     });
 });
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("User is signed in:", user.email);
+
+// Function to handle role-based functionality
+function handleRoleBasedFunctionality(role) {
+  if (role === "superadmin") {
+  
+    // Function to enable features based on user role
+    console.log("superadmin");
+  } else if (role === "admin") {
+    // Show admin features
+    enableAdminFeatures();
   } else {
-    window.location.href = "../index.html";
+    // Show user features or limit access
+    showUserFeatures();
   }
-});
+}
+
+function enableAdminFeatures() {
+  console.log("Admin features enabled.");
+  // Code for admin functionality
+}
+
+function showUserFeatures() {
+  console.log("User features enabled.");
+  // Code for regular user functionality
+}
+
+
+
