@@ -2,8 +2,7 @@
 
 
 body {
-
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', sans-serif;
     margin: 40px;
     padding: 50px;
     background-color: black;
@@ -25,6 +24,7 @@ body {
 .rhombus-top{
     width: auto;
     height: 80px;
+    margin-left: 12px;
     img{
         height: 30px;
         width: auto;
@@ -41,11 +41,12 @@ body {
     h6{
         margin: 0;
         font-size: 55px;   
-        font-weight: bolder;
+        font-weight: 900;
     }
     h7 {
        margin: 0;
-        font-size: 40px;
+        font-size: 45px;
+        font-weight: 100;
     }
     p {
     padding-top: 30px;
@@ -85,7 +86,7 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 20px;    
-    h3 {
+    h1 {
         font-weight: bolder;
         margin-top: 0;
         font-size: 20px;
@@ -95,6 +96,13 @@ body {
     p {
         font-size: 15px;
     }
+}
+#training-heading{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-top: 0;
+    font-size: 20px;
+    color: #3E68B9;
 }
 
 .line {
@@ -111,19 +119,26 @@ body {
     padding: 5px 10px;
     border-radius: 3px;
     font-size: 13px;
+    font-weight: 1000;
     margin-top: 10px;
 }
 
 .offline {
-    border: 1px solid #43BF73;
+    border: 3px solid #43BF73;
     border-radius: 25px;
     color: #43BF73;
 }
 
 .online {
-    border: 1px solid #3E68B9;
+    border: 3px solid #3E68B9;
     border-radius: 25px;
     color: #3E68B9;
+}
+
+.blended {
+    border: 3px solid #b93e3e;
+    border-radius: 25px;
+    color: #b93e3e;
 }
 
 .upcoming-button{
@@ -287,7 +302,7 @@ body {
     img{ 
     margin-top: 10px;
     margin-right: 10px;
-    height: 30px;
+    height: 50px;
     width: auto;
     
 }}
@@ -295,9 +310,9 @@ body {
 /* Hovering download Options */
 .sheetHover{
     color: white;
-    padding-left: 1px;
-    padding-top: 1px;
-    font-size: 10px;
+    padding-left: 6px;
+    padding-top: 0px;
+    font-size: 13px;
 }
  
 #onSheetHover{
@@ -307,25 +322,11 @@ body {
     visibility: visible;
 }
  
-.pdfHover{
-    color: white;
-    padding-left: 1px;
-    padding-top: 1px;
-    font-size: 10px;
-}
- 
-#onPdfHover{
-    visibility: hidden;
-}
-.downloadPdfHover :hover #onPdfHover {
-    visibility: visible;
-}
- 
 .pngHover{
     color: white;
-    padding-left: 1px;
-    padding-top: 1px;
-    font-size: 10px;
+    padding-left: 10px;
+    padding-top: 0px;
+    font-size: 13px;
 }
  
 #onPngHover{
