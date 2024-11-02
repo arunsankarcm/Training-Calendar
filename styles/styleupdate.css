@@ -26,9 +26,17 @@ html {
   color: white;
   padding: 20px;
   display: flex;
+  width: 100%; 
+  height: 25px;
   justify-content: space-between;
   align-items: center;
   display: fixed;
+}
+.header-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-right: 10%;
 }
 .right-section {
   background-color: #d9d9d9;

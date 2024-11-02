@@ -12,7 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   endDateInput.addEventListener("change", validateEndDate);
   endTimeInput.addEventListener("change", validateEndTime);
+
+  document.getElementById("course-name").addEventListener("input", trimInput);
+  document.getElementById("trainer").addEventListener("input", trimInput);
+  document.getElementById("audience").addEventListener("input", trimInput);
 });
+
+function trimInput(e) {
+  // Trim leading spaces
+  if (e.target.value.startsWith(" ")) {
+    e.target.value = e.target.value.trimStart();
+  }
+}
 
 function validateEndDate() {
   const startDate = document.getElementById("start-date").value;
@@ -70,7 +81,7 @@ if (courseKey) {
         document.getElementById('end-date').value = courseData.endDate || '';
         document.getElementById("start-time").value = courseData.startTime;
         document.getElementById("end-time").value = courseData.endTime;
-        document.getElementById("key-points").value = courseData.keyPoints;
+        // document.getElementById("key-points").value = courseData.keyPoints;
         document.getElementById("trainer").value = courseData.trainerName;
         document.getElementById("audience").value = courseData.targetAudience;
         document.getElementById("max-participants").value = courseData.maxParticipation;
@@ -106,7 +117,7 @@ function updateCourse(e) {
   const endDate = getElementVal("end-date");
   const startTime = getElementVal("start-time");
   const endTime = getElementVal("end-time");
-  const keyPoints = getElementVal("key-points");
+  // const keyPoints = getElementVal("key-points");
   const trainerName = getElementVal("trainer");
   const targetAudience = getElementVal("audience");
   const maxParticipation = getElementVal("max-participants");
@@ -129,7 +140,7 @@ function updateCourse(e) {
     endDate: endDate,
     startTime: startTime,
     endTime: endTime,
-    keyPoints: keyPoints,
+    // keyPoints: keyPoints,
     trainerName: trainerName,
     targetAudience: targetAudience,
     maxParticipation: maxParticipation,

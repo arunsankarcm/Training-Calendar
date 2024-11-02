@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const startTimeInput = document.getElementById("start-time");
   const maxParticipantsInput = document.getElementById("max-participants");
   const courseNameInput = document.getElementById("course-name");
-  const keyPointsInput = document.getElementById("key-points");
+  // const keyPointsInput = document.getElementById("key-points");
   const trainerInput = document.getElementById("trainer");
   const audienceInput = document.getElementById("audience");
 
@@ -33,9 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
   courseNameInput.addEventListener("input", () =>
     validateTextField(courseNameInput, "Course name")
   );
-  keyPointsInput.addEventListener("input", () =>
-    validateTextField(keyPointsInput, "Key points")
-  );
+  // keyPointsInput.addEventListener("input", () =>
+  //   validateTextField(keyPointsInput, "Key points")
+  // );
   trainerInput.addEventListener("input", () =>
     validateTextField(trainerInput, "Trainer name")
   );
@@ -47,9 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
   courseNameInput.addEventListener("blur", () =>
     validateEmptyField(courseNameInput, "Course name")
   );
-  keyPointsInput.addEventListener("blur", () =>
-    validateEmptyField(keyPointsInput, "Key points")
-  );
+  // keyPointsInput.addEventListener("blur", () =>
+  //   validateEmptyField(keyPointsInput, "Key points")
+  // );
   trainerInput.addEventListener("blur", () =>
     validateEmptyField(trainerInput, "Trainer name")
   );
@@ -72,28 +72,31 @@ function validateEmptyField(inputElement, fieldName) {
 
 // Validation for text fields
 function validateTextField(inputElement, fieldName) {
+  // Get the input value
   const value = inputElement.value;
-  // Allow letters, numbers, and single spaces between words
-  const validPattern = /^[a-zA-Z0-9]+(?:\s[a-zA-Z0-9]+)*$/;
 
-  // Remove extra spaces, tabs, etc.
-  const trimmedValue = value.trim().replace(/\s+/g, " ");
+  // Remove leading whitespace
+  const trimmedValue = value.replace(/^\s+/, "");
 
-  if (value !== trimmedValue) {
-    inputElement.value = trimmedValue;
-  }
+  // Set the maximum word limit
+  const maxLength = 100;
 
-  if (trimmedValue && !validPattern.test(trimmedValue)) {
+  // Update the input value with trimmed value
+  inputElement.value = trimmedValue;
+
+  // Check for maximum length
+  if (trimmedValue.length > maxLength) {
     inputElement.classList.add("invalid");
-    showError(
-      `${fieldName} can only contain letters, numbers, and single spaces between words.`
-    );
+    showError(`${fieldName} must not exceed ${maxLength} characters.`);
     return false;
   }
 
+  // Remove invalid class if validation passes
   inputElement.classList.remove("invalid");
   return true;
 }
+
+
 
 function validateEndDate() {
   const startDate = document.getElementById("start-date").value;
@@ -174,7 +177,7 @@ function submitCourse(e) {
 
   // Get all input elements
   const courseNameInput = document.getElementById("course-name");
-  const keyPointsInput = document.getElementById("key-points");
+  // const keyPointsInput = document.getElementById("key-points");
   const trainerInput = document.getElementById("trainer");
   const audienceInput = document.getElementById("audience");
   const maxParticipantsInput = document.getElementById("max-participants");
@@ -183,9 +186,9 @@ function submitCourse(e) {
   const isValidCourseName =
     validateTextField(courseNameInput, "Course name") &&
     validateEmptyField(courseNameInput, "Course name");
-  const isValidKeyPoints =
-    validateTextField(keyPointsInput, "Key points") &&
-    validateEmptyField(keyPointsInput, "Key points");
+  // const isValidKeyPoints =
+  //   validateTextField(keyPointsInput, "Key points") &&
+  //   validateEmptyField(keyPointsInput, "Key points");
   const isValidTrainer =
     validateTextField(trainerInput, "Trainer name") &&
     validateEmptyField(trainerInput, "Trainer name");
@@ -199,7 +202,7 @@ function submitCourse(e) {
   // Check if all validations pass
   if (
     !isValidCourseName ||
-    !isValidKeyPoints ||
+    // !isValidKeyPoints ||
     !isValidTrainer ||
     !isValidAudience ||
     !isValidMaxParticipants ||
@@ -216,7 +219,7 @@ function submitCourse(e) {
   const endDate = getElementVal("end-date");
   const startTime = getElementVal("start-time");
   const endTime = getElementVal("end-time");
-  const keyPoints = keyPointsInput.value.trim();
+  // const keyPoints = keyPointsInput.value.trim();
   const trainerName = trainerInput.value.trim();
   const targetAudience = audienceInput.value.trim();
   const maxParticipation = maxParticipantsInput.value;
@@ -241,7 +244,7 @@ function submitCourse(e) {
     endDate,
     startTime,
     endTime,
-    keyPoints,
+    
     trainerName,
     targetAudience,
     maxParticipation,
@@ -256,7 +259,7 @@ const saveInDB = (
   endDate,
   startTime,
   endTime,
-  keyPoints,
+ 
   trainerName,
   targetAudience,
   maxParticipation,
@@ -271,7 +274,7 @@ const saveInDB = (
     endDate: endDate,
     startTime: startTime,
     endTime: endTime,
-    keyPoints: keyPoints,
+  
     trainerName: trainerName,
     targetAudience: targetAudience,
     maxParticipation: maxParticipation,

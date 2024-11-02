@@ -22,14 +22,24 @@ html {
   display: fixed;
 
 }
+
+.header-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-right: 10%;
+}
 .head {
   background-color: #d9d9d9;
   color: white;
   padding: 20px;
   display: flex;
+  width: 100%; 
+  height: 25px;
   justify-content: space-between;
   align-items: center;
   display: fixed;
+
 }
 .right-section{
   background-color: #d9d9d9;
