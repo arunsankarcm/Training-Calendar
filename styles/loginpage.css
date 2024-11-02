@@ -13,8 +13,8 @@ body {
 
 .logo {
   margin-left: 70px;
-  height: 100px;
-  width: 150px;
+  height: auto;
+  width: 120px;
 }
 
 .login_page {

@@ -189,15 +189,14 @@ document.getElementById("right-arrow").addEventListener("click", () => {
   filterCoursesByMonth();
 });
 
-
 // Global variable for user role
 let userRole;
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
     user.getIdTokenResult().then((idTokenResult) => {
-      userRole = idTokenResult.claims.role; 
-      console.log("User Role:", userRole); 
+      userRole = idTokenResult.claims.role;
+      console.log("User Role:", userRole);
       handleRoleBasedFunctionality(userRole);
     });
     console.log("User is signed in:", user.email);
@@ -282,9 +281,6 @@ function AddCourseToCard(course, cardNo) {
       </span>
       <p id="course-name">${value.courseName || "No name"}</p>
     </div>
-    <ul class="details">
-      <li id="key-points">${value.keyPoints || "No key points available"}</li>
-    </ul>
     <p class="audience">
       Target Audience: <strong id="target-audience">${
         value.targetAudience || "Not specified"
@@ -319,45 +315,49 @@ function AddCourseToCard(course, cardNo) {
   const popupMenu = card.querySelector(".popup-menu");
   const deleteBtn = card.querySelector(".del-tag");
   const editBtn = card.querySelector(".edit-tag");
-// Conditionally show the three-dots menu for superadmin
-if (userRole === "superadmin") {
-  // Show the three-dot menu only for superadmin
-  threeDots.style.display = "block";
+  // Conditionally show the three-dots menu for superadmin
+  if (userRole === "superadmin") {
+    // Show the three-dot menu only for superadmin
+    threeDots.style.display = "block";
 
-  // Toggle popup menu when the three dots are clicked
-  threeDots.addEventListener("click", (e) => {
-    popupMenu.style.display = popupMenu.style.display === "block" ? "none" : "block";
-  });
+    // Toggle popup menu when the three dots are clicked
+    threeDots.addEventListener("click", (e) => {
+      popupMenu.style.display =
+        popupMenu.style.display === "block" ? "none" : "block";
+    });
 
-  // Hide the popup menu when clicking outside of it
-  document.addEventListener("click", (e) => {
-    if (!threeDots.contains(e.target) && !popupMenu.contains(e.target)) {
-      popupMenu.style.display = "none";
-    }
-  });
+    // Hide the popup menu when clicking outside of it
+    document.addEventListener("click", (e) => {
+      if (!threeDots.contains(e.target) && !popupMenu.contains(e.target)) {
+        popupMenu.style.display = "none";
+      }
+    });
 
-  // Enable delete functionality for superadmin
-  deleteBtn.addEventListener("click", () => {
-    const confirmDelete = confirm("Are you sure you want to delete this course?");
-    if (confirmDelete) {
-      const courseRef = ref(db, `courses/${courseKey}`);
-      remove(courseRef)
-        .then(() => {
-          card.remove(); // Remove the card element from the UI
-          console.log("Course deleted successfully from the database and UI.");
-        })
-        .catch((error) => console.error("Error deleting course:", error));
-    }
-  });
+    // Enable delete functionality for superadmin
+    deleteBtn.addEventListener("click", () => {
+      const confirmDelete = confirm(
+        "Are you sure you want to delete this course?"
+      );
+      if (confirmDelete) {
+        const courseRef = ref(db, `courses/${courseKey}`);
+        remove(courseRef)
+          .then(() => {
+            card.remove(); // Remove the card element from the UI
+            console.log(
+              "Course deleted successfully from the database and UI."
+            );
+          })
+          .catch((error) => console.error("Error deleting course:", error));
+      }
+    });
 
-  // Redirects to the course edit page with the course key as a parameter
-  editBtn.addEventListener("click", () => {
-    window.location.href = `indexupdate.html?courseKey=${courseKey}`;
-  });
-}
-else{
-  threeDots.style.display = "none";
-}
+    // Redirects to the course edit page with the course key as a parameter
+    editBtn.addEventListener("click", () => {
+      window.location.href = `indexupdate.html?courseKey=${courseKey}`;
+    });
+  } else {
+    threeDots.style.display = "none";
+  }
 }
 
 //Performs a real-time search of courses based on the user's input
@@ -630,11 +630,9 @@ document.getElementById("logout_button").addEventListener("click", () => {
     });
 });
 
-
 // Function to handle role-based functionality
 function handleRoleBasedFunctionality(role) {
   if (role === "superadmin") {
-  
     // Function to enable features based on user role
     console.log("superadmin");
   } else if (role === "admin") {
@@ -655,6 +653,3 @@ function showUserFeatures() {
   console.log("User features enabled.");
   // Code for regular user functionality
 }
-
-
-

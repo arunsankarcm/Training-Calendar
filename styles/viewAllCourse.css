@@ -29,88 +29,82 @@ body {
   z-index: 1;
   justify-content: space-between;
   align-items: center;
-    display: fixed;
-
+  display: fixed;
 }
 .head {
   background-color: #d9d9d9;
   color: white;
   padding: 20px;
   display: flex;
-  width: 100%; 
+  width: 100%;
   height: 65px;
   justify-content: space-between;
   align-items: center;
   display: fixed;
 }
-.right-section{
+.right-section {
   background-color: #d9d9d9;
-
 }
-.logoutHoverText{
+.logoutHoverText {
   color: #0b0b0b;
 }
 /* Logout button hover styles*/
-#onHoverLogout{
+#onHoverLogout {
   visibility: hidden;
 }
-#logout_button:hover #onHoverLogout{
+#logout_button:hover #onHoverLogout {
   visibility: visible;
-  
 }
 
 /* Export button hover styles */
-#onHoverExport{
+#onHoverExport {
   visibility: hidden;
 }
-.expo:hover #onHoverExport{
+.expo:hover #onHoverExport {
   visibility: visible;
 }
-.filterHoverText{
-color: white;
-padding-left: 4.5px;
-padding-top: 3px;
-font-size: 17px;
+.filterHoverText {
+  color: white;
+  padding-left: 4.5px;
+  padding-top: 3px;
+  font-size: 17px;
 }
-.addHoverText{
+.addHoverText {
   color: white;
   padding-left: 7px;
   padding-top: 3px;
   font-size: 17px;
-
 }
-#iconButton img{
+#iconButton img {
   padding-top: 23px;
 }
 
 /* Filter button hover styles */
-#onHoverFilter{
+#onHoverFilter {
   visibility: hidden;
 }
-#iconButton:hover #onHoverFilter{
+#iconButton:hover #onHoverFilter {
   visibility: visible;
 }
 
 /* Add button hover styles */
-#onHoverAdd{
+#onHoverAdd {
   visibility: hidden;
 }
-.addicon:hover #onHoverAdd{
+.addicon:hover #onHoverAdd {
   visibility: visible;
 }
 
 /* complete hover text styles */
-.hoverText{  
+.hoverText {
   color: #ffffff;
-padding-left: 2px;
+  padding-left: 2px;
 }
 
-
-
-.right-section img{
+.right-section img {
   background-color: #d9d9d9;
 }
-#logout_button{
+#logout_button {
   background-color: #d9d9d9;
   padding-top: 15px;
 }
@@ -138,9 +132,8 @@ padding-left: 2px;
   border-radius: 5px;
   padding: 5px 10px;
   position: absolute;
-  
+
   left: 350px;
-  
 }
 
 .search-bar input {
@@ -151,7 +144,7 @@ padding-left: 2px;
   width: 500px;
   box-sizing: border-box;
 }
-.search-btn{
+.search-btn {
   width: 30px;
   height: auto;
   border-style: none;
@@ -180,7 +173,6 @@ padding-left: 2px;
 .action-icons {
   display: flex;
   margin-right: 80px;
-
 }
 
 .card-grid {
@@ -217,6 +209,7 @@ padding-left: 2px;
   display: flex; /* Use flexbox for centering */
   justify-content: center; /* Horizontally center the content */
   align-items: center;
+  margin-bottom: 35px;
 }
 
 .yellow {
@@ -224,9 +217,6 @@ padding-left: 2px;
   width: 17px;
   height: 17px;
   padding-right: 4px;
-}
-.yellow p {
-  padding-right: 7px;
 }
 
 .red {
@@ -325,6 +315,15 @@ padding-left: 2px;
 #course-number {
   padding-right: 10px;
   color: white;
+  font-size: 12px;
+}
+
+#course-name {
+  margin-bottom: 35px;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+
 }
 
 /* ------------ */
@@ -337,7 +336,7 @@ padding-left: 2px;
 /* ---------POPUP - FILTER------------ */
 #popupMenuFilter.popup-menu {
   display: flex;
-  display: none; 
+  display: none;
   line-height: 11px;
   width: 120px;
   height: 126px;
@@ -350,11 +349,11 @@ padding-left: 2px;
   width: 91px;
   margin-left: 5px;
   height: auto;
-} 
+}
 
 #popupMenuAdd.popup-menu {
   display: flex;
-  display: none; 
+  display: none;
   line-height: 11px;
   width: 100px;
   height: 90px;
@@ -478,7 +477,7 @@ popup-menu ul {
   padding: 0;
   /* display: flex; */
 }
-popup-menu ul hr{
+popup-menu ul hr {
   margin-left: 3px;
 }
 
@@ -493,11 +492,11 @@ popup-menu ul hr{
   margin-left: 3px;
 }
 
-.del-tag img{
+.del-tag img {
   width: 20px;
 }
 
-.edit-tag img{
+.edit-tag img {
   width: 20px;
 }
 
