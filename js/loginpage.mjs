@@ -15,7 +15,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       errorMessage.textContent = "";
-      sessionStorage.setItem("successMessage", "Successfully logged in!");
+      // sessionStorage.setItem("successMessage", "Successfully logged in!");
       window.location.href = "pages/viewAllCourse.html";
 
       const user = userCredential.user;
