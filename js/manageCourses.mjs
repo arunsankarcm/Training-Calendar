@@ -135,7 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <td><input name="end-date" type="date" class="date-input"></td>
             <td><input name="start-time" type="time" class="time-input"></td>
             <td><input name="end-time" type="time" class="time-input"></td>
-            <td><input name="key-points" type="text" class="key-points" placeholder="Key Points"></td>
             <td><input name="trainer" type="text" class="trainer-name" placeholder="Trainer Name"></td>
             <td><input name="audience" type="text" class="audience" placeholder="Audience"></td>
             <td><input name="max-participants" type="number" class="max-participants" placeholder="Max Participants"></td>
