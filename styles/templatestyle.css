@@ -116,7 +116,7 @@ body {
 #training-card-details{
     display: flex;
     flex-direction: column;
-    line-height: 0.1;
+    line-height: 0.01;
 }
 
 .tag {
