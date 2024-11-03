@@ -271,8 +271,21 @@ function AddCourseToCard(course, cardNo) {
 
   const dateString = `${value.startDate || "N/A"} to ${endDateText}`;
 
-  const modeIcon =
-    value.mode === "online" ? "../Images/laptop.png" : "../Images/people.png";
+  let modeIcon;
+  switch (value.mode) {
+    case "online":
+      modeIcon = "../Images/laptop.png";
+      break;
+    case "in-person":
+      modeIcon = "../Images/people.png";
+      break;
+    case "blended":
+      modeIcon = "../Images/blended.png"; // Add the new mode and icon here
+      break;
+    default:
+      modeIcon = "../Images/default.png"; // Optional: a default icon
+  }
+  
 
   card.innerHTML = `
     <div class="status">
