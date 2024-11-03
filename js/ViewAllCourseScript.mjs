@@ -102,6 +102,7 @@ function assignCardNumbersForCurrentMonth() {
 function filterCoursesByMonth() {
   cardsDiv.innerHTML = "";
 
+  // Filter courses that are either starting or ongoing in the current month and year
   const filteredCourses = allCourses.filter((course) => {
     const value = course.val();
     const startDate = new Date(value.startDate);
@@ -110,15 +111,27 @@ function filterCoursesByMonth() {
     const isStartingThisMonth =
       startDate.getMonth() === currentMonth &&
       startDate.getFullYear() === currentYear;
+
     const isOngoingThisMonth =
-      startDate.getMonth() < currentMonth &&
-      (!endDate || endDate.getMonth() >= currentMonth) &&
-      startDate.getFullYear() <= currentYear;
+      startDate.getFullYear() <= currentYear &&
+      (endDate
+        ? endDate.getFullYear() > currentYear ||
+          (endDate.getFullYear() === currentYear &&
+            endDate.getMonth() >= currentMonth)
+        : true);
 
     return isStartingThisMonth || isOngoingThisMonth;
   });
 
-  if (filteredCourses.length === 0) {
+  filteredCourses.forEach((course) => {
+    const cardNumber = cardNumberMap.get(course.key);
+    if (cardNumber) {
+      AddCourseToCard(course, cardNumber);
+    }
+  });
+
+  // Check if the card grid is empty and show the message if no courses are displayed
+  if (cardsDiv.children.length === 0) {
     let popup = document.getElementById("noCoursesPopup");
 
     if (!popup) {
@@ -143,12 +156,6 @@ function filterCoursesByMonth() {
       popup.remove();
     }
   }
-  filteredCourses.forEach((course) => {
-    const cardNumber = cardNumberMap.get(course.key);
-    if (cardNumber) {
-      AddCourseToCard(course, cardNumber);
-    }
-  });
 }
 
 document.getElementById("left-arrow").addEventListener("click", () => {
