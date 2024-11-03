@@ -56,21 +56,22 @@ body {
 }
 
 .training-details-section{
-    background-color: white;
+    background-color: rgb(255, 255, 255);
 }
 
 .circle-number {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background-color: #4D4D4D;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 13px;
+    font-size: 15px;
     margin-left: 15px;
     margin-right: 15px;
+    font-weight: 900;
 }
 .training-details{
     max-width: 590px;
@@ -81,7 +82,7 @@ body {
 .training-card {
     text-align: left;
     margin: 23px 0;
-    padding: 13px;
+    padding: 18px;
     width: 700px;
     display: flex;
     align-items: center;
@@ -99,10 +100,13 @@ body {
 }
 #training-heading{
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
+    font-weight: 900;
     margin-top: 0;
     font-size: 19px;
     color: #3E68B9;
+    font-weight: 900;
+    -webkit-text-stroke: 0.4px #3E68B9; /* Adds an outline to the text */
+
 }
 
 .line {
