@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Course Registration Form</title>
+    <title>Course Details</title>
     <link rel="stylesheet" href="../styles/stylecreate.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat"
@@ -24,6 +24,7 @@
           style="width: 150px; height: 30px"
         />
       </div>
+      <div class="header-title">Course Details</div>
       <div class="right-section">
         <button id="logout_button" style="border: none;cursor: pointer;"><img
           src="../Images/sign_out.png"
@@ -85,7 +86,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="key-points">Key Points to be covered:</label>
             <textarea
               id="key-points"
@@ -93,7 +94,7 @@
               placeholder="Enter the project description here"
               required
             ></textarea>
-          </div>
+          </div> -->
 
           <div class="flex-container">
             <div class="left-section-bottom">
@@ -155,6 +156,22 @@
                     Offline
                     <img
                       src="../Images/image (7).png"
+                      alt="offline"
+                      class="offlinepic"
+                    />
+                  </label>
+                  <br>
+                  <label>
+                    <input
+                      type="radio"
+                      name="mode"
+                      value="blended"
+                      class="offline"
+                      required
+                    />
+                    Blended
+                    <img
+                      src="../Images/blended.png"
                       alt="offline"
                       class="offlinepic"
                     />
