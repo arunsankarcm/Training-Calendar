@@ -178,9 +178,11 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
 
   trainingDetails.innerHTML = `
     <p id ="training-heading">  ${course.courseName} </p>
+    <div id="training-card-details">
     <p>Target Audience: <strong style="-webkit-text-stroke: 0.5px #000;">${course.targetAudience}</strong></p>
-    <p>Date & Time:<strong style="-webkit-text-stroke: 0.5px #000;"> ${course.startDate} </strong> to <strong style="-webkit-text-stroke: 0.5px #000;"> ${courseEndDateValid} </strong> || <strong style="-webkit-text-stroke: 0.5px #000;"> (${durationString}) </strong> </p>
+    <p>Date & Time:<strong style="-webkit-text-stroke: 0.5px #000;"> ${course.startDate} </strong> to <strong style="-webkit-text-stroke: 0.5px #000;"> ${courseEndDateValid} </strong>  <strong style="-webkit-text-stroke: 0.5px #000;"> (${durationString}) </strong> </p>
     <p>Trainer:<strong style="-webkit-text-stroke: 0.5px #000;"> ${course.trainerName} </strong> </p>
+    </div>
   `;
 
   const modeTag = document.createElement("span");
