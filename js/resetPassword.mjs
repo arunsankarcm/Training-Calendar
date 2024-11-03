@@ -9,7 +9,6 @@ document.getElementById("backToLogin").addEventListener("click", (e) => {
   window.location.href = "../index.html";
 });
 
-
 onAuthStateChanged(auth, (user) => {
   if (user) {
     const userEmail = user.email;
@@ -20,7 +19,6 @@ onAuthStateChanged(auth, (user) => {
     console.log("No user is logged in.");
   }
 });
-
 
 document.getElementById("reset_form").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -39,11 +37,10 @@ document.getElementById("reset_form").addEventListener("submit", (e) => {
       resetMessage.textContent = "Invalid Email Address";
       const errorCode = error.code;
       const errorMessage = error.message;
-      
     });
 });
 
 document.getElementById("resetEmail").addEventListener("focus", () => {
   const resetMessage = document.getElementById("reset-message");
-  resetMessage.textContent = ""; 
+  resetMessage.textContent = "";
 });
