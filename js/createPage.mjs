@@ -16,26 +16,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const startTimeInput = document.getElementById("start-time");
   const maxParticipantsInput = document.getElementById("max-participants");
   const courseNameInput = document.getElementById("course-name");
-   
+
   const trainerInput = document.getElementById("trainer");
   const audienceInput = document.getElementById("audience");
 
-   
   startDateInput.addEventListener("blur", validateEndDate);
   endDateInput.addEventListener("blur", validateEndDate);
   startTimeInput.addEventListener("blur", validateEndTime);
   endTimeInput.addEventListener("blur", validateEndTime);
 
-   
   maxParticipantsInput.addEventListener("input", validateMaxParticipants);
 
-   
   courseNameInput.addEventListener("input", () =>
     validateTextField(courseNameInput, "Course name")
   );
-   
-   
-   
+
   trainerInput.addEventListener("input", () =>
     validateTextField(trainerInput, "Trainer name")
   );
@@ -43,13 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
     validateTextField(audienceInput, "Target audience")
   );
 
-   
   courseNameInput.addEventListener("blur", () =>
     validateEmptyField(courseNameInput, "Course name")
   );
-   
-   
-   
+
   trainerInput.addEventListener("blur", () =>
     validateEmptyField(trainerInput, "Trainer name")
   );
@@ -58,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 });
 
- 
 function validateEmptyField(inputElement, fieldName) {
   const value = inputElement.value.trim();
   if (!value) {
@@ -70,33 +61,24 @@ function validateEmptyField(inputElement, fieldName) {
   return true;
 }
 
- 
 function validateTextField(inputElement, fieldName) {
-   
   const value = inputElement.value;
 
-   
   const trimmedValue = value.replace(/^\s+/, "");
 
-   
   const maxLength = 100;
 
-   
   inputElement.value = trimmedValue;
 
-   
   if (trimmedValue.length > maxLength) {
     inputElement.classList.add("invalid");
     showError(`${fieldName} must not exceed ${maxLength} characters.`);
     return false;
   }
 
-   
   inputElement.classList.remove("invalid");
   return true;
 }
-
-
 
 function validateEndDate() {
   const startDate = document.getElementById("start-date").value;
@@ -105,7 +87,6 @@ function validateEndDate() {
   const startDateObj = new Date(startDate);
   const endDateObj = new Date(endDate);
 
-  
   if (endDate !== "" && startDateObj > endDateObj) {
     showError("End date must be the same as or after the start date.");
     document.getElementById("end-date").value = "";
@@ -113,7 +94,6 @@ function validateEndDate() {
   }
   return true;
 }
-
 
 function validateEndTime() {
   const startTime = document.getElementById("start-time").value;
@@ -147,7 +127,6 @@ function validateMaxParticipants() {
   return true;
 }
 
- 
 function showError(message) {
   const errorDiv = document.createElement("div");
   errorDiv.className = "error-message";
@@ -169,26 +148,21 @@ function showError(message) {
   }, 3000);
 }
 
- 
 document.getElementById("create-page").addEventListener("submit", submitCourse);
 
 function submitCourse(e) {
   e.preventDefault();
 
-   
   const courseNameInput = document.getElementById("course-name");
-   
+
   const trainerInput = document.getElementById("trainer");
   const audienceInput = document.getElementById("audience");
   const maxParticipantsInput = document.getElementById("max-participants");
 
-   
   const isValidCourseName =
     validateTextField(courseNameInput, "Course name") &&
     validateEmptyField(courseNameInput, "Course name");
-   
-   
-   
+
   const isValidTrainer =
     validateTextField(trainerInput, "Trainer name") &&
     validateEmptyField(trainerInput, "Trainer name");
@@ -199,10 +173,8 @@ function submitCourse(e) {
   const isValidDates = validateEndDate();
   const isValidTimes = validateEndTime();
 
-   
   if (
     !isValidCourseName ||
-     
     !isValidTrainer ||
     !isValidAudience ||
     !isValidMaxParticipants ||
@@ -213,13 +185,12 @@ function submitCourse(e) {
     return;
   }
 
-   
   const courseName = courseNameInput.value.trim();
   const startDate = getElementVal("start-date");
   const endDate = getElementVal("end-date");
   const startTime = getElementVal("start-time");
   const endTime = getElementVal("end-time");
-   
+
   const trainerName = trainerInput.value.trim();
   const targetAudience = audienceInput.value.trim();
   const maxParticipation = maxParticipantsInput.value;
@@ -244,7 +215,7 @@ function submitCourse(e) {
     endDate,
     startTime,
     endTime,
-    
+
     trainerName,
     targetAudience,
     maxParticipation,
@@ -252,14 +223,13 @@ function submitCourse(e) {
   );
 }
 
- 
 const saveInDB = (
   courseName,
   startDate,
   endDate,
   startTime,
   endTime,
- 
+
   trainerName,
   targetAudience,
   maxParticipation,
@@ -274,7 +244,7 @@ const saveInDB = (
     endDate: endDate,
     startTime: startTime,
     endTime: endTime,
-  
+
     trainerName: trainerName,
     targetAudience: targetAudience,
     maxParticipation: maxParticipation,
@@ -292,12 +262,10 @@ const saveInDB = (
     });
 };
 
- 
 const getElementVal = (id) => {
   return document.getElementById(id).value;
 };
 
- 
 const showPopup = (message, type) => {
   const popup = document.createElement("div");
   popup.style.position = "fixed";
@@ -333,13 +301,11 @@ const showPopup = (message, type) => {
   popup.appendChild(messageText);
   document.body.appendChild(popup);
 
-   
   setTimeout(() => {
     popup.remove();
-}, 3000);  
+  }, 3000);
 };
 
- 
 const style = document.createElement("style");
 style.textContent = `
   .invalid {
@@ -355,7 +321,6 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
- 
 document.getElementById("logout_button").addEventListener("click", () => {
   signOut(auth)
     .then(() => {
@@ -375,7 +340,6 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-document.getElementById('back-button').addEventListener('click', () => {
-  window.location.href = 'viewAllCourse.html';
+document.getElementById("back-button").addEventListener("click", () => {
+  window.location.href = "viewAllCourse.html";
 });
-

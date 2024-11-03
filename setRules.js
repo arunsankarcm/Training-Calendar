@@ -1,12 +1,12 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-
 const admin = require("firebase-admin");
-const serviceAccount = require("../Training-Calendar/serviceAccountKey.json"); 
+const serviceAccount = require("../Training-Calendar/serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://training-calendar-ilp05-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL:
+    "https://training-calendar-ilp05-default-rtdb.asia-southeast1.firebasedatabase.app",
 });
 
 async function setRole(uid, role) {

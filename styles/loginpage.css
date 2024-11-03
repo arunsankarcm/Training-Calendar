@@ -8,7 +8,6 @@ body {
   height: 100vh;
   background: linear-gradient(120deg, #fefefe 60%, #6495ed 40%);
   background-size: cover;
-  
 }
 
 .logo {
@@ -23,9 +22,7 @@ body {
   max-width: 85%;
   margin-top: auto;
   margin-left: 20px;
-  
 }
-
 
 .left-side,
 .right-side {
@@ -58,7 +55,6 @@ body {
   color: #777;
 }
 
-
 .login-box {
   position: relative;
   background-color: #fff;
@@ -77,8 +73,8 @@ body {
   color: red;
   font-size: 0.8rem;
   text-align: center;
-  height: 1.2rem; 
-  visibility: hidden; 
+  height: 1.2rem;
+  visibility: hidden;
 }
 
 .show-error #error-message {
@@ -153,8 +149,7 @@ body {
   color: #777;
 }
 
- 
- @media (max-width: 768px) {
+@media (max-width: 768px) {
   .login_page {
     flex-direction: column;
     max-width: 100%;
@@ -180,7 +175,7 @@ body {
   }
 }
 
- @media (max-width: 576px) {
+@media (max-width: 576px) {
   .logo-container img {
     height: 80px;
     width: 80%;

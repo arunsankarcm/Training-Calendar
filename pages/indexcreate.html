@@ -1,182 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Course Details</title>
-    <link rel="stylesheet" href="../styles/stylecreate.css" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <header class="head">
-      <div class="left-section">
-        <img
-          src="../Images/exp_logo.png"
-          alt="Experion Logo"
-          class="logo"
-          style="width: 150px; height: 30px"
-        />
-      </div>
-      <div class="header-title">Course Details</div>
-      <div class="right-section">
-        <button id="logout_button" style="border: none; cursor: pointer">
-          <img
-            src="../Images/sign_out.png"
-            alt="Logout"
-            class="icon"
-            style="width: 20px; height: 20px"
-          />
-          <div class="logoutHoverText">
-            <div id="onHoverLogout">Logout</div>
-          </div>
-        </button>
-      </div>
-    </header>
-    <div class="container">
-      <div class="form-container">
-        <form id="create-page">
-          <button type="button" class="previousbutton" id="back-button">
-            <img
-              src="../Images/back-button (1).png"
-              alt="previous"
-              class="previousimage"
-            />
-          </button>
-          <br /><br /><br />
 
-          <div class="form-group">
-            <label for="course-name">Course Name:</label>
-            <input
-              type="text"
-              id="course-name"
-              name="course-name"
-              placeholder="Input the Course title"
-              required
-            />
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Details</title>
+  <link rel="stylesheet" href="../styles/stylecreate.css" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet" />
+</head>
 
-          <div class="inline-group">
-            <div class="form-group">
-              <label for="start-date">Start Date:</label>
-              <input type="date" id="start-date" name="start-date" required />
-            </div>
-            <div class="form-group">
-              <label for="end-date">End Date:</label>
-              <input type="date" id="end-date" name="end-date" />
-            </div>
-          </div>
-
-          <div class="inline-group">
-            <div class="form-group">
-              <label for="start-time">Start Time:</label>
-              <input type="time" id="start-time" name="start-time" required />
-            </div>
-            <div class="form-group">
-              <label for="end-time">End Time:</label>
-              <input type="time" id="end-time" name="end-time" required />
-            </div>
-          </div>
-
-          <div class="flex-container">
-            <div class="left-section-bottom">
-              <div class="form-group">
-                <label for="trainer">Trainer:</label>
-                <input
-                  type="text"
-                  id="trainer"
-                  name="trainer"
-                  placeholder="Enter Trainer's name"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="audience">Target Audience:</label>
-                <input type="text" id="audience" name="audience" required />
-              </div>
-              <div class="form-group">
-                <label for="max-participants"
-                  >Maximum Number of Participants:</label
-                >
-                <input
-                  type="number"
-                  id="max-participants"
-                  name="max-participants"
-                  min="1"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="right-section-bottom">
-              <div class="form-group">
-                <div class="radio-group">
-                  <label>
-                    <input
-                      type="radio"
-                      name="mode"
-                      value="online"
-                      class="online"
-                      required
-                    />
-                    Online
-                    <img
-                      src="../Images/image (6).png"
-                      alt="online"
-                      class="onlinepic"
-                    />
-                  </label>
-                  <br />
-                  <label>
-                    <input
-                      type="radio"
-                      name="mode"
-                      value="offline"
-                      class="offline"
-                      required
-                    />
-                    Offline
-                    <img
-                      src="../Images/image (7).png"
-                      alt="offline"
-                      class="offlinepic"
-                    />
-                  </label>
-                  <br />
-                  <label>
-                    <input
-                      type="radio"
-                      name="mode"
-                      value="blended"
-                      class="offline"
-                      required
-                    />
-                    Blended
-                    <img
-                      src="../Images/blended.png"
-                      alt="offline"
-                      class="offlinepic"
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="button">
-            <button id="button" type="submit" class="button">SUBMIT</button>
-          </div>
-        </form>
-      </div>
+<body>
+  <header class="head">
+    <div class="left-section">
+      <img src="../Images/exp_logo.png" alt="Experion Logo" class="logo" style="width: 150px; height: 30px" />
     </div>
+    <div class="header-title">Course Details</div>
+    <div class="right-section">
+      <button id="logout_button" style="border: none; cursor: pointer">
+        <img src="../Images/sign_out.png" alt="Logout" class="icon" style="width: 20px; height: 20px" />
+        <div class="logoutHoverText">
+          <div id="onHoverLogout">Logout</div>
+        </div>
+      </button>
+    </div>
+  </header>
+  <div class="container">
+    <div class="form-container">
+      <form id="create-page">
+        <button type="button" class="previousbutton" id="back-button">
+          <img src="../Images/back-button (1).png" alt="previous" class="previousimage" />
+        </button>
+        <br /><br /><br />
 
-    <script type="module" src="../firebaseConfig.mjs"></script>
-    <script type="module" src="../js/createPage.mjs"></script>
-  </body>
+        <div class="form-group">
+          <label for="course-name">Course Name:</label>
+          <input type="text" id="course-name" name="course-name" placeholder="Input the Course title" required />
+        </div>
+
+        <div class="inline-group">
+          <div class="form-group">
+            <label for="start-date">Start Date:</label>
+            <input type="date" id="start-date" name="start-date" required />
+          </div>
+          <div class="form-group">
+            <label for="end-date">End Date:</label>
+            <input type="date" id="end-date" name="end-date" />
+          </div>
+        </div>
+
+        <div class="inline-group">
+          <div class="form-group">
+            <label for="start-time">Start Time:</label>
+            <input type="time" id="start-time" name="start-time" required />
+          </div>
+          <div class="form-group">
+            <label for="end-time">End Time:</label>
+            <input type="time" id="end-time" name="end-time" required />
+          </div>
+        </div>
+
+        <div class="flex-container">
+          <div class="left-section-bottom">
+            <div class="form-group">
+              <label for="trainer">Trainer:</label>
+              <input type="text" id="trainer" name="trainer" placeholder="Enter Trainer's name" required />
+            </div>
+            <div class="form-group">
+              <label for="audience">Target Audience:</label>
+              <input type="text" id="audience" name="audience" required />
+            </div>
+            <div class="form-group">
+              <label for="max-participants">Maximum Number of Participants:</label>
+              <input type="number" id="max-participants" name="max-participants" min="1" required />
+            </div>
+          </div>
+
+          <div class="right-section-bottom">
+            <div class="form-group">
+              <div class="radio-group">
+                <label>
+                  <input type="radio" name="mode" value="online" class="online" required />
+                  Online
+                  <img src="../Images/image (6).png" alt="online" class="onlinepic" />
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="mode" value="offline" class="offline" required />
+                  Offline
+                  <img src="../Images/image (7).png" alt="offline" class="offlinepic" />
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="mode" value="blended" class="offline" required />
+                  Blended
+                  <img src="../Images/blended.png" alt="offline" class="offlinepic" />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="button">
+          <button id="button" type="submit" class="button">SUBMIT</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="../firebaseConfig.mjs"></script>
+  <script type="module" src="../js/createPage.mjs"></script>
+</body>
+
 </html>
