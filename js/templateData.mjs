@@ -6,6 +6,8 @@ import {
   child,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
+getCourses();
+
 const upcomingDiv = document.getElementById("upcoming-training-cards-section");
 const ongoingDiv = document.getElementById("ongoing-training-cards-section");
 let cardNo = 1;
@@ -31,31 +33,31 @@ const monthNamesArray = [
 const currentMonth = monthNamesArray[todaysDate.getMonth()];
 const currentYear = todaysDate.getFullYear();
 
-// Parse month and year from URL parameters
-// Parse month and year from URL parameters
 const urlParams = new URLSearchParams(window.location.search);
 const monthText = urlParams.get("month");
 const yearText = urlParams.get("year");
 console.log("URL Parameters - Month:", monthText, "Year:", yearText);
 
-// Update the header
 const monthYearHeader = document.getElementById("month-year-header");
 monthYearHeader.innerHTML = `<h6>${monthText} ${yearText}</h6>`;
 
-// Get month index and year
 const monthIndexFromURL = monthNamesArray.indexOf(monthText);
 const yearFromURL = parseInt(yearText, 10);
 
-// Define start and end of the selected month
 const startOfMonth = new Date(yearFromURL, monthIndexFromURL, 1);
-const endOfMonth = new Date(yearFromURL, monthIndexFromURL + 1, 0, 23, 59, 59, 999);
+const endOfMonth = new Date(
+  yearFromURL,
+  monthIndexFromURL + 1,
+  0,
+  23,
+  59,
+  59,
+  999
+);
 
-// Get the current date
 const currentDate = new Date();
 
-getCourses();
-
-// Fetching data from the Database
+// fetching from DB course details
 function getCourses() {
   console.log("Fetching data from Firebase...");
 
@@ -83,32 +85,25 @@ function getCourses() {
           const courseStartDate = new Date(course.startDate);
           const courseEndDate = new Date(course.endDate);
 
-          // Check if the course has already ended
           if (courseEndDate < currentDate) {
             console.log(
               `Course '${course.courseName}' has already ended, skipping.`
             );
-          }
-          // Check if the course does not overlap with the selected month
-          else if (
+          } else if (
             courseEndDate < startOfMonth ||
             courseStartDate > endOfMonth
           ) {
             console.log(
               `Course '${course.courseName}' does not overlap with the selected month, skipping.`
             );
-          }
-          // Upcoming courses: start date is in the future and within the selected month
-          else if (
+          } else if (
             courseStartDate >= currentDate &&
             courseStartDate >= startOfMonth &&
             courseStartDate <= endOfMonth
           ) {
             console.log(`Rendering upcoming course: ${course.courseName}`);
             upcomingCourses.push(course);
-          }
-          // Ongoing courses: currently active and overlap with the selected month
-          else {
+          } else {
             console.log(`Rendering ongoing course: ${course.courseName}`);
             ongoingCourses.push(course);
           }
@@ -182,14 +177,13 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
   trainingDetails.classList.add("training-details");
 
   trainingDetails.innerHTML = `
-    <h3>${course.courseName}</h3>
-    <p><strong>Target Audience:</strong> ${course.targetAudience}</p>
-    <p><strong>Date & Time:</strong> ${course.startDate} to ${courseEndDateValid} || (${durationString})</p>
-    <p><strong>Trainer:</strong> ${course.trainerName}</p>
-    
+    <p id ="training-heading">  ${course.courseName} </p>
+    <div id="training-card-details">
+    <p>Target Audience: <strong style="-webkit-text-stroke: 0.5px #000;">${course.targetAudience}</strong></p>
+    <p>Date: <strong style="-webkit-text-stroke: 0.5px #000;"> ${course.startDate} </strong> to <strong style="-webkit-text-stroke: 0.5px #000;"> ${courseEndDateValid} </strong>  <strong style="-webkit-text-stroke: 0.5px #000;"> (${durationString}) </strong> </p>
+    <p>Trainer:<strong style="-webkit-text-stroke: 0.5px #000;"> ${course.trainerName} </strong> </p>
+    </div>
   `;
-  //if need copy and paste
-  // <p><strong>Key topics:</strong> ${course.keyPoints}</p>
 
   const modeTag = document.createElement("span");
   modeTag.classList.add("tag");
@@ -200,7 +194,7 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
 
   modeTag.textContent = course.mode
     ? course.mode.charAt(0).toUpperCase() + course.mode.slice(1)
-    : "Unknown"; // Handle case where mode is missing
+    : "Unknown";
 
   card.appendChild(circleNumber);
   card.appendChild(trainingDetails);
@@ -226,86 +220,6 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
   console.log(`Course card for '${course.courseName}' added to the DOM.`);
   cardNo++;
 }
-
-// PDF downloading Function
-document
-  .getElementById("downloadPDFbtn")
-  .addEventListener("click", function () {
-    const doc = new jsPDF();
-    let yOffset = 10;
-    const pageHeight = doc.internal.pageSize.height - 20;
-
-    function checkPageBreak(yOffset) {
-      if (yOffset > pageHeight) {
-        doc.addPage();
-        return 10;
-      }
-      return yOffset;
-    }
-
-    const todaysDate = new Date();
-    const monthNamesArray = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    const currentMonth = monthNamesArray[todaysDate.getMonth()];
-    const currentYear = todaysDate.getFullYear();
-
-    doc.setFontSize(14);
-    doc.text(`Training Calendar - ${currentMonth} ${currentYear}`, 10, yOffset);
-    yOffset += 10;
-
-    const upcomingCoursesText = document.getElementById(
-      "upcoming-training-cards-section"
-    ).innerText;
-    const ongoingCoursesText = document.getElementById(
-      "ongoing-training-cards-section"
-    ).innerText;
-
-    if (upcomingCoursesText.trim().length > 0) {
-      doc.setFontSize(12);
-      doc.text("Upcoming Courses:", 10, yOffset);
-      yOffset += 10;
-
-      const upcomingCoursesLines = upcomingCoursesText.split("\n");
-      upcomingCoursesLines.forEach((line) => {
-        doc.setFontSize(10);
-        doc.text(line, 10, yOffset);
-        yOffset += 6;
-        yOffset = checkPageBreak(yOffset);
-      });
-      yOffset += 10;
-      yOffset = checkPageBreak(yOffset);
-    }
-
-    if (ongoingCoursesText.trim().length > 0) {
-      doc.setFontSize(12);
-      doc.text("Ongoing Courses:", 10, yOffset);
-      yOffset += 10;
-
-      const ongoingCoursesLines = ongoingCoursesText.split("\n");
-      ongoingCoursesLines.forEach((line) => {
-        doc.setFontSize(10);
-        doc.text(line, 10, yOffset);
-        yOffset += 6;
-        yOffset = checkPageBreak(yOffset);
-      });
-      yOffset += 10;
-      yOffset = checkPageBreak(yOffset);
-    }
-
-    doc.save(`Training_Calendar_${currentMonth}_${currentYear}.pdf`);
-  });
 
 // excel sheet downloading function
 document.getElementById("downloadBtn").addEventListener("click", function () {
