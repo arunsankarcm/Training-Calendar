@@ -16,7 +16,20 @@ let ongoingCardNo = 1;
 const { jsPDF } = window.jspdf;
 
 const todaysDate = new Date();
-const monthNamesArray = ["January","February","March","April","May","June","July","August","September", "October",  "November","December",];
+const monthNamesArray = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 const currentMonth = monthNamesArray[todaysDate.getMonth()];
 const currentYear = todaysDate.getFullYear();
 
@@ -32,10 +45,17 @@ const monthIndexFromURL = monthNamesArray.indexOf(monthText);
 const yearFromURL = parseInt(yearText, 10);
 
 const startOfMonth = new Date(yearFromURL, monthIndexFromURL, 1);
-const endOfMonth = new Date(yearFromURL, monthIndexFromURL + 1, 0, 23, 59, 59, 999);
+const endOfMonth = new Date(
+  yearFromURL,
+  monthIndexFromURL + 1,
+  0,
+  23,
+  59,
+  59,
+  999
+);
 
 const currentDate = new Date();
-
 
 // fetching from DB course details
 function getCourses() {
@@ -69,24 +89,21 @@ function getCourses() {
             console.log(
               `Course '${course.courseName}' has already ended, skipping.`
             );
-          }
-          else if (
+          } else if (
             courseEndDate < startOfMonth ||
             courseStartDate > endOfMonth
           ) {
             console.log(
               `Course '${course.courseName}' does not overlap with the selected month, skipping.`
             );
-          }
-          else if (
+          } else if (
             courseStartDate >= currentDate &&
             courseStartDate >= startOfMonth &&
             courseStartDate <= endOfMonth
           ) {
             console.log(`Rendering upcoming course: ${course.courseName}`);
             upcomingCourses.push(course);
-          }
-          else {
+          } else {
             console.log(`Rendering ongoing course: ${course.courseName}`);
             ongoingCourses.push(course);
           }
@@ -161,12 +178,12 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
 
   trainingDetails.innerHTML = `
     <p id ="training-heading">  ${course.courseName} </p>
-    <p>Target Audience: <strong> ${course.targetAudience} </strong> </p>
-    <p>Date & Time:<strong> ${course.startDate} </strong> to <strong> ${courseEndDateValid} </strong> || <strong> (${durationString}) </strong> </p>
-    <p>Trainer:<strong> ${course.trainerName} </strong> </p>
+    <div id="training-card-details">
+    <p>Target Audience: <strong style="-webkit-text-stroke: 0.5px #000;">${course.targetAudience}</strong></p>
+    <p>Date: <strong style="-webkit-text-stroke: 0.5px #000;"> ${course.startDate} </strong> to <strong style="-webkit-text-stroke: 0.5px #000;"> ${courseEndDateValid} </strong>  <strong style="-webkit-text-stroke: 0.5px #000;"> (${durationString}) </strong> </p>
+    <p>Trainer:<strong style="-webkit-text-stroke: 0.5px #000;"> ${course.trainerName} </strong> </p>
+    </div>
   `;
-  //if need copy and paste
-  // <p><strong>Key topics:</strong> ${course.keyPoints}</p>
 
   const modeTag = document.createElement("span");
   modeTag.classList.add("tag");
@@ -177,7 +194,7 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
 
   modeTag.textContent = course.mode
     ? course.mode.charAt(0).toUpperCase() + course.mode.slice(1)
-    : "Unknown"; 
+    : "Unknown";
 
   card.appendChild(circleNumber);
   card.appendChild(trainingDetails);
@@ -279,4 +296,8 @@ onAuthStateChanged(auth, (user) => {
   } else {
     window.location.href = "../index.html";
   }
+});
+
+document.getElementById("back-button").addEventListener("click", () => {
+  window.location.href = "viewAllCourse.html";
 });
