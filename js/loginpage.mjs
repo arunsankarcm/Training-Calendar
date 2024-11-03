@@ -33,6 +33,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
       document.getElementById("email").value = "";
       document.getElementById("password").value = "";
       errorMessage.textContent = "Invalid email or password. Please try again.";
+      document.querySelector(".login-box").classList.add("show-error");
       console.error("Login error:", error.code, error.message);
     });
 });
