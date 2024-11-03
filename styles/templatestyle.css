@@ -1,5 +1,3 @@
-/* 846 px width size  */
-
 body {
   font-family: "Montserrat", sans-serif;
   margin: 40px;
@@ -70,7 +68,7 @@ body {
   margin-left: 15px;
   margin-right: 15px;
   font-weight: 900;
-  flex-shrink: 0; /* Prevent shrinking */
+  flex-shrink: 0;
   flex-grow: 0;
 }
 .training-details {
@@ -104,7 +102,7 @@ body {
   font-size: 19px;
   color: #3e68b9;
   font-weight: 900;
-  -webkit-text-stroke: 0.4px #3e68b9; /* Adds an outline to the text */
+  -webkit-text-stroke: 0.4px #3e68b9;
 }
 
 .line {
@@ -115,10 +113,10 @@ body {
   justify-content: center;
 }
 
-#training-card-details{
-    display: flex;
-    flex-direction: column;
-    line-height: 0.01;
+#training-card-details {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.01;
 }
 
 .tag {
@@ -255,7 +253,6 @@ body {
   }
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
   .download-icons {
     justify-content: center;
@@ -298,8 +295,6 @@ body {
   }
 }
 
-/* downloading icons */
-
 .download-icons {
   background-color: #3e68b9;
   justify-content: end;
@@ -324,7 +319,6 @@ body {
   padding-bottom: 3px;
 }
 
-/* Hovering download Options */
 .sheetHover {
   color: white;
   padding-left: 6px;
@@ -352,5 +346,3 @@ body {
 .downloadPngHover :hover #onPngHover {
   visibility: visible;
 }
-
-/* ended Icons for downloadindg */

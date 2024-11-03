@@ -1,9 +1,12 @@
 import { db, auth } from "../firebaseConfig.mjs";
-import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {
+  signOut,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {
   ref,
   set,
-  get
+  get,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -19,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function trimInput(e) {
-   
   if (e.target.value.startsWith(" ")) {
     e.target.value = e.target.value.trimStart();
   }
@@ -57,16 +59,12 @@ function validateEndTime() {
   }
 }
 
-
- 
-
-document.getElementById('back-button').addEventListener('click', () => {
-  window.location.href = 'viewAllCourse.html';
+document.getElementById("back-button").addEventListener("click", () => {
+  window.location.href = "viewAllCourse.html";
 });
 
-
 const urlParams = new URLSearchParams(window.location.search);
-const courseKey = urlParams.get('courseKey');
+const courseKey = urlParams.get("courseKey");
 
 if (courseKey) {
   const courseRef = ref(db, `courses/${courseKey}`);
@@ -75,21 +73,22 @@ if (courseKey) {
       if (snapshot.exists()) {
         const courseData = snapshot.val();
         console.log(courseData);
-         
-        document.getElementById('course-name').value = courseData.courseName;
-        document.getElementById('start-date').value = courseData.startDate;
-        document.getElementById('end-date').value = courseData.endDate || '';
+
+        document.getElementById("course-name").value = courseData.courseName;
+        document.getElementById("start-date").value = courseData.startDate;
+        document.getElementById("end-date").value = courseData.endDate || "";
         document.getElementById("start-time").value = courseData.startTime;
         document.getElementById("end-time").value = courseData.endTime;
-         
+
         document.getElementById("trainer").value = courseData.trainerName;
         document.getElementById("audience").value = courseData.targetAudience;
-        document.getElementById("max-participants").value = courseData.maxParticipation;
+        document.getElementById("max-participants").value =
+          courseData.maxParticipation;
 
         const modeRadioButtons = document.getElementsByName("mode");
         for (const radio of modeRadioButtons) {
           if (radio.value === courseData.mode) {
-            radio.checked = true;  
+            radio.checked = true;
           }
         }
       } else {
@@ -103,26 +102,21 @@ if (courseKey) {
   console.error("No courseKey found in URL");
 }
 
-
-
- 
 document.getElementById("update-page").addEventListener("submit", updateCourse);
 
 function updateCourse(e) {
   e.preventDefault();
 
-   
   const courseName = getElementVal("course-name");
   const startDate = getElementVal("start-date");
   const endDate = getElementVal("end-date");
   const startTime = getElementVal("start-time");
   const endTime = getElementVal("end-time");
-   
+
   const trainerName = getElementVal("trainer");
   const targetAudience = getElementVal("audience");
   const maxParticipation = getElementVal("max-participants");
 
-   
   const mode = document.getElementsByName("mode");
   let selectedValue = "";
   for (const radio of mode) {
@@ -132,7 +126,6 @@ function updateCourse(e) {
     }
   }
 
-   
   const courseRef = ref(db, `courses/${courseKey}`);
   set(courseRef, {
     courseName: courseName,
@@ -140,32 +133,28 @@ function updateCourse(e) {
     endDate: endDate,
     startTime: startTime,
     endTime: endTime,
-     
+
     trainerName: trainerName,
     targetAudience: targetAudience,
     maxParticipation: maxParticipation,
-    mode: selectedValue
+    mode: selectedValue,
   })
     .then(() => {
-       
       showPopup("Course updated successfully!", "success");
       setTimeout(() => {
-        window.location.href = "viewAllCourse.html";  
+        window.location.href = "viewAllCourse.html";
       }, 2000);
     })
     .catch((error) => {
-       
       showPopup("Failed to update the course. Please try again.", "error");
       console.error("Error updating course: ", error);
     });
 }
 
- 
 const getElementVal = (id) => {
   return document.getElementById(id).value;
 };
 
- 
 const showPopup = (message, type) => {
   const popup = document.createElement("div");
   popup.style.position = "fixed";
@@ -182,9 +171,8 @@ const showPopup = (message, type) => {
   popup.style.borderRadius = "15px";
   popup.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.15)";
   popup.style.textAlign = "center";
-  popup.style.zIndex = "1000"; 
+  popup.style.zIndex = "1000";
 
-   
   const messageImg = document.createElement("img");
   messageImg.src =
     type === "success"
@@ -202,26 +190,23 @@ const showPopup = (message, type) => {
   popup.appendChild(messageText);
   document.body.appendChild(popup);
 
-   
   setTimeout(() => {
     popup.remove();
-}, 3000);  
+  }, 3000);
 };
 
- 
-document.getElementById('logout_button').addEventListener('click', () => {
-  signOut(auth).then(() => {
-     
-    localStorage.setItem('logoutMessage', 'Logged out successfully.');
-  
-     
-    window.location.href = '../index.html';
-  }).catch((error) => {
-    console.error('Sign out error:', error);
-  });
+document.getElementById("logout_button").addEventListener("click", () => {
+  signOut(auth)
+    .then(() => {
+      localStorage.setItem("logoutMessage", "Logged out successfully.");
+
+      window.location.href = "../index.html";
+    })
+    .catch((error) => {
+      console.error("Sign out error:", error);
+    });
 });
 
- 
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User is signed in:", user.email);
@@ -229,4 +214,3 @@ onAuthStateChanged(auth, (user) => {
     window.location.href = "../index.html";
   }
 });
-

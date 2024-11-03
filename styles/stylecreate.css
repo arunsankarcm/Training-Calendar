@@ -8,9 +8,7 @@ html {
   overflow-x: hidden;
   overflow-y: scroll;
 
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
+  -ms-overflow-style: none;    scrollbar-width: none;  }
 
 .header {
   background-color: #3e68b9;
@@ -48,8 +46,7 @@ html {
 .logoutHoverText{
   color: #0b0b0b;
 }
-/* Logout button hover styles*/
-#onHoverLogout{
+ #onHoverLogout{
   visibility: hidden;
 }
 #logout_button:hover #onHoverLogout{

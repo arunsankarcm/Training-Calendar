@@ -2,15 +2,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* font-family: 'Arial', sans-serif;*/
   font-family: montserrat;
 }
 html {
   overflow-x: hidden;
   overflow-y: scroll;
 
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 body {
@@ -48,7 +47,6 @@ body {
 .logoutHoverText {
   color: #0b0b0b;
 }
-/* Logout button hover styles*/
 #onHoverLogout {
   visibility: hidden;
 }
@@ -56,7 +54,6 @@ body {
   visibility: visible;
 }
 
-/* Export button hover styles */
 #onHoverExport {
   visibility: hidden;
 }
@@ -79,7 +76,6 @@ body {
   padding-top: 23px;
 }
 
-/* Filter button hover styles */
 #onHoverFilter {
   visibility: hidden;
 }
@@ -87,7 +83,6 @@ body {
   visibility: visible;
 }
 
-/* Add button hover styles */
 #onHoverAdd {
   visibility: hidden;
 }
@@ -95,7 +90,6 @@ body {
   visibility: visible;
 }
 
-/* complete hover text styles */
 .hoverText {
   color: #ffffff;
   padding-left: 2px;
@@ -155,7 +149,6 @@ body {
   width: 25px;
   cursor: pointer;
   position: relative;
-  /* margin-top: 10px; */
   transform: translateY(17%);
 }
 .month-year img {
@@ -207,8 +200,8 @@ body {
   height: 20px;
   border-radius: 50%;
   display: inline-block;
-  display: flex; /* Use flexbox for centering */
-  justify-content: center; /* Horizontally center the content */
+  display: flex;
+  justify-content: center;
   align-items: center;
   margin-bottom: 35px;
 }
@@ -267,13 +260,11 @@ body {
 .three-dots {
   font-size: 26px;
   cursor: pointer;
-  color: #7f7f7f; /* Change color as needed */
+  color: #7f7f7f;
   position: absolute;
   top: 16px;
   right: 15px;
 }
-
-/* ------------------------ */
 
 .container {
   position: relative;
@@ -324,17 +315,14 @@ body {
   white-space: normal;
   overflow-wrap: break-word;
   word-break: break-word;
-
 }
 
-/* ------------ */
 .popup-menu p {
   margin: 10px 0;
   font-size: 16px;
   cursor: pointer;
   color: #2d2d2d;
 }
-/* ---------POPUP - FILTER------------ */
 #popupMenuFilter.popup-menu {
   display: flex;
   display: none;
@@ -370,8 +358,6 @@ body {
   height: auto;
 }
 
-/* ----------------------------- */
-
 .popup-menu hr {
   border: none;
   border-top: 1px solid #0b0b0b;
@@ -382,9 +368,6 @@ body {
   color: #007bff;
 }
 
-/* -------------------------------- */
-
-/* General styles for the menu */
 .menu-container {
   position: relative;
   display: inline-block;
@@ -404,7 +387,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 18px; /* Adjust the height as needed */
+  height: 18px;
 }
 
 .three-dots span {
@@ -418,7 +401,7 @@ body {
 
 .menu-popup {
   position: absolute;
-  top: 40px; /* Adjust based on button size */
+  top: 40px;
   right: 0;
   background-color: #eeeeee;
   border: 1px solid #ccc;
@@ -426,8 +409,8 @@ body {
   padding: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  width: 100px; /* Adjust width as needed */
-  display: none; /* Hidden by default */
+  width: 100px;
+  display: none;
 }
 
 .menu-popup p {
@@ -447,8 +430,6 @@ body {
   border-bottom: 1px solid #ddd;
   margin: 5px 0;
 }
-
-/* -------------------------popup three-dots ---------------------------- */
 
 .popup-menu {
   display: flex;
@@ -476,7 +457,6 @@ popup-menu ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  /* display: flex; */
 }
 popup-menu ul hr {
   margin-left: 3px;
@@ -513,6 +493,5 @@ popup-menu ul hr {
   text-align: start !important;
   text-align-last: start !important;
 
-  /* Hide the dot */
   content: none;
 }

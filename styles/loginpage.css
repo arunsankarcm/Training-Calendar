@@ -142,10 +142,8 @@ body {
   color: #777;
 }
 
-/* Media Queries for Responsiveness */
-
-/* Smaller tablets and mobile devices (portrait and landscape) */
-@media (max-width: 768px) {
+ 
+ @media (max-width: 768px) {
   .login_page {
     flex-direction: column;
     max-width: 100%;
@@ -171,8 +169,7 @@ body {
   }
 }
 
-/* Very small screens (phones, less than 576px) */
-@media (max-width: 576px) {
+ @media (max-width: 576px) {
   .logo-container img {
     height: 80px;
     width: 80%;
