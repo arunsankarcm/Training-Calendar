@@ -31,7 +31,7 @@ document.getElementById("reset_form").addEventListener("submit", (e) => {
       resetMessage.style.color = "green";
       resetMessage.textContent =
         "Password reset email sent. Please check your inbox.";
-        document.querySelector(".reset_password_box").classList.add("show-error");
+      document.querySelector(".reset_password_box").classList.add("show-error");
     })
     .catch((error) => {
       resetMessage.style.color = "red";
