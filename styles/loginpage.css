@@ -62,11 +62,11 @@ body {
 .login-box {
   position: relative;
   background-color: #fff;
-  padding: 40px;
+  padding: 0;
   border-radius: 5px;
   border: 1px solid #333;
   width: 80%;
-  height: 450px;
+  height: auto;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
   color: #333;
   display: flex;
@@ -129,6 +129,7 @@ body {
   font-size: 1em;
   cursor: pointer;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .login-button:hover {
