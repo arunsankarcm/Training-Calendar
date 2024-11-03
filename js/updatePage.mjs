@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function trimInput(e) {
-  // Trim leading spaces
+   
   if (e.target.value.startsWith(" ")) {
     e.target.value = e.target.value.trimStart();
   }
@@ -58,7 +58,7 @@ function validateEndTime() {
 }
 
 
-//main updation
+ 
 
 document.getElementById('back-button').addEventListener('click', () => {
   window.location.href = 'viewAllCourse.html';
@@ -75,13 +75,13 @@ if (courseKey) {
       if (snapshot.exists()) {
         const courseData = snapshot.val();
         console.log(courseData);
-        // Populate your form or fields with the course data
+         
         document.getElementById('course-name').value = courseData.courseName;
         document.getElementById('start-date').value = courseData.startDate;
         document.getElementById('end-date').value = courseData.endDate || '';
         document.getElementById("start-time").value = courseData.startTime;
         document.getElementById("end-time").value = courseData.endTime;
-        // document.getElementById("key-points").value = courseData.keyPoints;
+         
         document.getElementById("trainer").value = courseData.trainerName;
         document.getElementById("audience").value = courseData.targetAudience;
         document.getElementById("max-participants").value = courseData.maxParticipation;
@@ -89,7 +89,7 @@ if (courseKey) {
         const modeRadioButtons = document.getElementsByName("mode");
         for (const radio of modeRadioButtons) {
           if (radio.value === courseData.mode) {
-            radio.checked = true; // Set the correct mode as checked
+            radio.checked = true;  
           }
         }
       } else {
@@ -105,24 +105,24 @@ if (courseKey) {
 
 
 
-// Function to handle form submission for updating the course
+ 
 document.getElementById("update-page").addEventListener("submit", updateCourse);
 
 function updateCourse(e) {
   e.preventDefault();
 
-  // Retrieve updated form data
+   
   const courseName = getElementVal("course-name");
   const startDate = getElementVal("start-date");
   const endDate = getElementVal("end-date");
   const startTime = getElementVal("start-time");
   const endTime = getElementVal("end-time");
-  // const keyPoints = getElementVal("key-points");
+   
   const trainerName = getElementVal("trainer");
   const targetAudience = getElementVal("audience");
   const maxParticipation = getElementVal("max-participants");
 
-  // Get the selected radio button value
+   
   const mode = document.getElementsByName("mode");
   let selectedValue = "";
   for (const radio of mode) {
@@ -132,7 +132,7 @@ function updateCourse(e) {
     }
   }
 
-  // Update the data in Firebase using the existing courseKey
+   
   const courseRef = ref(db, `courses/${courseKey}`);
   set(courseRef, {
     courseName: courseName,
@@ -140,32 +140,32 @@ function updateCourse(e) {
     endDate: endDate,
     startTime: startTime,
     endTime: endTime,
-    // keyPoints: keyPoints,
+     
     trainerName: trainerName,
     targetAudience: targetAudience,
     maxParticipation: maxParticipation,
     mode: selectedValue
   })
     .then(() => {
-      // Success! Show success popup and redirect
+       
       showPopup("Course updated successfully!", "success");
       setTimeout(() => {
-        window.location.href = "viewAllCourse.html"; // Redirect to the courses page after 2 seconds
+        window.location.href = "viewAllCourse.html";  
       }, 2000);
     })
     .catch((error) => {
-      // Error occurred, show error popup
+       
       showPopup("Failed to update the course. Please try again.", "error");
       console.error("Error updating course: ", error);
     });
 }
 
-// Utility function to get the value of form elements by id
+ 
 const getElementVal = (id) => {
   return document.getElementById(id).value;
 };
 
-// Popup function
+ 
 const showPopup = (message, type) => {
   const popup = document.createElement("div");
   popup.style.position = "fixed";
@@ -184,7 +184,7 @@ const showPopup = (message, type) => {
   popup.style.textAlign = "center";
   popup.style.zIndex = "1000"; 
 
-  // Adding the appropriate image based on the type
+   
   const messageImg = document.createElement("img");
   messageImg.src =
     type === "success"
@@ -202,26 +202,26 @@ const showPopup = (message, type) => {
   popup.appendChild(messageText);
   document.body.appendChild(popup);
 
-  // Add auto-close feature
+   
   setTimeout(() => {
     popup.remove();
-}, 3000); // Automatically close after 3 seconds
+}, 3000);  
 };
 
-// Logout function (sign out)
+ 
 document.getElementById('logout_button').addEventListener('click', () => {
   signOut(auth).then(() => {
-    // Store the logout message in localStorage
+     
     localStorage.setItem('logoutMessage', 'Logged out successfully.');
   
-    // Redirect to login page after logging out
+     
     window.location.href = '../index.html';
   }).catch((error) => {
     console.error('Sign out error:', error);
   });
 });
 
-// Check if user is authenticated
+ 
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User is signed in:", user.email);

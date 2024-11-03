@@ -70,6 +70,8 @@ body {
   margin-left: 15px;
   margin-right: 15px;
   font-weight: 900;
+  flex-shrink: 0; /* Prevent shrinking */
+  flex-grow: 0;
 }
 .training-details {
   max-width: 590px;
