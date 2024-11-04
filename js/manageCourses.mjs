@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     Promise.all(promises)
       .then(() => {
-        showPopup("Course added successfully!", "success");
+        showPopup("Courses added successfully!", "success");
         setTimeout(() => {
           window.location.href = "viewAllCourse.html";
         }, 2000);
