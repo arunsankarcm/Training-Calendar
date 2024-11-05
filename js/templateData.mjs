@@ -13,7 +13,6 @@ const ongoingDiv = document.getElementById("ongoing-training-cards-section");
 let cardNo = 1;
 let upcomingCardNo = 1;
 let ongoingCardNo = 1;
-const { jsPDF } = window.jspdf;
 
 const todaysDate = new Date();
 const monthNamesArray = [
@@ -222,6 +221,7 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
 }
 
 // excel sheet downloading function
+// Excel sheet downloading function
 document.getElementById("downloadBtn").addEventListener("click", function () {
   var data = [];
 
@@ -236,47 +236,59 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
   ]);
 
   var upcomingCards = document.querySelectorAll(
-    ".upcoming-section .training-card"
+    "#upcoming-training-cards-section .training-card"
   );
   upcomingCards.forEach((card, index) => {
-    var number = card.querySelector(".circle-number span").textContent;
-    var title = card.querySelector(".training-details h3").textContent;
+    var number = card.querySelector(".circle-number span").textContent.trim();
+    var title = card
+      .querySelector(".training-details #training-heading")
+      .textContent.trim();
     var audience = card
-      .querySelector(".training-details p:nth-child(2)")
-      .textContent.replace("Target Audience: ", "");
+      .querySelector(
+        ".training-details #training-card-details p:nth-child(1)"
+      )
+      .textContent.replace("Target Audience: ", "").trim();
     var date = card
-      .querySelector(".training-details p:nth-child(3)")
-      .textContent.replace("Date: ", "");
+      .querySelector(
+        ".training-details #training-card-details p:nth-child(2)"
+      )
+      .textContent.replace("Date: ", "").trim();
     var trainer = card
-      .querySelector(".training-details p:nth-child(4)")
-      .textContent.replace("Trainer: ", "");
-    var keyPoints = card
-      .querySelector(".training-details p:nth-child(5)")
-      .textContent.replace("Key points: ", "");
-    var type = card.querySelector(".tag").textContent;
+      .querySelector(
+        ".training-details #training-card-details p:nth-child(3)"
+      )
+      .textContent.replace("Trainer:", "").trim();
+    var keyPoints = ""; // Update this if you have key points in your data
+    var type = card.querySelector(".tag").textContent.trim();
 
     data.push([number, title, audience, date, trainer, keyPoints, type]);
   });
 
   var ongoingCards = document.querySelectorAll(
-    ".ongoing-section .training-card"
+    "#ongoing-training-cards-section .training-card"
   );
   ongoingCards.forEach((card, index) => {
-    var number = card.querySelector(".circle-number span").textContent;
-    var title = card.querySelector(".training-details h3").textContent;
+    var number = card.querySelector(".circle-number span").textContent.trim();
+    var title = card
+      .querySelector(".training-details #training-heading")
+      .textContent.trim();
     var audience = card
-      .querySelector(".training-details p:nth-child(2)")
-      .textContent.replace("Target Audience: ", "");
+      .querySelector(
+        ".training-details #training-card-details p:nth-child(1)"
+      )
+      .textContent.replace("Target Audience: ", "").trim();
     var date = card
-      .querySelector(".training-details p:nth-child(3)")
-      .textContent.replace("Date: ", "");
+      .querySelector(
+        ".training-details #training-card-details p:nth-child(2)"
+      )
+      .textContent.replace("Date: ", "").trim();
     var trainer = card
-      .querySelector(".training-details p:nth-child(4)")
-      .textContent.replace("Trainer: ", "");
-    var keyPoints = card
-      .querySelector(".training-details p:nth-child(5)")
-      .textContent.replace("Key points: ", "");
-    var type = card.querySelector(".tag").textContent;
+      .querySelector(
+        ".training-details #training-card-details p:nth-child(3)"
+      )
+      .textContent.replace("Trainer:", "").trim();
+    var keyPoints = ""; // Update this if you have key points in your data
+    var type = card.querySelector(".tag").textContent.trim();
 
     data.push([number, title, audience, date, trainer, keyPoints, type]);
   });
@@ -288,7 +300,15 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
   XLSX.utils.book_append_sheet(wb, ws, "Training Calendar");
 
   XLSX.writeFile(wb, `Training_Calendar_${currentMonth}_${currentYear}.xlsx`);
+  console.log("Number:", number);
+console.log("Title:", title);
+console.log("Audience:", audience);
+console.log("Date:", date);
+console.log("Trainer:", trainer);
+console.log("Type:", type);
+
 });
+
 
 onAuthStateChanged(auth, (user) => {
   if (user) {

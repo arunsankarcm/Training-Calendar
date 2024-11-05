@@ -9,7 +9,6 @@ document.getElementById("backToLogin").addEventListener("click", (e) => {
   window.location.href = "../index.html";
 });
 
-
 onAuthStateChanged(auth, (user) => {
   if (user) {
     const userEmail = user.email;
@@ -20,7 +19,6 @@ onAuthStateChanged(auth, (user) => {
     console.log("No user is logged in.");
   }
 });
-
 
 document.getElementById("reset_form").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -33,17 +31,18 @@ document.getElementById("reset_form").addEventListener("submit", (e) => {
       resetMessage.style.color = "green";
       resetMessage.textContent =
         "Password reset email sent. Please check your inbox.";
+      document.querySelector(".reset_password_box").classList.add("show-error");
     })
     .catch((error) => {
       resetMessage.style.color = "red";
       resetMessage.textContent = "Invalid Email Address";
+      document.querySelector(".reset_password_box").classList.add("show-error");
       const errorCode = error.code;
       const errorMessage = error.message;
-      
     });
 });
 
 document.getElementById("resetEmail").addEventListener("focus", () => {
   const resetMessage = document.getElementById("reset-message");
-  resetMessage.textContent = ""; // Clear the error message
+  resetMessage.textContent = "";
 });

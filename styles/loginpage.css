@@ -8,7 +8,6 @@ body {
   height: 100vh;
   background: linear-gradient(120deg, #fefefe 60%, #6495ed 40%);
   background-size: cover;
-  
 }
 
 .logo {
@@ -23,9 +22,7 @@ body {
   max-width: 85%;
   margin-top: auto;
   margin-left: 20px;
-  
 }
-
 
 .left-side,
 .right-side {
@@ -58,29 +55,38 @@ body {
   color: #777;
 }
 
-
 .login-box {
   position: relative;
   background-color: #fff;
-  padding: 40px;
+  padding: 0;
   border-radius: 5px;
   border: 1px solid #333;
   width: 80%;
-  height: 450px;
+  height: auto;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
   color: #333;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+#error-message {
+  color: red;
+  font-size: 0.8rem;
+  text-align: center;
+  height: 1.2rem;
+  visibility: hidden;
+}
 
+.show-error #error-message {
+  visibility: visible;
+}
 .login-box p {
   margin-top: 40px;
   margin-bottom: 30px;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 2px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -129,6 +135,7 @@ body {
   font-size: 1em;
   cursor: pointer;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .login-button:hover {
@@ -142,9 +149,6 @@ body {
   color: #777;
 }
 
-/* Media Queries for Responsiveness */
-
-/* Smaller tablets and mobile devices (portrait and landscape) */
 @media (max-width: 768px) {
   .login_page {
     flex-direction: column;
@@ -171,7 +175,6 @@ body {
   }
 }
 
-/* Very small screens (phones, less than 576px) */
 @media (max-width: 576px) {
   .logo-container img {
     height: 80px;

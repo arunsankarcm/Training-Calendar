@@ -21,8 +21,6 @@ let monthYearText = "";
 let month = "";
 let year = "";
 
-//Returns the full name of a month based on its index (0-11).
-
 function getMonthName(monthIndex) {
   const monthNames = [
     "January",
@@ -41,8 +39,6 @@ function getMonthName(monthIndex) {
   return monthNames[monthIndex];
 }
 
-//Updates the month and year display on the page based on the current month and year.
-
 function updateMonthYearDisplay() {
   month = `${getMonthName(currentMonth)}`;
   year = `${currentYear}`;
@@ -57,8 +53,6 @@ document.getElementById("export-img").addEventListener("click", () => {
   window.open(url, "_blank");
 });
 
-//Fetches all courses from the Firebase database and initializes the course display.
-
 function getCourses() {
   const dbref = ref(db);
 
@@ -70,7 +64,6 @@ function getCourses() {
           allCourses.push(course);
         });
 
-        // Sort the courses by start date in ascending order
         allCourses.sort((a, b) => {
           const dateA = new Date(a.val().startDate);
           const dateB = new Date(b.val().startDate);
@@ -87,8 +80,6 @@ function getCourses() {
       console.error("Error fetching data: ", error);
     });
 }
-
-//Assigns sequential card numbers to courses that start in the current month.
 
 function assignCardNumbersForCurrentMonth() {
   cardNumberMap.clear();
@@ -108,11 +99,10 @@ function assignCardNumbersForCurrentMonth() {
   });
 }
 
-//Filters courses to display only those that are relevant to the current month.
-
 function filterCoursesByMonth() {
   cardsDiv.innerHTML = "";
 
+  // Filter courses that are either starting or ongoing in the current month and year
   const filteredCourses = allCourses.filter((course) => {
     const value = course.val();
     const startDate = new Date(value.startDate);
@@ -121,19 +111,29 @@ function filterCoursesByMonth() {
     const isStartingThisMonth =
       startDate.getMonth() === currentMonth &&
       startDate.getFullYear() === currentYear;
+
     const isOngoingThisMonth =
-      startDate.getMonth() < currentMonth &&
-      (!endDate || endDate.getMonth() >= currentMonth) &&
-      startDate.getFullYear() <= currentYear;
+      startDate.getFullYear() <= currentYear &&
+      (endDate
+        ? endDate.getFullYear() > currentYear ||
+          (endDate.getFullYear() === currentYear &&
+            endDate.getMonth() >= currentMonth)
+        : true);
 
     return isStartingThisMonth || isOngoingThisMonth;
   });
 
-  //  styles for no courses for this month popup
-  if (filteredCourses.length === 0) {
+  filteredCourses.forEach((course) => {
+    const cardNumber = cardNumberMap.get(course.key);
+    if (cardNumber) {
+      AddCourseToCard(course, cardNumber);
+    }
+  });
+
+  // Check if the card grid is empty and show the message if no courses are displayed
+  if (cardsDiv.children.length === 0) {
     let popup = document.getElementById("noCoursesPopup");
 
-    // Create the popup if it doesn't already exist
     if (!popup) {
       popup = document.createElement("div");
       popup.id = "noCoursesPopup";
@@ -151,18 +151,11 @@ function filterCoursesByMonth() {
       document.body.appendChild(popup);
     }
   } else {
-    // Remove the popup if courses are available
     const popup = document.getElementById("noCoursesPopup");
     if (popup) {
       popup.remove();
     }
   }
-  filteredCourses.forEach((course) => {
-    const cardNumber = cardNumberMap.get(course.key);
-    if (cardNumber) {
-      AddCourseToCard(course, cardNumber);
-    }
-  });
 }
 
 document.getElementById("left-arrow").addEventListener("click", () => {
@@ -189,7 +182,6 @@ document.getElementById("right-arrow").addEventListener("click", () => {
   filterCoursesByMonth();
 });
 
-// Global variable for user role
 let userRole;
 
 onAuthStateChanged(auth, (user) => {
@@ -205,15 +197,12 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-//* Creates a course card element and appends it to the DOM.
-
 function AddCourseToCard(course, cardNo) {
   const value = course.val();
   const card = document.createElement("div");
   const courseKey = course.key;
   card.classList.add("training-card");
 
-  // Converts time from 12-hour format to 24-hour format.
   function convertTo24Hour(timeStr) {
     const [time, modifier] = timeStr.split(" ");
     let [hours, minutes] = time.split(":");
@@ -232,7 +221,6 @@ function AddCourseToCard(course, cardNo) {
 
   let endDateText = endDate ? value.endDate : "TBD";
 
-  // Determines the status color based on the current date and course dates.
   let statusColor = "";
   if (currentDate < startDate) {
     statusColor = "#CA1919";
@@ -276,16 +264,15 @@ function AddCourseToCard(course, cardNo) {
     case "online":
       modeIcon = "../Images/laptop.png";
       break;
-    case "in-person":
+    case "offline":
       modeIcon = "../Images/people.png";
       break;
     case "blended":
-      modeIcon = "../Images/blended.png"; // Add the new mode and icon here
+      modeIcon = "../Images/blended.png";
       break;
     default:
-      modeIcon = "../Images/default.png"; // Optional: a default icon
+      modeIcon = "../Images/default.png";
   }
-  
 
   card.innerHTML = `
     <div class="status">
@@ -328,25 +315,21 @@ function AddCourseToCard(course, cardNo) {
   const popupMenu = card.querySelector(".popup-menu");
   const deleteBtn = card.querySelector(".del-tag");
   const editBtn = card.querySelector(".edit-tag");
-  // Conditionally show the three-dots menu for superadmin
+
   if (userRole === "superadmin") {
-    // Show the three-dot menu only for superadmin
     threeDots.style.display = "block";
 
-    // Toggle popup menu when the three dots are clicked
     threeDots.addEventListener("click", (e) => {
       popupMenu.style.display =
         popupMenu.style.display === "block" ? "none" : "block";
     });
 
-    // Hide the popup menu when clicking outside of it
     document.addEventListener("click", (e) => {
       if (!threeDots.contains(e.target) && !popupMenu.contains(e.target)) {
         popupMenu.style.display = "none";
       }
     });
 
-    // Enable delete functionality for superadmin
     deleteBtn.addEventListener("click", () => {
       const confirmDelete = confirm(
         "Are you sure you want to delete this course?"
@@ -355,7 +338,7 @@ function AddCourseToCard(course, cardNo) {
         const courseRef = ref(db, `courses/${courseKey}`);
         remove(courseRef)
           .then(() => {
-            card.remove(); // Remove the card element from the UI
+            card.remove();
             console.log(
               "Course deleted successfully from the database and UI."
             );
@@ -364,7 +347,6 @@ function AddCourseToCard(course, cardNo) {
       }
     });
 
-    // Redirects to the course edit page with the course key as a parameter
     editBtn.addEventListener("click", () => {
       window.location.href = `indexupdate.html?courseKey=${courseKey}`;
     });
@@ -372,8 +354,6 @@ function AddCourseToCard(course, cardNo) {
     threeDots.style.display = "none";
   }
 }
-
-//Performs a real-time search of courses based on the user's input
 
 function searchCourses() {
   const searchTerm = document
@@ -404,9 +384,7 @@ function searchCourses() {
     return isInCurrentMonth && matchesSearch;
   });
 
-  // Check if there are any matching courses and handle the popup message
   if (filteredCourses.length === 0) {
-    // If no matching courses, show the popup and keep it there
     if (!existingPopup) {
       const popup = document.createElement("div");
       popup.id = "no-course-popup";
@@ -423,13 +401,11 @@ function searchCourses() {
       document.body.appendChild(popup);
     }
   } else {
-    // If there are matches, remove the popup if it exists
     if (existingPopup) {
       existingPopup.remove();
     }
   }
 
-  // Display the filtered courses
   filteredCourses.forEach((course) => {
     const cardNumber = cardNumberMap.get(course.key);
     if (cardNumber) {
@@ -441,8 +417,6 @@ const addButton = document.getElementById("add_button");
 const iconButton = document.getElementById("iconButton");
 const popupMenuFilter = document.getElementById("popupMenuFilter");
 
-//Toggles the visibility of the filter popup menu when the filter icon is clicked.
-
 function togglePopup() {
   popupMenuFilter.style.display =
     popupMenuFilter.style.display === "block" ? "none" : "block";
@@ -453,12 +427,11 @@ iconButton.addEventListener("click", (e) => {
   togglePopup();
 });
 
-//To make the popup disappear once clicked outside
 document.addEventListener("click", (e) => {
   if (
-    popupMenuFilter.style.display === "block" && // Check if the popup is open
-    !popupMenuFilter.contains(e.target) && // Check if the click is outside the popup
-    e.target !== iconButton // Check if the click is not on the icon button
+    popupMenuFilter.style.display === "block" &&
+    !popupMenuFilter.contains(e.target) &&
+    e.target !== iconButton
   ) {
     popupMenuFilter.style.display = "none";
   }
@@ -533,15 +506,12 @@ function filterCourses(filterType) {
       filteredCourses = monthFilteredCourses;
   }
 
-  // Styles for "no courses to display" popup
   if (filteredCourses.length === 0) {
-    // Check if the popup already exists
     let popup = document.getElementById("noCoursesPopup");
 
-    // Create the popup if it doesn't exist
     if (!popup) {
       popup = document.createElement("div");
-      popup.id = "noCoursesPopup"; // Assign an ID to identify the popup
+      popup.id = "noCoursesPopup";
       popup.innerText = "No courses to display";
       popup.style.position = "fixed";
       popup.style.bottom = "220px";
@@ -556,7 +526,6 @@ function filterCourses(filterType) {
       document.body.appendChild(popup);
     }
   } else {
-    // Remove the popup if courses are available
     const popup = document.getElementById("noCoursesPopup");
     if (popup) {
       popup.remove();
@@ -571,36 +540,30 @@ function filterCourses(filterType) {
   });
 }
 
-// const addButton = document.getElementById("add_button");
 const popupMenuAdd = document.getElementById("popupMenuAdd");
 
-// Function to toggle the "Add" popup menu
 function toggleAddPopup() {
   popupMenuAdd.style.display =
     popupMenuAdd.style.display === "block" ? "none" : "block";
 }
 
-// Event listener to open/close the "Add" popup menu
 addButton.addEventListener("click", (e) => {
   e.stopPropagation();
   toggleAddPopup();
 });
 
-// Event listeners for the "One Course" and "Multiple Courses" options
 document.getElementById("add-one-course").addEventListener("click", () => {
-  window.location.href = "indexcreate.html"; // Redirect to indexcreate.html
+  window.location.href = "indexcreate.html";
 });
 
 document
   .getElementById("add-multiple-courses")
   .addEventListener("click", () => {
-    window.location.href = "manageCourses.html"; // Redirect to manageCourses.html
+    window.location.href = "manageCourses.html";
   });
 
-// Close the "Add" popup menu when clicking outside
 document.addEventListener("click", (e) => {
   if (!addButton.contains(e.target) && !popupMenuAdd.contains(e.target)) {
-    // Ensure "Filter" button closes the popup
     popupMenuAdd.style.display = "none";
   }
 });
@@ -611,20 +574,6 @@ iconButton.addEventListener("click", () => {
 document
   .getElementById("search-input")
   .addEventListener("input", searchCourses);
-
-// document
-//   .getElementById("customMail")
-//   .setAttribute(
-//     "href",
-//     "mailto:" +
-//       benefit.emails[0].to +
-//       "?cc=" +
-//       benefit.emails[0].cc +
-//       "&subject=" +
-//       benefit.emails[0].subject +
-//       "&body=" +
-//       encodedBody
-//   );
 
 window.addEventListener("load", () => {
   updateMonthYearDisplay();
@@ -643,26 +592,20 @@ document.getElementById("logout_button").addEventListener("click", () => {
     });
 });
 
-// Function to handle role-based functionality
 function handleRoleBasedFunctionality(role) {
   if (role === "superadmin") {
-    // Function to enable features based on user role
     console.log("superadmin");
   } else if (role === "admin") {
-    // Show admin features
     enableAdminFeatures();
   } else {
-    // Show user features or limit access
     showUserFeatures();
   }
 }
 
 function enableAdminFeatures() {
   console.log("Admin features enabled.");
-  // Code for admin functionality
 }
 
 function showUserFeatures() {
   console.log("User features enabled.");
-  // Code for regular user functionality
 }

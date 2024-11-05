@@ -16,13 +16,12 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("coursesTable")
     .getElementsByTagName("tbody")[0];
 
-  // Validation functions
   function validateCourseName(name) {
     return /^[a-zA-Z0-9\s]*$/.test(name);
   }
 
   function validateDates(startDate, endDate) {
-    if (!endDate) return true; // End date is optional
+    if (!endDate) return true;
     return new Date(endDate) >= new Date(startDate);
   }
 
@@ -73,12 +72,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const endDate = inputs[2].value;
     const startTime = inputs[3].value;
     const endTime = inputs[4].value;
-    // const keyPoints = inputs[5].value;
+
     const trainer = inputs[5].value;
     const audience = inputs[6].value;
     const maxParticipants = inputs[7].value;
 
-    // Validate course name
     if (!validateRequired(courseName)) {
       showError(inputs[0], "Course name is required");
       isValid = false;
@@ -86,12 +84,11 @@ document.addEventListener("DOMContentLoaded", function () {
       removeError(inputs[0]);
     }
 
-    // Validate required fields
     const requiredFields = [
       { input: inputs[1], name: "Start date" },
       { input: inputs[3], name: "Start time" },
       { input: inputs[4], name: "End time" },
-      // { input: inputs[5], name: 'Key points' },
+
       { input: inputs[5], name: "Trainer" },
       { input: inputs[6], name: "Audience" },
       { input: inputs[7], name: "Max participants" },
@@ -106,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // Validate dates
     if (startDate && endDate && !validateDates(startDate, endDate)) {
       showError(inputs[2], "End date must be after or same as start date");
       isValid = false;
@@ -114,7 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
       removeError(inputs[2]);
     }
 
-    // Validate times
     if (startTime && endTime && !validateTimes(startTime, endTime)) {
       showError(inputs[4], "End time must be after start time");
       isValid = false;
@@ -122,7 +117,6 @@ document.addEventListener("DOMContentLoaded", function () {
       removeError(inputs[4]);
     }
 
-    // Validate max participants
     if (maxParticipants && !validateMaxParticipants(maxParticipants)) {
       showError(inputs[7], "Must be a positive whole number");
       isValid = false;
@@ -141,7 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <td><input name="end-date" type="date" class="date-input"></td>
             <td><input name="start-time" type="time" class="time-input"></td>
             <td><input name="end-time" type="time" class="time-input"></td>
-            <td><input name="key-points" type="text" class="key-points" placeholder="Key Points"></td>
             <td><input name="trainer" type="text" class="trainer-name" placeholder="Trainer Name"></td>
             <td><input name="audience" type="text" class="audience" placeholder="Audience"></td>
             <td><input name="max-participants" type="number" class="max-participants" placeholder="Max Participants"></td>
@@ -149,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <select name="mode">
                     <option value="online">Online</option>
                     <option value="offline">Offline</option>
+                    <option value="blended">Blended</option>
                 </select>
             </td>
             <td>
@@ -156,10 +150,8 @@ document.addEventListener("DOMContentLoaded", function () {
             </td>
         `;
 
-    // Append the new row to the table body
     coursesTable.appendChild(newRow);
 
-    // Add event listener to the delete button in the new row
     newRow.querySelector(".delete-btn").addEventListener("click", function () {
       if (coursesTable.children.length > 1) {
         deleteRow(newRow);
@@ -176,22 +168,20 @@ document.addEventListener("DOMContentLoaded", function () {
   function handleSubmit() {
     let isValid = true;
     const rows = coursesTable.getElementsByTagName("tr");
-    const coursesData = []; // Array to hold all courses data
+    const coursesData = [];
 
-    // Validate all rows
     Array.from(rows).forEach((row) => {
       if (validateRow(row)) {
         const inputs = row.getElementsByTagName("input");
         const select = row.querySelector("select");
 
-        // Collect course data
         const courseData = {
           courseName: inputs[0].value,
           startDate: inputs[1].value,
           endDate: inputs[2].value,
           startTime: inputs[3].value,
           endTime: inputs[4].value,
-          // keyPoints: inputs[5].value,
+
           trainer: inputs[5].value,
           audience: inputs[6].value,
           maxParticipants: inputs[7].value,
@@ -199,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         coursesData.push(courseData);
       } else {
-        isValid = false; // If any row is invalid, mark overall as invalid
+        isValid = false;
       }
     });
 
@@ -208,7 +198,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // Save all valid courses to the database
     const promises = coursesData.map((course) => {
       return saveInDB(
         course.courseName,
@@ -216,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
         course.endDate,
         course.startTime,
         course.endTime,
-        // course.keyPoints,
+
         course.trainer,
         course.audience,
         course.maxParticipants,
@@ -226,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     Promise.all(promises)
       .then(() => {
-        showPopup("Course added successfully!", "success");
+        showPopup("Courses added successfully!", "success");
         setTimeout(() => {
           window.location.href = "viewAllCourse.html";
         }, 2000);
@@ -234,15 +223,13 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => {
         showPopup("Failed to add the course. Please try again.", "error");
         console.error("Error adding course: ", error);
-        throw error; // Rethrow error to handle it in Promise.all
+        throw error;
       });
   }
 
-  // Add event listeners
   addRowBtn.addEventListener("click", addRow);
   submitBtn.addEventListener("click", handleSubmit);
 
-  // Add some basic CSS for validation
   const style = document.createElement("style");
   style.textContent = `
         .error {
@@ -257,15 +244,13 @@ document.addEventListener("DOMContentLoaded", function () {
   document.head.appendChild(style);
 });
 
-//dbsave
-
 const saveInDB = (
   courseName,
   startDate,
   endDate,
   startTime,
   endTime,
-  // keyPoints,
+
   trainerName,
   targetAudience,
   maxParticipation,
@@ -280,7 +265,7 @@ const saveInDB = (
     endDate: endDate,
     startTime: startTime,
     endTime: endTime,
-    // keyPoints: keyPoints,
+
     trainerName: trainerName,
     targetAudience: targetAudience,
     maxParticipation: maxParticipation,
@@ -290,13 +275,10 @@ const saveInDB = (
       console.log("Couses added Succesfullty");
     })
     .catch((error) => {
-      // showPopup("Failed to add the course. Please try again.", "error");
       console.error("Error adding course: ", error);
     });
 };
 
-// Function to display a popup message
-// Popup function
 const showPopup = (message, type) => {
   const popup = document.createElement("div");
   popup.style.position = "fixed";
@@ -332,13 +314,11 @@ const showPopup = (message, type) => {
   popup.appendChild(messageText);
   document.body.appendChild(popup);
 
-  // Add auto-close feature
   setTimeout(() => {
     popup.remove();
-  }, 3000); // Automatically close after 3 seconds
+  }, 3000);
 };
 
-//logout and previous
 document.getElementById("back-button").addEventListener("click", () => {
   window.location.href = "viewAllCourse.html";
 });

@@ -4,12 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>exTC-template</title>
-    <link rel="icon" href="../Images/logo white rings.png">
+    <link rel="icon" href="../Images/logo white rings.png" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"/>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../styles/templatestyle.css" />
   </head>
   <body>
+<<<<<<< HEAD
   <section class="body-main">
 
     <!-- downloading icons section -->
@@ -59,64 +63,98 @@
           </div>
           <div id="upcoming-training-cards-section">
             <!-- upcoming training details will come here -->
+=======
+    <section class="body-main">
+      <div class="download-icons">
+        <div class="downloadPngHover">
+          <a href="#" onclick="downloadImage()" id="pngDownHover">
+            <img src="../Images/1-removebg.png" alt="download-icon"
+          /></a>
+          <div class="pngHover">
+            <div id="onPngHover">PNG</div>
+>>>>>>> 500d594efba61b11d730a14aaa3b2c2ddcf974ef
           </div>
         </div>
-        <!-- ongoing section -->
-        <div class="ongoing-section">
-          <div class="ongoing-button">
-            <h2>ONGOING</h2>
+
+        <div class="downloadSheetHover">
+          <a href="#" id="downloadBtn">
+            <img
+              src="../Images/PDF__1_-removebg-preview.png"
+              alt="download-sheet"
+          /></a>
+          <div class="sheetHover">
+            <div id="onSheetHover">Sheet</div>
           </div>
-          <div id="ongoing-training-cards-section"></div>
-            <!-- ongoing training details will come here -->
         </div>
       </div>
 
-      <!-- footer part - static -->
-
-      <div class="footer">
-        <div class="secure-spot">
-          <h7>Secure your spot now!</h7>
+      <div class="container" id="container-capture">
+        <div class="rhombus-top">
+          <img src="../images/Rhombus.png" alt="experion-rhombus-white" />
         </div>
-        <p>
-          <strong
-            >Please use the training nomination form available in Vconnect to
-            submit your nominations.</strong
-          >
+        <div class="header" id="header-month-year">
+          <h7>Training Calendar</h7><br />
+          <div class="header-MMYY" id="month-year-header"></div>
 
-          <br />Nominations will be accepted in concurrence with managers and
-          based on the availability of seats.
-        </p>
+          <p>
+            This calendar contains the details of all training programs planned
+            for this month - technical and soft skills - conducted by external
+            vendors and internal trainers.
+          </p>
+        </div>
+        <div class="training-details-section">
+          <div class="upcoming-section">
+            <div class="upcoming-button">
+              <h2>UPCOMING</h2>
+            </div>
+            <div id="upcoming-training-cards-section"></div>
+          </div>
+          <div class="ongoing-section">
+            <div class="ongoing-button">
+              <h2>ONGOING</h2>
+            </div>
+            <div id="ongoing-training-cards-section"></div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="secure-spot">
+            <h7>Secure your spot now!</h7>
+          </div>
+          <p>
+            <strong
+              >Please use the training nomination form available in Vconnect to
+              submit your nominations.</strong
+            >
+
+            <br />Nominations will be accepted in concurrence with managers and
+            based on the availability of seats.
+          </p>
+        </div>
+
+        <div class="bottom-badges">
+          <div class="company-logo">
+            <img src="../images/Group 691.png" alt="Experion Technologies" />
+          </div>
+
+          <div class="gptw-logo">
+            <img
+              src="../Images/GPTW Certification Badge JAN 2024-2025 1.png"
+              alt="Great Place to Work"
+            />
+          </div>
+        </div>
       </div>
 
-      <div class="bottom-badges">
-        <div class="company-logo">
-          <img src="../images/Group 691.png" alt="Experion Technologies" />
-        </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-        <div class="gptw-logo">
-          <img
-            src="../Images/GPTW Certification Badge JAN 2024-2025 1.png"
-            alt="Great Place to Work"
-          />
-        </div>
-      </div>
-    </div>
-
-    <!-- include the xcel library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <!-- js linking to pdf -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-    <!-- javascript linking section -->
-    <script type="module" src="../js/templateData.mjs"></script>
-    <script src="../js/templateJS.js"></script>
-
-  </section>    
-
-
-    
+      <script type="module" src="../js/templateData.mjs"></script>
+      <script src="../js/templateJS.js"></script>
+    </section>
   </body>
 </html>
+<<<<<<< HEAD
 
 
 <!-- dummy datas - for understanding -->
@@ -163,3 +201,5 @@
 </div>
 
 <div class="line"></div> -->
+=======
+>>>>>>> 500d594efba61b11d730a14aaa3b2c2ddcf974ef

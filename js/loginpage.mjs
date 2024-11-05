@@ -1,5 +1,8 @@
 import { auth, db } from "../firebaseConfig.mjs";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {
   ref,
   update,
@@ -15,25 +18,25 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       errorMessage.textContent = "";
-      // sessionStorage.setItem("successMessage", "Successfully logged in!");
       window.location.href = "pages/viewAllCourse.html";
 
       const user = userCredential.user;
-      const dt = new Date().toISOString(); 
+      const dt = new Date().toISOString();
       update(ref(db, "users/" + user.uid), {
-        last_login: dt
+        last_login: dt,
       })
-      .then(() => {
-        console.log("Last login updated successfully");
-      })
-      .catch((error) => {
-        console.error("Error updating last login:", error);
-      });
+        .then(() => {
+          console.log("Last login updated successfully");
+        })
+        .catch((error) => {
+          console.error("Error updating last login:", error);
+        });
     })
     .catch((error) => {
       document.getElementById("email").value = "";
       document.getElementById("password").value = "";
       errorMessage.textContent = "Invalid email or password. Please try again.";
+      document.querySelector(".login-box").classList.add("show-error");
       console.error("Login error:", error.code, error.message);
     });
 });
@@ -44,26 +47,24 @@ document.getElementById("email").addEventListener("focus", () => {
 });
 document.getElementById("password").addEventListener("focus", () => {
   const errorMessage = document.getElementById("error-message");
-  errorMessage.textContent = ""; 
+  errorMessage.textContent = "";
 });
 
 // Check if user is authenticated
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    
-    console.log('User is signed in:', user.email);
+    console.log("User is signed in:", user.email);
   } else {
-    console.log('User is signed out.');
+    console.log("User is signed out.");
   }
 });
 
-window.addEventListener('load', () => {
-  const logoutMessage = localStorage.getItem('logoutMessage');
+window.addEventListener("load", () => {
+  const logoutMessage = localStorage.getItem("logoutMessage");
 
   if (logoutMessage) {
     alert(logoutMessage);
 
-    localStorage.removeItem('logoutMessage');
+    localStorage.removeItem("logoutMessage");
   }
 });
-

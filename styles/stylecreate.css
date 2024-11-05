@@ -1,15 +1,15 @@
 body {
-  font-family: 'Montserrat', sans-serif;
-background-color: #f4f4f4;
-margin: 0;
-padding: 0;
+  font-family: "Montserrat", sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
 html {
   overflow-x: hidden;
   overflow-y: scroll;
 
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .header {
@@ -20,7 +20,6 @@ html {
   justify-content: space-between;
   align-items: center;
   display: fixed;
-
 }
 
 .header-title {
@@ -34,59 +33,53 @@ html {
   color: white;
   padding: 20px;
   display: flex;
-  width: 100%; 
+  width: 100%;
   height: 25px;
   justify-content: space-between;
   align-items: center;
   display: fixed;
-
 }
-.right-section{
+.right-section {
   background-color: #d9d9d9;
-
 }
-.logoutHoverText{
+.logoutHoverText {
   color: #0b0b0b;
 }
-/* Logout button hover styles*/
-#onHoverLogout{
+#onHoverLogout {
   visibility: hidden;
 }
-#logout_button:hover #onHoverLogout{
+#logout_button:hover #onHoverLogout {
   visibility: visible;
-  
 }
-.right-section img{
+.right-section img {
   background-color: #d9d9d9;
-  
 }
-#logout_button{
+#logout_button {
   background-color: #d9d9d9;
   padding-top: 9px;
 }
 
 .container {
-max-width: 900px;
-background-color: #fff;
-margin: 50px auto;
-border-radius: 8px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-border: 1px solid #ccc;
+  max-width: 900px;
+  background-color: #fff;
+  margin: 50px auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
 }
 
-
 .form-container {
-padding: 30px;
+  padding: 30px;
 }
 
 .form-group {
-margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 label {
-display: block;
-margin-bottom: 10px;
-font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 input[type="text"],
@@ -100,149 +93,143 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  transition: border-color 0.3s ease; 
+  transition: border-color 0.3s ease;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
   border: 3px solid #357ae8;
-  outline: none; 
+  outline: none;
 }
 
 input::placeholder,
 textarea::placeholder {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   color: #888;
   opacity: 1;
 }
 
 input[type="date"]::placeholder {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   color: #888;
   opacity: 1;
 }
 
 textarea {
-height: 120px;
-resize: vertical;
+  height: 120px;
+  resize: vertical;
 }
 
 .inline-group {
-display: flex;
-justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .inline-group .form-group {
-width: 48%;
+  width: 48%;
 }
 
-
 .flex-container {
-display: flex;
-justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .left-section-bottom,
 .right-section-bottom {
-width: 48%;
+  width: 48%;
 }
-#logout_button{
-cursor: pointer;
+#logout_button {
+  cursor: pointer;
 }
 .backbutton,
 .previousbutton {
-background: transparent; 
-border: none; 
-padding: 0; 
-cursor: pointer; 
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .backimage,
 .previousimage {
-display: block;
+  display: block;
 
-
-width: 25px; 
-height: 25px; 
+  width: 25px;
+  height: 25px;
 }
 
 .button {
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 button {
-background-color: #4a90e2;
-color: white;
-padding: 12px 25px;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-font-size: 16px;
+  background-color: #4a90e2;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 }
 #button:hover {
   background-color: #357ae8;
 }
 
-
 .radio-group label {
-position: relative;
-padding-left: 30px;
-cursor: pointer;
-font-size: 16px;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .radio-group input[type="radio"]:checked + label::before {
-border-color: transparent;
-background-color: blue;
+  border-color: transparent;
+  background-color: blue;
 }
 
 .radio-group label:hover::before {
-background-color: #4a90e2;
+  background-color: #4a90e2;
 }
 .backbutton {
-width: 20px;
-height: auto;
-padding-left: 375px;
-padding-top: 10px;
+  width: 20px;
+  height: auto;
+  padding-left: 375px;
+  padding-top: 10px;
 }
 
 .previousbutton {
-width: 20px;
-height: auto;
+  width: 20px;
+  height: auto;
 }
 
 .onlinepic {
-width: 20px;
-height: 20px;
-padding-left: 10px;
-
-
+  width: 20px;
+  height: 20px;
+  padding-left: 10px;
 }
 
 .offlinepic {
-width: 25px;
-height: 25px;
-padding-left: 10px;
-margin-top: 5px;
+  width: 25px;
+  height: 25px;
+  padding-left: 10px;
+  margin-top: 5px;
 }
 
 .radio-group {
-  display: flex;           
-  flex-direction: column;  
+  display: flex;
+  flex-direction: column;
 }
 
 .radio-group label {
-  display: flex;           
-  align-items: center;     
-  margin-bottom: 10px;     
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.onlinepic, .offlinepic {
-  width: 30px;           
-  height: 30px;           
-  padding-left: 10px;      
+.onlinepic,
+.offlinepic {
+  width: 30px;
+  height: 30px;
+  padding-left: 10px;
 }
-
-

@@ -16,26 +16,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const startTimeInput = document.getElementById("start-time");
   const maxParticipantsInput = document.getElementById("max-participants");
   const courseNameInput = document.getElementById("course-name");
-  // const keyPointsInput = document.getElementById("key-points");
+
   const trainerInput = document.getElementById("trainer");
   const audienceInput = document.getElementById("audience");
 
-  // Event listeners for date and time validation
   startDateInput.addEventListener("blur", validateEndDate);
   endDateInput.addEventListener("blur", validateEndDate);
   startTimeInput.addEventListener("blur", validateEndTime);
   endTimeInput.addEventListener("blur", validateEndTime);
 
-  // Event listener for maximum participants validation
   maxParticipantsInput.addEventListener("input", validateMaxParticipants);
 
-  // Event listeners for text fields
   courseNameInput.addEventListener("input", () =>
     validateTextField(courseNameInput, "Course name")
   );
-  // keyPointsInput.addEventListener("input", () =>
-  //   validateTextField(keyPointsInput, "Key points")
-  // );
+
   trainerInput.addEventListener("input", () =>
     validateTextField(trainerInput, "Trainer name")
   );
@@ -43,13 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
     validateTextField(audienceInput, "Target audience")
   );
 
-  // Add blur events to check for empty fields
   courseNameInput.addEventListener("blur", () =>
     validateEmptyField(courseNameInput, "Course name")
   );
-  // keyPointsInput.addEventListener("blur", () =>
-  //   validateEmptyField(keyPointsInput, "Key points")
-  // );
+
   trainerInput.addEventListener("blur", () =>
     validateEmptyField(trainerInput, "Trainer name")
   );
@@ -58,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 });
 
-// Validation for empty fields
 function validateEmptyField(inputElement, fieldName) {
   const value = inputElement.value.trim();
   if (!value) {
@@ -70,33 +61,24 @@ function validateEmptyField(inputElement, fieldName) {
   return true;
 }
 
-// Validation for text fields
 function validateTextField(inputElement, fieldName) {
-  // Get the input value
   const value = inputElement.value;
 
-  // Remove leading whitespace
   const trimmedValue = value.replace(/^\s+/, "");
 
-  // Set the maximum word limit
   const maxLength = 100;
 
-  // Update the input value with trimmed value
   inputElement.value = trimmedValue;
 
-  // Check for maximum length
   if (trimmedValue.length > maxLength) {
     inputElement.classList.add("invalid");
     showError(`${fieldName} must not exceed ${maxLength} characters.`);
     return false;
   }
 
-  // Remove invalid class if validation passes
   inputElement.classList.remove("invalid");
   return true;
 }
-
-
 
 function validateEndDate() {
   const startDate = document.getElementById("start-date").value;
@@ -105,7 +87,6 @@ function validateEndDate() {
   const startDateObj = new Date(startDate);
   const endDateObj = new Date(endDate);
 
-  
   if (endDate !== "" && startDateObj > endDateObj) {
     showError("End date must be the same as or after the start date.");
     document.getElementById("end-date").value = "";
@@ -113,7 +94,6 @@ function validateEndDate() {
   }
   return true;
 }
-
 
 function validateEndTime() {
   const startTime = document.getElementById("start-time").value;
@@ -147,7 +127,6 @@ function validateMaxParticipants() {
   return true;
 }
 
-// Show error message function
 function showError(message) {
   const errorDiv = document.createElement("div");
   errorDiv.className = "error-message";
@@ -169,26 +148,21 @@ function showError(message) {
   }, 3000);
 }
 
-// Submission event
 document.getElementById("create-page").addEventListener("submit", submitCourse);
 
 function submitCourse(e) {
   e.preventDefault();
 
-  // Get all input elements
   const courseNameInput = document.getElementById("course-name");
-  // const keyPointsInput = document.getElementById("key-points");
+
   const trainerInput = document.getElementById("trainer");
   const audienceInput = document.getElementById("audience");
   const maxParticipantsInput = document.getElementById("max-participants");
 
-  // Validate all fields
   const isValidCourseName =
     validateTextField(courseNameInput, "Course name") &&
     validateEmptyField(courseNameInput, "Course name");
-  // const isValidKeyPoints =
-  //   validateTextField(keyPointsInput, "Key points") &&
-  //   validateEmptyField(keyPointsInput, "Key points");
+
   const isValidTrainer =
     validateTextField(trainerInput, "Trainer name") &&
     validateEmptyField(trainerInput, "Trainer name");
@@ -199,10 +173,8 @@ function submitCourse(e) {
   const isValidDates = validateEndDate();
   const isValidTimes = validateEndTime();
 
-  // Check if all validations pass
   if (
     !isValidCourseName ||
-    // !isValidKeyPoints ||
     !isValidTrainer ||
     !isValidAudience ||
     !isValidMaxParticipants ||
@@ -213,13 +185,12 @@ function submitCourse(e) {
     return;
   }
 
-  // Get values for submission
   const courseName = courseNameInput.value.trim();
   const startDate = getElementVal("start-date");
   const endDate = getElementVal("end-date");
   const startTime = getElementVal("start-time");
   const endTime = getElementVal("end-time");
-  // const keyPoints = keyPointsInput.value.trim();
+
   const trainerName = trainerInput.value.trim();
   const targetAudience = audienceInput.value.trim();
   const maxParticipation = maxParticipantsInput.value;
@@ -244,7 +215,7 @@ function submitCourse(e) {
     endDate,
     startTime,
     endTime,
-    
+
     trainerName,
     targetAudience,
     maxParticipation,
@@ -252,14 +223,13 @@ function submitCourse(e) {
   );
 }
 
-// Save to Firebase
 const saveInDB = (
   courseName,
   startDate,
   endDate,
   startTime,
   endTime,
- 
+
   trainerName,
   targetAudience,
   maxParticipation,
@@ -274,7 +244,7 @@ const saveInDB = (
     endDate: endDate,
     startTime: startTime,
     endTime: endTime,
-  
+
     trainerName: trainerName,
     targetAudience: targetAudience,
     maxParticipation: maxParticipation,
@@ -292,12 +262,10 @@ const saveInDB = (
     });
 };
 
-// Get input value by ID
 const getElementVal = (id) => {
   return document.getElementById(id).value;
 };
 
-// Popup function
 const showPopup = (message, type) => {
   const popup = document.createElement("div");
   popup.style.position = "fixed";
@@ -333,13 +301,11 @@ const showPopup = (message, type) => {
   popup.appendChild(messageText);
   document.body.appendChild(popup);
 
-  // Add auto-close feature
   setTimeout(() => {
     popup.remove();
-}, 3000); // Automatically close after 3 seconds
+  }, 3000);
 };
 
-//style for error message - checking
 const style = document.createElement("style");
 style.textContent = `
   .invalid {
@@ -355,7 +321,6 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Authentication code remains the same
 document.getElementById("logout_button").addEventListener("click", () => {
   signOut(auth)
     .then(() => {
@@ -375,7 +340,6 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-document.getElementById('back-button').addEventListener('click', () => {
-  window.location.href = 'viewAllCourse.html';
+document.getElementById("back-button").addEventListener("click", () => {
+  window.location.href = "viewAllCourse.html";
 });
-
