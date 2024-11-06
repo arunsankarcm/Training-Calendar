@@ -338,6 +338,15 @@ function AddCourseToCard(course, cardNo) {
         popupMenu.style.display = "none";
       }
     });
+    document.getElementById("month-year").addEventListener("click", (e) => {
+      popupMenu.style.display = "none";
+    });
+    document.getElementById("add_button").addEventListener("click", (e) => {
+      popupMenu.style.display = "none";
+    });
+    document.getElementById("iconButton").addEventListener("click", (e) => {
+      popupMenu.style.display = "none";
+    });
 
     deleteBtn.addEventListener("click", () => {
       const confirmDelete = confirm(
@@ -363,6 +372,7 @@ function AddCourseToCard(course, cardNo) {
     threeDots.style.display = "none";
   }
 }
+
 
 function searchCourses() {
   const searchTerm = document
@@ -563,3 +573,60 @@ function enableAdminFeatures() {
 function showUserFeatures() {
   console.log("User features enabled.");
 }
+
+
+// Toggle the month dropdown
+document.getElementById("month-year").addEventListener("click", (e) => {
+  e.stopPropagation();
+  const monthDropdown = document.getElementById("month-dropdown");
+  const popupMenuFilter = document.getElementById("popupMenuFilter");
+  const popupMenuAdd = document.getElementById("popupMenuAdd");
+
+  monthDropdown.style.display = monthDropdown.style.display === "block" ? "none" : "block";
+  popupMenuFilter.style.display = "none";
+  popupMenuAdd.style.display = "none";
+
+});
+
+// Handle month selection in the dropdown
+document.getElementById("month-dropdown").addEventListener("click", (e) => {
+  e.stopPropagation();
+  if (e.target.tagName === "P") {
+    currentMonth = parseInt(e.target.getAttribute("data-month"));
+    updateMonthYearDisplay();
+    document.getElementById("month-dropdown").style.display = "none";
+
+    assignCardNumbersForCurrentMonth();
+    filterCoursesByMonth();
+    updateMonthYearDisplay();
+  }
+});
+
+
+document.addEventListener("click", () => {
+  const monthDropdown = document.getElementById("month-dropdown");
+  const popupMenuFilter = document.getElementById("popupMenuFilter");
+  const popupMenuAdd = document.getElementById("popupMenuAdd");
+
+  monthDropdown.style.display = "none";
+  popupMenuFilter.style.display = "none";
+  popupMenuAdd.style.display = "none";
+  
+});
+
+
+document.getElementById("add_button").addEventListener("click", () => {
+  const monthDropdown = document.getElementById("month-dropdown");
+  monthDropdown.style.display = "none";
+
+  
+});
+
+
+document.getElementById("iconButton").addEventListener("click", () => {
+  const monthDropdown = document.getElementById("month-dropdown");
+  monthDropdown.style.display = "none";
+ 
+  
+});
+

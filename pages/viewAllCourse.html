@@ -38,12 +38,30 @@ rel='stylesheet'>
       <div class="header-content">
         <h1>
             Training Calendar
-            <span class="month-year">
+            <span class="month-year" style="cursor: pointer;">
               <br />
               <img src="../Images/left-arr.png" alt="left_arrow" id="left-arrow" />
               <span id="month-year"></span>
               <img src="../Images/right-arr.png" alt="right_arrow" id="right-arrow" />
             </span>
+            <div id="month-year-container">
+              <!-- Custom dropdown list for months -->
+              <div id="month-dropdown" style="display: none; position: absolute; cursor: pointer;">
+                <p data-month="0">January</p>
+                <p data-month="1">February</p>
+                <p data-month="2">March</p>
+                <p data-month="3">April</p>
+                <p data-month="4">May</p>
+                <p data-month="5">June</p>
+                <p data-month="6">July</p>
+                <p data-month="7">August</p>
+                <p data-month="8">September</p>
+                <p data-month="9">October</p>
+                <p data-month="10">November</p>
+                <p data-month="11">December</p>
+              </div>
+            </div>
+            
           </h1>
         <div class="search-bar">
           <input type="text" placeholder="Search here..." id="search-input" />
