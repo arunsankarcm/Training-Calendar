@@ -3,68 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>exTC-Vconnect-Template</title>
+    <title>exTC-Email-Template</title>
     <link rel="icon" href="../Images/logo white rings.png" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../styles/templatestyle.css" />
+    <link rel="stylesheet" href="../styles/templateEmailStyles.css" />
   </head>
   <body>
-  <section class="body-main">
+    <section class="body-main">
+      <div class="download-icons">
 
-    <!-- downloading icons section -->
+        <button id="downloadPDFBtn">Download as PDF</button>
 
-    <div class="download-icons">
 
-      <!-- png -->
-      <div class="downloadPngHover">
-        <a href="#" onclick="downloadImage()" id="pngDownHover">
-          <img class="png-icon" src="../Images/1-removebg.png" alt="download-icon"/></a>
-        <div class="pngHover">
-          <div id="onPngHover">PNG</div>
+        <div class="downloadPngHover">
+          <a href="#" onclick="downloadImage()" id="pngDownHover">
+            <img src="../Images/1-removebg.png" alt="download-icon"
+          /></a>
+          <div class="pngHover">
+            <div id="onPngHover">PNG</div>
+          </div>
+        </div>
+
+        <div class="downloadSheetHover">
+          <a href="#" id="downloadBtn">
+            <img
+              src="../Images/PDF__1_-removebg-preview.png"
+              alt="download-sheet"
+          /></a>
+          <div class="sheetHover">
+            <div id="onSheetHover">Sheet</div>
+          </div>
         </div>
       </div>
-      
-      <!-- execel sheet  -->
-      <div class="downloadSheetHover">
-        <a href="#" id="downloadBtn">
-          <img class="excel-icon" src="../Images/PDF__1_-removebg-preview.png" alt="download-sheet"/></a>
-        <div class="sheetHover">
-          <div id="onSheetHover">Sheet</div>
+
+      <div class="container" id="container-capture">
+        <div class="rhombus-top">
+          <img src="../images/Rhombus.png" alt="experion-rhombus-white" />
         </div>
-      </div>
-      
-    </div>
+        <div class="header" id="header-month-year">
+          <h7>Training Calendar</h7><br />
+          <div class="header-MMYY" id="month-year-header"></div>
 
-    <!-- displaying section -->
-    <div class="container" id="container-capture">
-      <div class="rhombus-top">
-        <img src="../images/Rhombus.png" alt="experion-rhombus-white" />
-      </div>
-      <div class="header" id="header-month-year">
-        <h7>Training Calendar</h7><br />
-        <div class="header-MMYY" id="month-year-header"></div>
-
-        <p>
-          This calendar contains the details of all training programs planned
-          for this month - technical and soft skills - conducted by external
-          vendors and internal trainers.
-        </p>
-      </div>
-      <div class="training-details-section">
-        <!-- upcoming section -->
-        <div class="upcoming-section">
-          <div class="upcoming-button">
-            <h2>UPCOMING</h2>
-          </div>
-          <div id="upcoming-training-cards-section">
-            <!-- upcoming training details will come here -->
-          </div>
+          <p>
+            This calendar contains the details of all training programs planned
+            for this month - technical and soft skills - conducted by external
+            vendors and internal trainers.
+          </p>
         </div>
         <div class="training-details-section">
+          <div class="upcoming-section">
+            <div class="upcoming-button">
+              <h2>UPCOMING</h2>
+            </div>
+            <div id="upcoming-training-cards-section"></div>
+          </div>
           <div class="ongoing-section">
             <div class="ongoing-button">
               <h2>ONGOING</h2>
@@ -72,20 +68,14 @@
             <div id="ongoing-training-cards-section"></div>
           </div>
         </div>
-      </div>
-        
 
         <div class="footer">
           <div class="secure-spot">
             <h7>Secure your spot now!</h7>
           </div>
-          <p>
-            <strong
-              >Please use the training nomination form available in Vconnect to
-              submit your nominations.</strong
-            >
-
-            <br />Nominations will be accepted in concurrence with managers and
+          <p><strong>Submit the training nominations form here</strong>
+            <br>
+            <br>Nominations will be accepted in concurrence with managers and
             based on the availability of seats.
           </p>
         </div>
