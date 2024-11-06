@@ -108,6 +108,30 @@ function assignCardNumbersForCurrentMonth() {
   });
 }
 
+function checkForNoCourses() {
+  if (cardsDiv.children.length === 0) {
+    if (!document.querySelector('.no-courses-popup')) {
+      const popup = document.createElement('div');
+      popup.textContent = 'No courses to display';
+      popup.classList.add('no-courses-popup');
+      popup.style.position = 'fixed';
+      popup.style.bottom = '220px';
+      popup.style.left = '50%';
+      popup.style.transform = 'translateX(-50%)';
+      popup.style.color = '#555555';
+      popup.style.fontSize = 'x-large';
+      popup.style.zIndex = '1000';
+      document.body.appendChild(popup);
+    }
+  } else {
+    const existingPopup = document.querySelector('.no-courses-popup');
+    if (existingPopup) {
+      existingPopup.remove();
+    }
+  }
+}
+
+
 
 function filterCoursesByMonth() {
   cardsDiv.innerHTML = "";
@@ -139,6 +163,8 @@ function filterCoursesByMonth() {
       AddCourseToCard(course, cardNumber);
     }
   });
+  checkForNoCourses();
+
 }
 
 document.getElementById("left-arrow").addEventListener("click", () => {
@@ -364,6 +390,8 @@ function searchCourses() {
     const cardNumber = index + 1; 
     AddCourseToCard(course, cardNumber);
   });
+  checkForNoCourses();
+
 }
 
 const addButton = document.getElementById("add_button");
@@ -462,6 +490,8 @@ function filterCourses(filterType) {
       AddCourseToCard(course, cardNumber);
     }
   });
+  checkForNoCourses();
+
 }
 
 const popupMenuAdd = document.getElementById("popupMenuAdd");
