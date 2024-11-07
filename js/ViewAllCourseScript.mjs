@@ -54,10 +54,14 @@ document.getElementById("export-img").addEventListener("click", () => {
 });
 
 function getCourses() {
+  const loader = document.getElementById("loader");
+  loader.style.display = "block"; // Show loader
+
   const dbref = ref(db);
 
   get(child(dbref, "courses"))
     .then((snapshot) => {
+      loader.style.display = "none"; // Hide loader after data is fetched
       if (snapshot.exists()) {
         allCourses = [];
         snapshot.forEach((course) => {
@@ -77,6 +81,7 @@ function getCourses() {
       }
     })
     .catch((error) => {
+      loader.style.display = "none"; // Hide loader if there's an error
       console.error("Error fetching data: ", error);
     });
 }
@@ -110,28 +115,26 @@ function assignCardNumbersForCurrentMonth() {
 
 function checkForNoCourses() {
   if (cardsDiv.children.length === 0) {
-    if (!document.querySelector('.no-courses-popup')) {
-      const popup = document.createElement('div');
-      popup.textContent = 'No courses to display';
-      popup.classList.add('no-courses-popup');
-      popup.style.position = 'fixed';
-      popup.style.bottom = '220px';
-      popup.style.left = '50%';
-      popup.style.transform = 'translateX(-50%)';
-      popup.style.color = '#555555';
-      popup.style.fontSize = 'x-large';
-      popup.style.zIndex = '1000';
+    if (!document.querySelector(".no-courses-popup")) {
+      const popup = document.createElement("div");
+      popup.textContent = "No courses to display";
+      popup.classList.add("no-courses-popup");
+      popup.style.position = "fixed";
+      popup.style.bottom = "220px";
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)";
+      popup.style.color = "#555555";
+      popup.style.fontSize = "x-large";
+      popup.style.zIndex = "1000";
       document.body.appendChild(popup);
     }
   } else {
-    const existingPopup = document.querySelector('.no-courses-popup');
+    const existingPopup = document.querySelector(".no-courses-popup");
     if (existingPopup) {
       existingPopup.remove();
     }
   }
 }
-
-
 
 function filterCoursesByMonth() {
   cardsDiv.innerHTML = "";
@@ -164,7 +167,6 @@ function filterCoursesByMonth() {
     }
   });
   checkForNoCourses();
-
 }
 
 document.getElementById("left-arrow").addEventListener("click", () => {
@@ -373,7 +375,6 @@ function AddCourseToCard(course, cardNo) {
   }
 }
 
-
 function searchCourses() {
   const searchTerm = document
     .getElementById("search-input")
@@ -397,11 +398,10 @@ function searchCourses() {
 
   // Assign sequential card numbers for search results
   filteredCourses.forEach((course, index) => {
-    const cardNumber = index + 1; 
+    const cardNumber = index + 1;
     AddCourseToCard(course, cardNumber);
   });
   checkForNoCourses();
-
 }
 
 const addButton = document.getElementById("add_button");
@@ -445,7 +445,6 @@ document.getElementById("filter-completed").addEventListener("click", () => {
   filterCourses("completed");
   popupMenuFilter.style.display = "none";
 });
-
 
 function filterCourses(filterType) {
   cardsDiv.innerHTML = "";
@@ -501,7 +500,6 @@ function filterCourses(filterType) {
     }
   });
   checkForNoCourses();
-
 }
 const popupMenuExport = document.getElementById("popupMenuExport");
 const exportButton = document.getElementById("exportbutton");
@@ -584,7 +582,6 @@ function showUserFeatures() {
   console.log("User features enabled.");
 }
 
-
 // Toggle the month dropdown
 document.getElementById("month-year").addEventListener("click", (e) => {
   e.stopPropagation();
@@ -592,10 +589,10 @@ document.getElementById("month-year").addEventListener("click", (e) => {
   const popupMenuFilter = document.getElementById("popupMenuFilter");
   const popupMenuAdd = document.getElementById("popupMenuAdd");
 
-  monthDropdown.style.display = monthDropdown.style.display === "block" ? "none" : "block";
+  monthDropdown.style.display =
+    monthDropdown.style.display === "block" ? "none" : "block";
   popupMenuFilter.style.display = "none";
   popupMenuAdd.style.display = "none";
-
 });
 
 // Handle month selection in the dropdown
@@ -612,7 +609,6 @@ document.getElementById("month-dropdown").addEventListener("click", (e) => {
   }
 });
 
-
 document.addEventListener("click", () => {
   const monthDropdown = document.getElementById("month-dropdown");
   const popupMenuFilter = document.getElementById("popupMenuFilter");
@@ -621,22 +617,14 @@ document.addEventListener("click", () => {
   monthDropdown.style.display = "none";
   popupMenuFilter.style.display = "none";
   popupMenuAdd.style.display = "none";
-  
 });
-
 
 document.getElementById("add_button").addEventListener("click", () => {
   const monthDropdown = document.getElementById("month-dropdown");
   monthDropdown.style.display = "none";
-
-  
 });
-
 
 document.getElementById("iconButton").addEventListener("click", () => {
   const monthDropdown = document.getElementById("month-dropdown");
   monthDropdown.style.display = "none";
- 
-  
 });
-
