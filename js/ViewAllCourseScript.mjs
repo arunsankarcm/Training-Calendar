@@ -503,6 +503,16 @@ function filterCourses(filterType) {
   checkForNoCourses();
 
 }
+const popupMenuExport = document.getElementById("popupMenuExport");
+const exportButton = document.getElementById("exportbutton");
+
+function toggleExportPopup() {
+  popupMenuExport.style.display =  popupMenuExport.style.display === "block" ? "none" : "block"; 
+}
+exportButton.addEventListener("click", (e) => {
+  e.stopPropagation();
+  toggleExportPopup();
+});
 
 const popupMenuAdd = document.getElementById("popupMenuAdd");
 
