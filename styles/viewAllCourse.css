@@ -350,10 +350,26 @@ body {
   margin-top: 22px;
   margin-left: 765px;
 }
+#popupMenuExport.popup-menu {
+  display: flex;
+  display: none;
+  line-height: 11px;
+  width: 85px;
+  height: 90px;
+  border-radius: 13px;
+  margin-top: 22px;
+  margin-left: 620px;
+}
 
 #popupMenuAdd.popup-menu hr {
   display: flex;
   width: 72px;
+  margin-left: 5.5px;
+  height: auto;
+}
+#popupMenuExport.popup-menu hr {
+  display: flex;
+  width: 62px;
   margin-left: 5.5px;
   height: auto;
 }
@@ -367,6 +383,7 @@ body {
 .popup-menu p:hover {
   color: #007bff;
 }
+
 
 .menu-container {
   position: relative;
