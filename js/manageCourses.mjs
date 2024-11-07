@@ -30,9 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
     return startTime < endTime;
   }
 
-  function validateMaxParticipants(value) {
-    return Number.isInteger(Number(value)) && Number(value) > 0;
-  }
+  // function validateMaxParticipants(value) {
+  //   return Number.isInteger(Number(value)) && Number(value) > 0;
+  // }
 
   function validateRequired(value) {
     return value.trim() !== "";
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const trainer = inputs[5].value;
     const audience = inputs[6].value;
-    const maxParticipants = inputs[7].value;
+   
 
     if (!validateRequired(courseName)) {
       showError(inputs[0], "Course name is required");
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       { input: inputs[5], name: "Trainer" },
       { input: inputs[6], name: "Audience" },
-      { input: inputs[7], name: "Max participants" },
+      
     ];
 
     requiredFields.forEach((field) => {
@@ -117,12 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
       removeError(inputs[4]);
     }
 
-    if (maxParticipants && !validateMaxParticipants(maxParticipants)) {
-      showError(inputs[7], "Must be a positive whole number");
-      isValid = false;
-    } else if (maxParticipants) {
-      removeError(inputs[7]);
-    }
+    
 
     return isValid;
   }
@@ -137,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <td><input name="end-time" type="time" class="time-input"></td>
             <td><input name="trainer" type="text" class="trainer-name" placeholder="Trainer Name"></td>
             <td><input name="audience" type="text" class="audience" placeholder="Audience"></td>
-            <td><input name="max-participants" type="number" class="max-participants" placeholder="Max Participants"></td>
+           
             <td>
                 <select name="mode">
                     <option value="online">Online</option>
@@ -184,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           trainer: inputs[5].value,
           audience: inputs[6].value,
-          maxParticipants: inputs[7].value,
+          
           mode: select.value,
         };
         coursesData.push(courseData);
@@ -208,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         course.trainer,
         course.audience,
-        course.maxParticipants,
+        
         course.mode
       );
     });
@@ -253,7 +248,7 @@ const saveInDB = (
 
   trainerName,
   targetAudience,
-  maxParticipation,
+ 
   mode
 ) => {
   const coursesRef = ref(db, "courses");
@@ -268,7 +263,7 @@ const saveInDB = (
 
     trainerName: trainerName,
     targetAudience: targetAudience,
-    maxParticipation: maxParticipation,
+    
     mode: mode,
   })
     .then(() => {

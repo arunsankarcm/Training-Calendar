@@ -82,8 +82,8 @@ if (courseKey) {
 
         document.getElementById("trainer").value = courseData.trainerName;
         document.getElementById("audience").value = courseData.targetAudience;
-        document.getElementById("max-participants").value =
-          courseData.maxParticipation;
+        // document.getElementById("max-participants").value =
+        //   courseData.maxParticipation;
 
         const modeRadioButtons = document.getElementsByName("mode");
         for (const radio of modeRadioButtons) {
@@ -115,7 +115,7 @@ function updateCourse(e) {
 
   const trainerName = getElementVal("trainer");
   const targetAudience = getElementVal("audience");
-  const maxParticipation = getElementVal("max-participants");
+  
 
   const mode = document.getElementsByName("mode");
   let selectedValue = "";
@@ -136,7 +136,7 @@ function updateCourse(e) {
 
     trainerName: trainerName,
     targetAudience: targetAudience,
-    maxParticipation: maxParticipation,
+   
     mode: selectedValue,
   })
     .then(() => {
