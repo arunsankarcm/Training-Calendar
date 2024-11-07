@@ -505,8 +505,11 @@ popup-menu ul hr {
   background-color: #eeeeee;
   border: 1px solid #ccc;
   border-radius: 14px;
-  padding: 5px;
-  width: auto;
+  text-align: center;
+  position: absolute;
+  padding: 15px;
+  left: 5%;
+  width: 120px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   line-height: 25px;
   z-index: 10;
@@ -515,9 +518,11 @@ popup-menu ul hr {
 #month-dropdown p {
   margin: 0;
   cursor: pointer;
-  border-bottom: #282828 solid 1px;
 }
 
 #month-dropdown p:hover {
   color: #007bff;
+}
+#month-dropdown hr{
+  border-top: 1px solid #0b0b0b;
 }
