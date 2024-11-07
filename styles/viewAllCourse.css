@@ -354,11 +354,11 @@ body {
   display: flex;
   display: none;
   line-height: 11px;
-  width: 85px;
+  width: 70px;
   height: 90px;
   border-radius: 13px;
   margin-top: 22px;
-  margin-left: 620px;
+  margin-left: 639px;
 }
 
 #popupMenuAdd.popup-menu hr {
@@ -369,7 +369,7 @@ body {
 }
 #popupMenuExport.popup-menu hr {
   display: flex;
-  width: 62px;
+  width: 45px;
   margin-left: 5.5px;
   height: auto;
 }
@@ -543,3 +543,24 @@ popup-menu ul hr {
 #month-dropdown hr{
   border-top: 1px solid #0b0b0b;
 }
+
+.circle-loader {
+  border: 8px solid #f3f3f3; /* Light gray */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
