@@ -48,11 +48,6 @@ function updateMonthYearDisplay() {
   console.log("Inside function:", monthYearText);
 }
 
-document.getElementById("export-img").addEventListener("click", () => {
-  const url = `templatePage.html?month=${month}&year=${year}`;
-  window.open(url, "_blank");
-});
-
 function getCourses() {
   const dbref = ref(db);
 
@@ -110,28 +105,26 @@ function assignCardNumbersForCurrentMonth() {
 
 function checkForNoCourses() {
   if (cardsDiv.children.length === 0) {
-    if (!document.querySelector('.no-courses-popup')) {
-      const popup = document.createElement('div');
-      popup.textContent = 'No courses to display';
-      popup.classList.add('no-courses-popup');
-      popup.style.position = 'fixed';
-      popup.style.bottom = '220px';
-      popup.style.left = '50%';
-      popup.style.transform = 'translateX(-50%)';
-      popup.style.color = '#555555';
-      popup.style.fontSize = 'x-large';
-      popup.style.zIndex = '1000';
+    if (!document.querySelector(".no-courses-popup")) {
+      const popup = document.createElement("div");
+      popup.textContent = "No courses to display";
+      popup.classList.add("no-courses-popup");
+      popup.style.position = "fixed";
+      popup.style.bottom = "220px";
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)";
+      popup.style.color = "#555555";
+      popup.style.fontSize = "x-large";
+      popup.style.zIndex = "1000";
       document.body.appendChild(popup);
     }
   } else {
-    const existingPopup = document.querySelector('.no-courses-popup');
+    const existingPopup = document.querySelector(".no-courses-popup");
     if (existingPopup) {
       existingPopup.remove();
     }
   }
 }
-
-
 
 function filterCoursesByMonth() {
   cardsDiv.innerHTML = "";
@@ -164,7 +157,6 @@ function filterCoursesByMonth() {
     }
   });
   checkForNoCourses();
-
 }
 
 document.getElementById("left-arrow").addEventListener("click", () => {
@@ -338,13 +330,16 @@ function AddCourseToCard(course, cardNo) {
         popupMenu.style.display = "none";
       }
     });
-    document.getElementById("month-year").addEventListener("click", (e) => {
+    document.getElementById("month-year").addEventListener("click", () => {
       popupMenu.style.display = "none";
     });
-    document.getElementById("add_button").addEventListener("click", (e) => {
+    document.getElementById("add_button").addEventListener("click", () => {
       popupMenu.style.display = "none";
     });
-    document.getElementById("iconButton").addEventListener("click", (e) => {
+    document.getElementById("iconButton").addEventListener("click", () => {
+      popupMenu.style.display = "none";
+    });
+    document.getElementById("exportbutton").addEventListener("click", () => {
       popupMenu.style.display = "none";
     });
 
@@ -373,7 +368,6 @@ function AddCourseToCard(course, cardNo) {
   }
 }
 
-
 function searchCourses() {
   const searchTerm = document
     .getElementById("search-input")
@@ -397,13 +391,13 @@ function searchCourses() {
 
   // Assign sequential card numbers for search results
   filteredCourses.forEach((course, index) => {
-    const cardNumber = index + 1; 
+    const cardNumber = index + 1;
     AddCourseToCard(course, cardNumber);
   });
   checkForNoCourses();
-
 }
 
+const exportButton = document.getElementById("exportbutton");
 const addButton = document.getElementById("add_button");
 const iconButton = document.getElementById("iconButton");
 const popupMenuFilter = document.getElementById("popupMenuFilter");
@@ -416,6 +410,8 @@ function togglePopup() {
 iconButton.addEventListener("click", (e) => {
   e.stopPropagation();
   togglePopup();
+  popupMenuAdd.style.display = "none";
+  popupMenuExport.style.display = "none";
 });
 
 document.addEventListener("click", (e) => {
@@ -426,9 +422,6 @@ document.addEventListener("click", (e) => {
   ) {
     popupMenuFilter.style.display = "none";
   }
-});
-addButton.addEventListener("click", () => {
-  popupMenuFilter.style.display = "none";
 });
 
 document.getElementById("filter-upcoming").addEventListener("click", () => {
@@ -445,7 +438,6 @@ document.getElementById("filter-completed").addEventListener("click", () => {
   filterCourses("completed");
   popupMenuFilter.style.display = "none";
 });
-
 
 function filterCourses(filterType) {
   cardsDiv.innerHTML = "";
@@ -501,17 +493,32 @@ function filterCourses(filterType) {
     }
   });
   checkForNoCourses();
-
 }
 const popupMenuExport = document.getElementById("popupMenuExport");
-const exportButton = document.getElementById("exportbutton");
 
 function toggleExportPopup() {
-  popupMenuExport.style.display =  popupMenuExport.style.display === "block" ? "none" : "block"; 
+  popupMenuExport.style.display =
+    popupMenuExport.style.display === "block" ? "none" : "block";
 }
 exportButton.addEventListener("click", (e) => {
   e.stopPropagation();
   toggleExportPopup();
+  popupMenuAdd.style.display = "none";
+  popupMenuFilter.style.display = "none";
+});
+document.getElementById("mail").addEventListener("click", () => {
+  window.location.href = "templatemail.html";
+  popupMenuExport.style.display = "none";
+});
+document.getElementById("png").addEventListener("click", () => {
+  const url = `templatePage.html?month=${month}&year=${year}`;
+  window.open(url, "_blank");
+  popupMenuExport.style.display = "none";
+});
+document.addEventListener("click", (e) => {
+  if (!exportButton.contains(e.target) && !popupMenuExport.contains(e.target)) {
+    popupMenuExport.style.display = "none";
+  }
 });
 
 const popupMenuAdd = document.getElementById("popupMenuAdd");
@@ -524,6 +531,8 @@ function toggleAddPopup() {
 addButton.addEventListener("click", (e) => {
   e.stopPropagation();
   toggleAddPopup();
+  popupMenuFilter.style.display = "none";
+  popupMenuExport.style.display = "none";
 });
 
 document.getElementById("add-one-course").addEventListener("click", () => {
@@ -540,9 +549,6 @@ document.addEventListener("click", (e) => {
   if (!addButton.contains(e.target) && !popupMenuAdd.contains(e.target)) {
     popupMenuAdd.style.display = "none";
   }
-});
-iconButton.addEventListener("click", () => {
-  popupMenuAdd.style.display = "none";
 });
 
 document
@@ -584,18 +590,19 @@ function showUserFeatures() {
   console.log("User features enabled.");
 }
 
-
 // Toggle the month dropdown
 document.getElementById("month-year").addEventListener("click", (e) => {
   e.stopPropagation();
   const monthDropdown = document.getElementById("month-dropdown");
   const popupMenuFilter = document.getElementById("popupMenuFilter");
   const popupMenuAdd = document.getElementById("popupMenuAdd");
+  const popupMenuExport = document.getElementById("popupMenuExport");
 
-  monthDropdown.style.display = monthDropdown.style.display === "block" ? "none" : "block";
+  monthDropdown.style.display =
+    monthDropdown.style.display === "block" ? "none" : "block";
   popupMenuFilter.style.display = "none";
   popupMenuAdd.style.display = "none";
-
+  popupMenuExport.style.display = "none";
 });
 
 // Handle month selection in the dropdown
@@ -612,31 +619,29 @@ document.getElementById("month-dropdown").addEventListener("click", (e) => {
   }
 });
 
-
 document.addEventListener("click", () => {
   const monthDropdown = document.getElementById("month-dropdown");
   const popupMenuFilter = document.getElementById("popupMenuFilter");
   const popupMenuAdd = document.getElementById("popupMenuAdd");
+  const popupMenuExport = document.getElementById("popupMenuExport");
 
   monthDropdown.style.display = "none";
   popupMenuFilter.style.display = "none";
   popupMenuAdd.style.display = "none";
-  
+  popupMenuExport.style.display = "none";
 });
-
 
 document.getElementById("add_button").addEventListener("click", () => {
   const monthDropdown = document.getElementById("month-dropdown");
   monthDropdown.style.display = "none";
-
-  
 });
-
 
 document.getElementById("iconButton").addEventListener("click", () => {
   const monthDropdown = document.getElementById("month-dropdown");
   monthDropdown.style.display = "none";
- 
-  
 });
 
+document.getElementById("exportbutton").addEventListener("click", () => {
+  const monthDropdown = document.getElementById("month-dropdown");
+  monthDropdown.style.display = "none";
+});
