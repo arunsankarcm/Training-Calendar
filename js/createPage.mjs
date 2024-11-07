@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const startDateInput = document.getElementById("start-date");
   const endTimeInput = document.getElementById("end-time");
   const startTimeInput = document.getElementById("start-time");
-  const maxParticipantsInput = document.getElementById("max-participants");
+  // const maxParticipantsInput = document.getElementById("max-participants");
   const courseNameInput = document.getElementById("course-name");
 
   const trainerInput = document.getElementById("trainer");
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   startTimeInput.addEventListener("blur", validateEndTime);
   endTimeInput.addEventListener("blur", validateEndTime);
 
-  maxParticipantsInput.addEventListener("input", validateMaxParticipants);
+  // maxParticipantsInput.addEventListener("input", validateMaxParticipants);
 
   courseNameInput.addEventListener("input", () =>
     validateTextField(courseNameInput, "Course name")
@@ -115,17 +115,17 @@ function validateEndTime() {
   return true;
 }
 
-function validateMaxParticipants() {
-  const maxParticipantsInput = document.getElementById("max-participants");
-  const value = maxParticipantsInput.value;
+// function validateMaxParticipants() {
+//   const maxParticipantsInput = document.getElementById("max-participants");
+//   const value = maxParticipantsInput.value;
 
-  if (!/^\d+$/.test(value) && value !== "") {
-    showError("Please enter a valid integer for maximum participants.");
-    maxParticipantsInput.value = "";
-    return false;
-  }
-  return true;
-}
+//   if (!/^\d+$/.test(value) && value !== "") {
+//     showError("Please enter a valid integer for maximum participants.");
+//     maxParticipantsInput.value = "";
+//     return false;
+//   }
+//   return true;
+// }
 
 function showError(message) {
   const errorDiv = document.createElement("div");
@@ -157,7 +157,7 @@ function submitCourse(e) {
 
   const trainerInput = document.getElementById("trainer");
   const audienceInput = document.getElementById("audience");
-  const maxParticipantsInput = document.getElementById("max-participants");
+  // const maxParticipantsInput = document.getElementById("max-participants");
 
   const isValidCourseName =
     validateTextField(courseNameInput, "Course name") &&
@@ -169,7 +169,7 @@ function submitCourse(e) {
   const isValidAudience =
     validateTextField(audienceInput, "Target audience") &&
     validateEmptyField(audienceInput, "Target audience");
-  const isValidMaxParticipants = validateMaxParticipants();
+  // const isValidMaxParticipants = validateMaxParticipants();
   const isValidDates = validateEndDate();
   const isValidTimes = validateEndTime();
 
@@ -177,7 +177,7 @@ function submitCourse(e) {
     !isValidCourseName ||
     !isValidTrainer ||
     !isValidAudience ||
-    !isValidMaxParticipants ||
+    // !isValidMaxParticipants ||
     !isValidDates ||
     !isValidTimes
   ) {
@@ -193,7 +193,7 @@ function submitCourse(e) {
 
   const trainerName = trainerInput.value.trim();
   const targetAudience = audienceInput.value.trim();
-  const maxParticipation = maxParticipantsInput.value;
+  // const maxParticipation = maxParticipantsInput.value;
 
   const mode = document.getElementsByName("mode");
   let selectedValue = "";
@@ -218,7 +218,7 @@ function submitCourse(e) {
 
     trainerName,
     targetAudience,
-    maxParticipation,
+    
     selectedValue
   );
 }
@@ -232,7 +232,7 @@ const saveInDB = (
 
   trainerName,
   targetAudience,
-  maxParticipation,
+  
   mode
 ) => {
   const coursesRef = ref(db, "courses");
@@ -247,7 +247,7 @@ const saveInDB = (
 
     trainerName: trainerName,
     targetAudience: targetAudience,
-    maxParticipation: maxParticipation,
+   
     mode: mode,
   })
     .then(() => {
