@@ -321,3 +321,6 @@ onAuthStateChanged(auth, (user) => {
 document.getElementById("back-button").addEventListener("click", () => {
   window.location.href = "viewAllCourse.html";
 });
+
+
+
