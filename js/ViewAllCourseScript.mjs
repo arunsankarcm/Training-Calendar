@@ -512,7 +512,8 @@ exportButton.addEventListener("click", (e) => {
   popupMenuFilter.style.display = "none";
 });
 document.getElementById("mail").addEventListener("click", () => {
-  window.location.href = "templatemail.html";
+  const url = `templatePageEmail.html?month=${month}&year=${year}`;
+  window.open(url, "_blank");
   popupMenuExport.style.display = "none";
 });
 document.getElementById("png").addEventListener("click", () => {
