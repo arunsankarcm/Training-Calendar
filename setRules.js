@@ -15,5 +15,5 @@ async function setRole(uid, role) {
 }
 
 // Run this function to assign roles
-setRole("XqyEJhUNstYGlqhvIBO0kFdkDV33", "superadmin");
-setRole("gnM668eNtJUGJoJq1kBm2oc7Jbk1", "admin");
+setRole("U3fVdYNUClR8UyXfm83QC5LtPpa2", "superadmin");
+setRole("8qrsudZ61SV47aJKKjzHdECjRgE3", "admin");
