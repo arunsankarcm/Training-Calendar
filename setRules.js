@@ -1,4 +1,4 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const admin = require("firebase-admin");
 const serviceAccount = require("../Training-Calendar/serviceAccountKey.json");
@@ -14,6 +14,8 @@ async function setRole(uid, role) {
   console.log(`Role ${role} has been assigned to user ${uid}`);
 }
 
-// Run this function to assign roles
-setRole("U3fVdYNUClR8UyXfm83QC5LtPpa2", "superadmin");
-setRole("8qrsudZ61SV47aJKKjzHdECjRgE3", "admin");
+// Assign roles to each user
+(async () => {
+  await setRole("U3fVdYNUClR8UyXfm83QC5LtPpa2", "superadmin");
+  await setRole("8qrsudZ61SV47aJKKjzHdECjRgE3", "admin");
+})();
