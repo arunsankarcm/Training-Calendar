@@ -6,6 +6,15 @@ import {
   child,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
+document.addEventListener("DOMContentLoaded", function() {
+  const loadingScreen = document.getElementById("loadingScreen");
+  loadingScreen.style.display = "flex"; 
+  setTimeout(function() {
+      loadingScreen.style.display = "none"; 
+      document.getElementById("body-main").style.display = "block"; 
+  }, 1500);
+});
+
 getCourses();
 
 const upcomingDiv = document.getElementById("upcoming-training-cards-section");

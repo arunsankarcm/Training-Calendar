@@ -48,14 +48,16 @@ function updateMonthYearDisplay() {
   console.log("Inside function:", monthYearText);
 }
 
+document.getElementById("export-img").addEventListener("click", () => {
+  const url = `templatePage.html?month=${month}&year=${year}`;
+  window.open(url, "_blank");
+});
+
 function getCourses() {
-  const loader = document.getElementById("loader");
-  loader.style.display = "block"; 
   const dbref = ref(db);
 
   get(child(dbref, "courses"))
     .then((snapshot) => {
-      loader.style.display = "none"; 
       if (snapshot.exists()) {
         allCourses = [];
         snapshot.forEach((course) => {
@@ -75,7 +77,6 @@ function getCourses() {
       }
     })
     .catch((error) => {
-      loader.style.display = "none"; 
       console.error("Error fetching data: ", error);
     });
 }
@@ -86,48 +87,16 @@ function assignCardNumbersForCurrentMonth() {
   const filteredCourses = allCourses.filter((course) => {
     const value = course.val();
     const startDate = new Date(value.startDate);
-    const endDate = value.endDate ? new Date(value.endDate) : null;
-
-    const isStartingThisMonth =
+    return (
       startDate.getMonth() === currentMonth &&
-      startDate.getFullYear() === currentYear;
-
-    const isOngoingThisMonth =
-      startDate <= new Date(currentYear, currentMonth + 1, 0) && // Course started before or in current month
-      (endDate
-        ? endDate >= new Date(currentYear, currentMonth, 1) // Course ends after or in current month
-        : true); // If no end date, assume ongoing
-
-    return isStartingThisMonth || isOngoingThisMonth;
+      startDate.getFullYear() === currentYear
+    );
   });
 
   let cardNo = 1;
   filteredCourses.forEach((course) => {
     cardNumberMap.set(course.key, cardNo++);
   });
-}
-
-function checkForNoCourses() {
-  if (cardsDiv.children.length === 0) {
-    if (!document.querySelector(".no-courses-popup")) {
-      const popup = document.createElement("div");
-      popup.textContent = "No courses to display";
-      popup.classList.add("no-courses-popup");
-      popup.style.position = "fixed";
-      popup.style.bottom = "220px";
-      popup.style.left = "50%";
-      popup.style.transform = "translateX(-50%)";
-      popup.style.color = "#555555";
-      popup.style.fontSize = "x-large";
-      popup.style.zIndex = "1000";
-      document.body.appendChild(popup);
-    }
-  } else {
-    const existingPopup = document.querySelector(".no-courses-popup");
-    if (existingPopup) {
-      existingPopup.remove();
-    }
-  }
 }
 
 function filterCoursesByMonth() {
@@ -160,7 +129,33 @@ function filterCoursesByMonth() {
       AddCourseToCard(course, cardNumber);
     }
   });
-  checkForNoCourses();
+
+  // Check if the card grid is empty and show the message if no courses are displayed
+  if (cardsDiv.children.length === 0) {
+    let popup = document.getElementById("noCoursesPopup");
+
+    if (!popup) {
+      popup = document.createElement("div");
+      popup.id = "noCoursesPopup";
+      popup.innerText = "No courses available for this month";
+      popup.style.position = "fixed";
+      popup.style.bottom = "220px";
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)";
+      popup.style.color = "#555555";
+      popup.style.fontSize = "x-large";
+      popup.style.padding = "10px 20px";
+      popup.style.borderRadius = "3px";
+      popup.style.zIndex = "1000";
+
+      document.body.appendChild(popup);
+    }
+  } else {
+    const popup = document.getElementById("noCoursesPopup");
+    if (popup) {
+      popup.remove();
+    }
+  }
 }
 
 document.getElementById("left-arrow").addEventListener("click", () => {
@@ -334,18 +329,6 @@ function AddCourseToCard(course, cardNo) {
         popupMenu.style.display = "none";
       }
     });
-    document.getElementById("month-year").addEventListener("click", () => {
-      popupMenu.style.display = "none";
-    });
-    document.getElementById("add_button").addEventListener("click", () => {
-      popupMenu.style.display = "none";
-    });
-    document.getElementById("iconButton").addEventListener("click", () => {
-      popupMenu.style.display = "none";
-    });
-    document.getElementById("exportbutton").addEventListener("click", () => {
-      popupMenu.style.display = "none";
-    });
 
     deleteBtn.addEventListener("click", () => {
       const confirmDelete = confirm(
@@ -376,32 +359,60 @@ function searchCourses() {
   const searchTerm = document
     .getElementById("search-input")
     .value.toLowerCase();
+  const existingPopup = document.getElementById("no-course-popup");
 
   if (searchTerm === "") {
+    if (existingPopup) {
+      existingPopup.remove();
+    }
     filterCoursesByMonth();
     return;
   }
 
   cardsDiv.innerHTML = "";
 
-  // Remove the current month filter
   const filteredCourses = allCourses.filter((course) => {
     const value = course.val();
     const courseName = value.courseName.toLowerCase();
+    const startDate = new Date(value.startDate);
+
+    const isInCurrentMonth =
+      startDate.getMonth() === currentMonth &&
+      startDate.getFullYear() === currentYear;
     const matchesSearch = courseName.includes(searchTerm);
 
-    return matchesSearch;
+    return isInCurrentMonth && matchesSearch;
   });
 
-  // Assign sequential card numbers for search results
-  filteredCourses.forEach((course, index) => {
-    const cardNumber = index + 1;
-    AddCourseToCard(course, cardNumber);
+  if (filteredCourses.length === 0) {
+    if (!existingPopup) {
+      const popup = document.createElement("div");
+      popup.id = "no-course-popup";
+      popup.innerText = "No results found";
+      popup.style.position = "fixed";
+      popup.style.bottom = "220px";
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)";
+      popup.style.color = "#555555";
+      popup.style.fontSize = "x-large";
+      popup.style.padding = "10px 20px";
+      popup.style.borderRadius = "3px";
+      popup.style.zIndex = "1000";
+      document.body.appendChild(popup);
+    }
+  } else {
+    if (existingPopup) {
+      existingPopup.remove();
+    }
+  }
+
+  filteredCourses.forEach((course) => {
+    const cardNumber = cardNumberMap.get(course.key);
+    if (cardNumber) {
+      AddCourseToCard(course, cardNumber);
+    }
   });
-  checkForNoCourses();
 }
-
-const exportButton = document.getElementById("exportbutton");
 const addButton = document.getElementById("add_button");
 const iconButton = document.getElementById("iconButton");
 const popupMenuFilter = document.getElementById("popupMenuFilter");
@@ -414,7 +425,6 @@ function togglePopup() {
 iconButton.addEventListener("click", (e) => {
   e.stopPropagation();
   togglePopup();
-  popupMenuExport.style.display = "none";
 });
 
 document.addEventListener("click", (e) => {
@@ -425,6 +435,9 @@ document.addEventListener("click", (e) => {
   ) {
     popupMenuFilter.style.display = "none";
   }
+});
+addButton.addEventListener("click", () => {
+  popupMenuFilter.style.display = "none";
 });
 
 document.getElementById("filter-upcoming").addEventListener("click", () => {
@@ -442,6 +455,10 @@ document.getElementById("filter-completed").addEventListener("click", () => {
   popupMenuFilter.style.display = "none";
 });
 
+/**
+ * Filters courses based on their status (upcoming, ongoing, completed)
+ * and displays the filtered courses on the page.
+ */
 function filterCourses(filterType) {
   cardsDiv.innerHTML = "";
   const currentDate = new Date();
@@ -489,50 +506,70 @@ function filterCourses(filterType) {
       filteredCourses = monthFilteredCourses;
   }
 
+  if (filteredCourses.length === 0) {
+    let popup = document.getElementById("noCoursesPopup");
+
+    if (!popup) {
+      popup = document.createElement("div");
+      popup.id = "noCoursesPopup";
+      popup.innerText = "No courses to display";
+      popup.style.position = "fixed";
+      popup.style.bottom = "220px";
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)";
+      popup.style.color = "#555555";
+      popup.style.fontSize = "x-large";
+      popup.style.padding = "10px 20px";
+      popup.style.borderRadius = "3px";
+      popup.style.zIndex = "1000";
+
+      document.body.appendChild(popup);
+    }
+  } else {
+    const popup = document.getElementById("noCoursesPopup");
+    if (popup) {
+      popup.remove();
+    }
+  }
+
   filteredCourses.forEach((course) => {
     const cardNumber = cardNumberMap.get(course.key);
     if (cardNumber) {
       AddCourseToCard(course, cardNumber);
     }
   });
-  checkForNoCourses();
 }
-const popupMenuExport = document.getElementById("popupMenuExport");
 
-function toggleExportPopup() {
-  popupMenuExport.style.display =
-    popupMenuExport.style.display === "block" ? "none" : "block";
+const popupMenuAdd = document.getElementById("popupMenuAdd");
+
+function toggleAddPopup() {
+  popupMenuAdd.style.display =
+    popupMenuAdd.style.display === "block" ? "none" : "block";
 }
-exportButton.addEventListener("click", (e) => {
-  e.stopPropagation();
-  toggleExportPopup();
-  popupMenuFilter.style.display = "none";
-});
-document.getElementById("mail").addEventListener("click", () => {
-  const url = `templatePageEmail.html?month=${month}&year=${year}`;
-  window.open(url, "_blank");
-  popupMenuExport.style.display = "none";
-});
-document.getElementById("png").addEventListener("click", () => {
-  const url = `templatePage.html?month=${month}&year=${year}`;
-  window.open(url, "_blank");
-  popupMenuExport.style.display = "none";
-});
-document.addEventListener("click", (e) => {
-  if (!exportButton.contains(e.target) && !popupMenuExport.contains(e.target)) {
-    popupMenuExport.style.display = "none";
-  }
-});
-
 
 addButton.addEventListener("click", (e) => {
   e.stopPropagation();
-  window.location.href = "manageCourses.html";
-  popupMenuFilter.style.display = "none";
-  popupMenuExport.style.display = "none";
+  toggleAddPopup();
 });
 
+document.getElementById("add-one-course").addEventListener("click", () => {
+  window.location.href = "indexcreate.html";
+});
 
+document
+  .getElementById("add-multiple-courses")
+  .addEventListener("click", () => {
+    window.location.href = "manageCourses.html";
+  });
+
+document.addEventListener("click", (e) => {
+  if (!addButton.contains(e.target) && !popupMenuAdd.contains(e.target)) {
+    popupMenuAdd.style.display = "none";
+  }
+});
+iconButton.addEventListener("click", () => {
+  popupMenuAdd.style.display = "none";
+});
 
 document
   .getElementById("search-input")
@@ -572,55 +609,3 @@ function enableAdminFeatures() {
 function showUserFeatures() {
   console.log("User features enabled.");
 }
-
-// Toggle the month dropdown
-document.getElementById("month-year").addEventListener("click", (e) => {
-  e.stopPropagation();
-  const monthDropdown = document.getElementById("month-dropdown");
-  const popupMenuFilter = document.getElementById("popupMenuFilter");
-  const popupMenuExport = document.getElementById("popupMenuExport");
-
-  monthDropdown.style.display =
-    monthDropdown.style.display === "block" ? "none" : "block";
-  popupMenuFilter.style.display = "none";
-  popupMenuExport.style.display = "none";
-});
-
-// Handle month selection in the dropdown
-document.getElementById("month-dropdown").addEventListener("click", (e) => {
-  e.stopPropagation();
-  if (e.target.tagName === "P") {
-    currentMonth = parseInt(e.target.getAttribute("data-month"));
-    updateMonthYearDisplay();
-    document.getElementById("month-dropdown").style.display = "none";
-
-    assignCardNumbersForCurrentMonth();
-    filterCoursesByMonth();
-    updateMonthYearDisplay();
-  }
-});
-
-document.addEventListener("click", () => {
-  const monthDropdown = document.getElementById("month-dropdown");
-  const popupMenuFilter = document.getElementById("popupMenuFilter");
-  const popupMenuExport = document.getElementById("popupMenuExport");
-
-  monthDropdown.style.display = "none";
-  popupMenuFilter.style.display = "none";
-  popupMenuExport.style.display = "none";
-});
-
-document.getElementById("add_button").addEventListener("click", () => {
-  const monthDropdown = document.getElementById("month-dropdown");
-  monthDropdown.style.display = "none";
-});
-
-document.getElementById("iconButton").addEventListener("click", () => {
-  const monthDropdown = document.getElementById("month-dropdown");
-  monthDropdown.style.display = "none";
-});
-
-document.getElementById("exportbutton").addEventListener("click", () => {
-  const monthDropdown = document.getElementById("month-dropdown");
-  monthDropdown.style.display = "none";
-});
