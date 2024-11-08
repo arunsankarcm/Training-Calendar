@@ -340,16 +340,7 @@ body {
   height: auto;
 }
 
-#popupMenuAdd.popup-menu {
-  display: flex;
-  display: none;
-  line-height: 11px;
-  width: 100px;
-  height: 90px;
-  border-radius: 13px;
-  margin-top: 22px;
-  margin-left: 765px;
-}
+
 #popupMenuExport.popup-menu {
   display: flex;
   display: none;
@@ -361,12 +352,6 @@ body {
   margin-left: 639px;
 }
 
-#popupMenuAdd.popup-menu hr {
-  display: flex;
-  width: 72px;
-  margin-left: 5.5px;
-  height: auto;
-}
 #popupMenuExport.popup-menu hr {
   display: flex;
   width: 45px;

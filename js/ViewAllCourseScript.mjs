@@ -50,13 +50,12 @@ function updateMonthYearDisplay() {
 
 function getCourses() {
   const loader = document.getElementById("loader");
-  loader.style.display = "block"; // Show loader
-
+  loader.style.display = "block"; 
   const dbref = ref(db);
 
   get(child(dbref, "courses"))
     .then((snapshot) => {
-      loader.style.display = "none"; // Hide loader after data is fetched
+      loader.style.display = "none"; 
       if (snapshot.exists()) {
         allCourses = [];
         snapshot.forEach((course) => {
@@ -76,7 +75,7 @@ function getCourses() {
       }
     })
     .catch((error) => {
-      loader.style.display = "none"; // Hide loader if there's an error
+      loader.style.display = "none"; 
       console.error("Error fetching data: ", error);
     });
 }
@@ -416,7 +415,6 @@ iconButton.addEventListener("click", (e) => {
   e.stopPropagation();
   togglePopup();
   popupMenuExport.style.display = "none";
-  // popupMenuAdd.style.display = "none";
 });
 
 document.addEventListener("click", (e) => {
@@ -508,7 +506,6 @@ function toggleExportPopup() {
 exportButton.addEventListener("click", (e) => {
   e.stopPropagation();
   toggleExportPopup();
-  // popupMenuAdd.style.display = "none";
   popupMenuFilter.style.display = "none";
 });
 document.getElementById("mail").addEventListener("click", () => {
@@ -527,36 +524,15 @@ document.addEventListener("click", (e) => {
   }
 });
 
-const popupMenuAdd = document.getElementById("popupMenuAdd");
-
-function toggleAddPopup() {
-  // popupMenuAdd.style.display =
-  //   popupMenuAdd.style.display === "block" ? "none" : "block";
-    window.location.href = "manageCourses.html";
-}
 
 addButton.addEventListener("click", (e) => {
   e.stopPropagation();
-  toggleAddPopup();
+  window.location.href = "manageCourses.html";
   popupMenuFilter.style.display = "none";
   popupMenuExport.style.display = "none";
 });
 
-// document.getElementById("add-one-course").addEventListener("click", () => {
-//   window.location.href = "indexcreate.html";
-// });
 
-// document
-//   .getElementById("add-multiple-courses")
-//   .addEventListener("click", () => {
-//     window.location.href = "manageCourses.html";
-//   });
-
-// document.addEventListener("click", (e) => {
-//   if (!addButton.contains(e.target) && !popupMenuAdd.contains(e.target)) {
-//     popupMenuAdd.style.display = "none";
-//   }
-// });
 
 document
   .getElementById("search-input")
@@ -602,13 +578,11 @@ document.getElementById("month-year").addEventListener("click", (e) => {
   e.stopPropagation();
   const monthDropdown = document.getElementById("month-dropdown");
   const popupMenuFilter = document.getElementById("popupMenuFilter");
-  // const popupMenuAdd = document.getElementById("popupMenuAdd");
   const popupMenuExport = document.getElementById("popupMenuExport");
 
   monthDropdown.style.display =
     monthDropdown.style.display === "block" ? "none" : "block";
   popupMenuFilter.style.display = "none";
-  // popupMenuAdd.style.display = "none";
   popupMenuExport.style.display = "none";
 });
 
@@ -629,12 +603,10 @@ document.getElementById("month-dropdown").addEventListener("click", (e) => {
 document.addEventListener("click", () => {
   const monthDropdown = document.getElementById("month-dropdown");
   const popupMenuFilter = document.getElementById("popupMenuFilter");
-  // const popupMenuAdd = document.getElementById("popupMenuAdd");
   const popupMenuExport = document.getElementById("popupMenuExport");
 
   monthDropdown.style.display = "none";
   popupMenuFilter.style.display = "none";
-  // popupMenuAdd.style.display = "none";
   popupMenuExport.style.display = "none";
 });
 
