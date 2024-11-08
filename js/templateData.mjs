@@ -6,6 +6,18 @@ import {
   child,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
+document.addEventListener("DOMContentLoaded", function() {
+  const loadingScreen = document.getElementById("loadingScreen");
+  loadingScreen.style.display = "flex"; 
+
+  setTimeout(function() {
+      loadingScreen.style.display = "none"; 
+      document.getElementsByClassName("body-main").style.display = "block"; 
+  }, 1500);
+});
+
+
+
 getCourses();
 
 const upcomingDiv = document.getElementById("upcoming-training-cards-section");
@@ -195,6 +207,36 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
     ? course.mode.charAt(0).toUpperCase() + course.mode.slice(1)
     : "Unknown";
 
+
+//implementing seperate temps starts
+
+
+  // Function for option 1
+  function handleOption1() {
+    console.log('Option 1 selected');
+    let templateOptions = document.getElementById("template-change-option")
+    templateOptions.innerHTML = ` <strong>Please use the training nomination form available in Vconnect to submit your nominations</strong>`;
+    // alert('Option 1 function triggered!');
+}
+
+// Function for option 2
+function handleOption2() {
+    console.log('Option 2 selected');
+    let templateOptions = document.getElementById("template-change-option")
+    templateOptions.innerHTML = ` <strong>Submit the training nominations form here</strong>`;
+    // alert('Option 2 function triggered!');
+}
+
+// Adding event listeners to the radio buttons 
+document.getElementById('option1').addEventListener('click', handleOption1);
+document.getElementById('option2').addEventListener('click', handleOption2);
+
+window.onload =  
+function() { handleOption1(); };
+
+//implementing seperate temps ends
+
+
   card.appendChild(circleNumber);
   card.appendChild(trainingDetails);
   card.appendChild(modeTag);
@@ -219,6 +261,12 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
   console.log(`Course card for '${course.courseName}' added to the DOM.`);
   cardNo++;
 }
+
+
+
+
+
+
 
 // Excel sheet downloading function
 document.getElementById("downloadBtn").addEventListener("click", function () {
@@ -320,6 +368,5 @@ onAuthStateChanged(auth, (user) => {
 document.getElementById("back-button").addEventListener("click", () => {
   window.location.href = "viewAllCourse.html";
 });
-
 
 

@@ -13,9 +13,30 @@
     <link rel="stylesheet" href="../styles/templatestyle.css" />
   </head>
   <body>
+    <div class="loading-overlay" id="loadingScreen">
+      <div class="spinner"></div>
+    </div>
+    
   <section class="body-main">
 
     <!-- downloading icons section -->
+    <!-- <div class="template-dropdown">
+      <label for="dropdown">Choose an option:</label>
+      <select id="dropdown">
+          <option value="option1" selected>Vconnect</option>
+          <option value="option2">E-mail</option>
+      </select>
+  </div> -->
+
+    <div class="template-options">
+      <label>
+          <input  type="radio" name="option" value="option1" id="option1"> Vconnect
+      </label>
+      <br>
+      <label>
+          <input type="radio" name="option" value="option2" id="option2"> Email
+      </label>
+  </div>
 
     <div class="download-icons">
 
@@ -80,10 +101,11 @@
             <h7>Secure your spot now!</h7>
           </div>
           <p>
-            <strong
-              >Please use the training nomination form available in Vconnect to
-              submit your nominations.</strong
-            >
+            <div id="template-change-option">
+
+            </div>
+            <!-- <strong>Please use the training nomination form available in Vconnect to
+              submit your nominations.</strong> -->
 
             <br />Nominations will be accepted in concurrence with managers and
             based on the availability of seats.

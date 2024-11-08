@@ -2,7 +2,7 @@ body {
   font-family: "Montserrat", sans-serif;
   margin: 40px;
   padding: 50px;
-  background-color: whitesmoke;
+  background-color: black;
   max-width: 846px;
 }
 
@@ -92,7 +92,7 @@ body {
   }
 
   p {
-    font-size: 15px;
+    font-size: 15px;;
   }
 }
 #training-heading {
@@ -301,8 +301,6 @@ body {
   display: flex;
 
   img {
-    padding-top: 7px;
-    padding-right: 13px;
     justify-content: end;
     display: flex;
     margin-top: 10px;
@@ -323,7 +321,7 @@ body {
 
 .sheetHover {
   color: white;
-  padding-left: 2px;
+  padding-left: 6px;
   padding-top: 0px;
   font-size: 13px;
 }
@@ -337,8 +335,8 @@ body {
 
 .pngHover {
   color: white;
-  padding-left: 3px;
-  padding-top: 2px;
+  padding-left: 10px;
+  padding-top: 0px;
   font-size: 13px;
 }
 
@@ -347,49 +345,4 @@ body {
 }
 .downloadPngHover :hover #onPngHover {
   visibility: visible;
-}
-
-
-.pdfHover {
-  color: rgb(255, 255, 255);
-  padding-left: 3px;
-  padding-top: 2px;
-  font-size: 13px;
-}
-
-#onPdfHover {
-  visibility: hidden;
-}
-.downloadPdfHover :hover #onPdfHover {
-  visibility: visible;
-}
-
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #3e68b9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  display: none; /* Hidden by default */
-}
-
-/* Style for the loading spinner */
-.spinner {
-  border: 8px solid white;
-  border-top: 8px solid #3e68b9;
-  border-radius: 50%;
-  width: 75px;
-  height: 75px;
-  animation: spin 1s linear infinite;
-}
-
-/* Keyframes for spinner animation */
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
