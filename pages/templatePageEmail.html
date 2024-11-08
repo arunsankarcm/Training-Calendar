@@ -5,39 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>exTC-Email-Template</title>
     <link rel="icon" href="../Images/logo white rings.png" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../styles/templateEmailStyles.css" />
+    <link rel="stylesheet" href="../styles/templatestyle.css" />
   </head>
   <body>
     <section class="body-main">
       <div class="download-icons">
 
-        <button id="downloadPDFBtn">Download as PDF</button>
-
-
-        <div class="downloadPngHover">
-          <a href="#" onclick="downloadImage()" id="pngDownHover">
-            <img src="../Images/1-removebg.png" alt="download-icon"
-          /></a>
-          <div class="pngHover">
-            <div id="onPngHover">PNG</div>
+        <div class="downloadPdfHover">
+          <a href="#" onclick="downloadAsPDF()" id="pdfDownHover">
+            <img class="pdf-icon" src="../Images/PDF new logo.png" alt="download-icon"/></a>
+          <div class="pdfHover">
+            <div id="onPdfHover">PDF</div>
           </div>
         </div>
-
-        <div class="downloadSheetHover">
-          <a href="#" id="downloadBtn">
-            <img
-              src="../Images/PDF__1_-removebg-preview.png"
-              alt="download-sheet"
-          /></a>
-          <div class="sheetHover">
-            <div id="onSheetHover">Sheet</div>
-          </div>
-        </div>
+          
       </div>
 
       <div class="container" id="container-capture">
@@ -93,12 +78,15 @@
           </div>
         </div>
       </div>
-
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+
       <script type="module" src="../js/templateData.mjs"></script>
+      <script src="../js/templatePdf.js"></script>
       <script src="../js/templateJS.js"></script>
+      
     </section>
   </body>
 </html>

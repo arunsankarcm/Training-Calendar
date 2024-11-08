@@ -220,7 +220,6 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
   cardNo++;
 }
 
-// excel sheet downloading function
 // Excel sheet downloading function
 document.getElementById("downloadBtn").addEventListener("click", function () {
   var data = [];

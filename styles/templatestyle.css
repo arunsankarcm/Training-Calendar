@@ -301,6 +301,8 @@ body {
   display: flex;
 
   img {
+    padding-top: 7px;
+    padding-right: 13px;
     justify-content: end;
     display: flex;
     margin-top: 10px;
@@ -321,7 +323,7 @@ body {
 
 .sheetHover {
   color: white;
-  padding-left: 6px;
+  padding-left: 2px;
   padding-top: 0px;
   font-size: 13px;
 }
@@ -335,8 +337,8 @@ body {
 
 .pngHover {
   color: white;
-  padding-left: 10px;
-  padding-top: 0px;
+  padding-left: 3px;
+  padding-top: 2px;
   font-size: 13px;
 }
 
@@ -344,5 +346,20 @@ body {
   visibility: hidden;
 }
 .downloadPngHover :hover #onPngHover {
+  visibility: visible;
+}
+
+
+.pdfHover {
+  color: rgb(255, 255, 255);
+  padding-left: 3px;
+  padding-top: 2px;
+  font-size: 13px;
+}
+
+#onPdfHover {
+  visibility: hidden;
+}
+.downloadPdfHover :hover #onPdfHover {
   visibility: visible;
 }
