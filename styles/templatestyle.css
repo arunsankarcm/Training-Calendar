@@ -79,11 +79,9 @@ body {
 .training-card {
   text-align: left;
   margin: 23px 0;
-  padding: 18px;
   width: 700px;
   display: flex;
   align-items: center;
-  margin-bottom: 2px;
   h1 {
     font-weight: bolder;
     margin-top: 0;
@@ -125,7 +123,7 @@ body {
   border-radius: 3px;
   font-size: 13px;
   font-weight: 1000;
-  margin-top: 70px;
+  margin-top: 110px;
 }
 
 .offline {
