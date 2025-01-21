@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
   setTimeout(function() {
       loadingScreen.style.display = "none"; 
       document.getElementById("body-main").style.display = "block"; 
-  }, 1500);
+  }, 1000);
 });
 
 getCourses();
@@ -117,16 +117,34 @@ function getCourses() {
           }
         });
 
-        upcomingCourses.forEach((course, index) => {
-          renderCourses(course, "upcoming", upcomingCourses.length, index);
-        });
+        if (upcomingCourses.length === 0) {
+          upcomingDiv.innerHTML = `<div class="NoCase">There are no upcoming courses.</div>`;
+        } else {
+          upcomingCourses.forEach((course, index) => {
+            renderCourses(course, "upcoming", upcomingCourses.length, index);
+          });
+        }
 
-        ongoingCourses.forEach((course, index) => {
-          renderCourses(course, "ongoing", ongoingCourses.length, index);
-        });
+        if (ongoingCourses.length === 0) {
+          ongoingDiv.innerHTML = `<div class="NoCase">There are no ongoing courses in this month.</div>`;
+        } else {
+          ongoingCourses.forEach((course, index) => {
+            renderCourses(course, "ongoing", ongoingCourses.length, index);
+          });
+        }
       } else {
         console.log("No data available");
       }
+      //   upcomingCourses.forEach((course, index) => {
+      //     renderCourses(course, "upcoming", upcomingCourses.length, index);
+      //   });
+
+      //   ongoingCourses.forEach((course, index) => {
+      //     renderCourses(course, "ongoing", ongoingCourses.length, index);
+      //   });
+      // } else {
+      //   console.log("No data available");
+      // }
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
@@ -136,7 +154,13 @@ function getCourses() {
 // rendering courses and inputing to the template
 function renderCourses(course, section, totalCoursesInSection, currentIndex) {
   console.log(`Rendering course card for: ${course.courseName}`);
+  const startDate = convertDateToCustomFormat(course.startDate);
+  const endDate = convertDateToCustomFormat(course.endDate);
+  // let courseEndDateValid = convertDateToCustomFormat(course.endDate);
 
+  console.log(`Start Date: ${startDate}`);
+  console.log(`End Date: ${endDate}`);
+  
   const startTime = new Date(`${course.startDate}T${course.startTime}`);
   const endTime = new Date(`${course.startDate}T${course.endTime}`);
 
@@ -158,11 +182,6 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
     durationString = `${durationMinutes} mins`;
   } else {
     durationString = `NS`;
-  }
-
-  let courseEndDateValid = course.endDate;
-  if (courseEndDateValid === "") {
-    courseEndDateValid = "TBD";
   }
 
   // main card div
@@ -187,9 +206,10 @@ function renderCourses(course, section, totalCoursesInSection, currentIndex) {
   trainingDetails.innerHTML = `
     <p id ="training-heading">  ${course.courseName} </p>
     <div id="training-card-details">
-    <p>Target Audience: <strong style="-webkit-text-stroke: 0.5px #000;">${course.targetAudience}</strong></p>
-    <p>Date: <strong style="-webkit-text-stroke: 0.5px #000;"> ${course.startDate} </strong> to <strong style="-webkit-text-stroke: 0.5px #000;"> ${courseEndDateValid} </strong>  <strong style="-webkit-text-stroke: 0.5px #000;"> (${durationString}) </strong> </p>
-    <p>Trainer:<strong style="-webkit-text-stroke: 0.5px #000;"> ${course.trainerName} </strong> </p>
+    <p>Target Audience: <strong style="-webkit-text-stroke: 0.5px #4d4d4d;">${course.targetAudience}</strong></p>
+    <p>Date: <strong style="-webkit-text-stroke: 0.5px #4d4d4d;"> ${startDate} </strong> <span style= "color: #4d4d4d;"> to </span> <strong style="-webkit-text-stroke: 0.5px #4d4d4d"> 
+    ${endDate} </strong>  <strong style="-webkit-text-stroke: 0.5px #4d4d4d"> (${durationString}) </strong> </p>
+    <p>Trainer:<strong style="-webkit-text-stroke: 0.5px #4d4d4d;"> ${course.trainerName} </strong> </p>
     </div>
   `;
 
@@ -316,6 +336,19 @@ console.log("Trainer:", trainer);
 console.log("Type:", type);
 
 });
+
+function convertDateToCustomFormat(dateString) {
+  if (dateString == ''){
+    return `TBD`;
+  }
+else {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+}}
 
 
 onAuthStateChanged(auth, (user) => {

@@ -345,16 +345,16 @@ body {
   display: flex;
   display: none;
   line-height: 11px;
-  width: 70px;
+  width: 90px;
   height: 90px;
   border-radius: 13px;
   margin-top: 22px;
-  margin-left: 639px;
+  margin-left: 633px;
 }
 
 #popupMenuExport.popup-menu hr {
   display: flex;
-  width: 45px;
+  width: 65px;
   margin-left: 5.5px;
   height: auto;
 }
