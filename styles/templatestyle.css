@@ -138,11 +138,12 @@ body {
   color: #43bf73;
   width: 50px;
   display: flex;
-  justify-content: center;
+  /* justify-content: center;
   justify-items: center;
   align-items: center;
-  align-content: center;
+  align-content: center; */
   height: 10px;
+  padding-bottom: 7px;
 }
 
 .online {
@@ -151,11 +152,12 @@ body {
   color: #3e68b9;
   width: 50px;
   display: flex;
-  justify-content: center;
+  /* justify-content: center;
   justify-items: center;
   align-items: center;
-  align-content: center;
+  align-content: center; */
   height: 10px; 
+  padding-bottom: 7px;
 }
 
 .blended {
@@ -164,10 +166,11 @@ body {
   color: #EA5853;
   width: 50px;
   display: flex;
-  justify-content: center;
+  /* justify-content: center;
   justify-items: center;
   align-items: center;
-  align-content: center;
+  align-content: center; */
+  padding-bottom: 7px;
   height: 10px;
 }
 
